@@ -1,0 +1,32 @@
+﻿<Window x:Class="ExerciseAssistantApplication.View.NewExercise"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExerciseAssistantApplication.View"
+        mc:Ignorable="d"
+        Title="New exercise with Kinect" Height="700" Width="900" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" >
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Viewbox DataContext="{Binding ColorStreamView}" Grid.Column="0" HorizontalAlignment="Center" Height="300">
+                <Grid>
+                    <Image Source="{Binding colorImage}" Stretch="UniformToFill"/>
+                    <Image Source="{Binding ColorPlayback}" Stretch="UniformToFill"/>
+                    <Image Source="{Binding SkeletonReplayImage}" Stretch="UniformToFill"/>
+                </Grid>
+            </Viewbox>
+            <Viewbox DataContext="{Binding SkeletonStreamView}" Grid.Column="1" HorizontalAlignment="Center" Height="300">
+                <Image Source="{Binding skeletonImage}" Stretch="UniformToFill" />
+            </Viewbox>
+        </Grid>
+        <Grid>
+            <Button  Content="Record" Command="{Binding Record}" IsEnabled="{Binding btnRecord}"   Height="30" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" />
+            <Button  Content="Playback" Command="{Binding Replay}" IsEnabled="{Binding btnPlayback}"  Height="30" Width="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
+            <Button  Content="Stop" Command="{Binding Stop}" IsEnabled="{Binding btnStop}"  Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" />
+        </Grid>
+    </Grid>
+</Window>
