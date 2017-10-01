@@ -29,10 +29,19 @@ namespace Stream
         private byte[] colorPixels;
         bool isRecording = false;
 
+        /// <summary>
+        /// Color display height (not video size)
+        /// </summary>
+        public static float colorDisplayHeight = 300;
+        /// <summary>
+        /// Color display width (not video size)
+        /// </summary>
+        public static float colorDisplayWidth = 600;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ColorStream() { }
-
+        
         public void Stream(KinectSensor kinectSensor)
         {
             if (kinectSensor != null)
@@ -148,7 +157,20 @@ namespace Stream
                 isRecording = value;
             }
         }
-
+        public static float ColorDisplayHeight
+        {
+            get
+            {
+                return colorDisplayHeight;
+            }
+        }
+        public static float ColorDisplayWidth
+        {
+            get
+            {
+                return colorDisplayWidth;
+            }
+        }
         public void Dispose()
         {
             if (colorFrameReader != null)

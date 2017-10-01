@@ -20,8 +20,8 @@ namespace Stream
         public event EventHandlerNewFrame NewFrame;
 
         //color frame size (not video size)
-        public float colorStreamHeight = 300;
-        public float colorStreamWidth = 600;
+        public float colorDisplayHeight = ColorStream.ColorDisplayHeight;
+        public float colorDisplayWidth = ColorStream.ColorDisplayWidth;
 
         public StreamPlayer()
         {
@@ -118,29 +118,14 @@ namespace Stream
                     double skeletonHeight = Convert.ToDouble(words[9]); //skeleton display Height
 
                     // display size -> skeleton size; colorstream size -> the color frame size
-                    //depthSpacePoint.X = depthSpacePoint.X / displayWidth * ColorStreamWidth;
-                    //depthSpacePoint.Y = depthSpacePoint.Y / displayHeight * ColorStreamHeight;
+                    double skeletonZoomOutX = 3 * skeletonWidth / 1920;
+                    double skeletonZoomOutY = 1080 / (3 * skeletonHeight);
 
-                    // depthSpacePoint.X = (depthSpacePoint.X * (float)(1080.0 / 424.0) + (float)3) * (float)ColorStreamWidth/(float)1920.0;
-                    // depthSpacePoint.X = (depthSpacePoint.X  + (float)307.92*(float)ColorStreamWidth / (float)1920.0) ;
-                    //depthSpacePoint.Y = (depthSpacePoint.Y * (float)(1080.0 / 424.0) - (float)34.0) * (float)ColorStreamHeight / (float)1080.0;
-                    //depthSpacePoint.Y = depthSpacePoint.Y / displayHeight * 1920;
+                    double shiftX = 1920 - (2 * 3 * skeletonWidth * skeletonZoomOutX) + colorDisplayWidth;// ((1920 - (3 * skeletonWidth) * skeletonKicsinyitesX) - ((3 * skeletonWidth) * skeletonKicsinyitesX - colorStreamWidth));
+                    double shiftY = (1080 - (3 * skeletonHeight * skeletonZoomOutX)) / 2;
 
-
-                    //Y = Y * (float)1080.0 / (float)424.0 - (float)34.0 * (float)424.0 / (float)1080.0;
-                    //X = X + 84.84 * ColorStreamWidth/1920;
-                    //Y = Y - 172.72 * ColorStreamHeight/1080;
-
-                    //X = X + 722 * skeletonWidth/ColorStreamWidth;
-                    //Y = Y - 56 ;
-
-                    double skeletonZoomOut = 3 * skeletonWidth / 1920;
-
-                    double shiftX = 1920 - (2 * 3 * skeletonWidth * skeletonZoomOut) + colorStreamWidth;// ((1920 - (3 * skeletonWidth) * skeletonKicsinyitesX) - ((3 * skeletonWidth) * skeletonKicsinyitesX - colorStreamWidth));
-                    double shiftY = (1080 - (3 * skeletonHeight * skeletonZoomOut)) / 2;
-
-                    X = X * skeletonZoomOut;
-                    Y = Y * skeletonZoomOut;
+                    X = X * skeletonZoomOutX;
+                    Y = Y * skeletonZoomOutY;
                     X = X + shiftX;
                     Y = Y - shiftY;
 

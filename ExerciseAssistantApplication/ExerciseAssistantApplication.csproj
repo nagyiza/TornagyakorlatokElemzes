@@ -77,16 +77,12 @@
     <Compile Include="ViewModell\LogInViewModel.cs" />
     <Compile Include="ViewModell\MainWindowViewModel.cs" />
     <Compile Include="ViewModell\MenuViewModel.cs" />
-    <Compile Include="ViewModell\NewExerciseViewModel.cs" />
     <Compile Include="ViewModell\RegistrationViewModel.cs" />
     <Compile Include="View\LogIn.xaml.cs">
       <DependentUpon>LogIn.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\NewExercise.xaml.cs">
-      <DependentUpon>NewExercise.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
@@ -112,10 +108,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Menu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\NewExercise.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

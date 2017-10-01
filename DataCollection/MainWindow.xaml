@@ -12,11 +12,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Viewbox x:Name="colorStreamView" Grid.Column="0" HorizontalAlignment="Center" Height="300" Width="600">
+            <Viewbox x:Name="colorStreamView" Grid.Column="0" HorizontalAlignment="Center" Height="{Binding ColorDisplayHeight}" Width="{Binding ColorDisplayWidth}">
                 <Grid>
-                    <Image Source="{Binding colorImage}" Stretch="UniformToFill" Height="300" Width="600"/>
-                    <Image Name="colorPlayback" Stretch="UniformToFill" Height="300" Width="600"/>
-                    <Image Name="skeletonReplayImage" Stretch="UniformToFill" Height="300" Width="600"/>
+                    <Image Source="{Binding colorImage}" Stretch="UniformToFill" Height="{Binding ColorDisplayHeight}" Width="{Binding ColorDisplayWidth}"/>
+                    <Image Name="colorPlayback" Stretch="UniformToFill" Height="{Binding ColorDisplayHeight}" Width="{Binding ColorDisplayWidth}"/>
+                    <Image Name="skeletonReplayImage" Stretch="UniformToFill" Height="{Binding ColorDisplayHeight}" Width="{Binding ColorDisplayWidth}"/>
                 </Grid>
             </Viewbox>
             <Viewbox x:Name="skeletonStreamView" Grid.Column="1" HorizontalAlignment="Center" Height="300">
