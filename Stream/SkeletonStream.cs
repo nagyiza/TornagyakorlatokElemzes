@@ -230,17 +230,25 @@ namespace Stream
                             DepthSpacePoint depthSpacePoint = coordinateMapper.MapCameraPointToDepthSpace(position);
                             ColorSpacePoint colorSpacePoint = coordinateMapper.MapCameraPointToColorSpace(position);
 
-                            jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
+                            jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y); // to drawing
 
-                            
+                            //coordinate from cordinate mapping
+                            //source: http://pterneas.com/2014/05/06/understanding-kinect-coordinate-mapping/
+                            float ColorX = float.IsInfinity(colorSpacePoint.X) ? 0 : colorSpacePoint.X;
+                            float ColorY = float.IsInfinity(colorSpacePoint.Y) ? 0 : colorSpacePoint.Y;
+
+                            float DepthX = float.IsInfinity(depthSpacePoint.X) ? 0 : depthSpacePoint.X;
+                            float DepthY = float.IsInfinity(depthSpacePoint.Y) ? 0 : depthSpacePoint.Y;
+
+
                             if (joints[jointType].TrackingState == TrackingState.Tracked && isRecording)
                             {
                                 {
                                     //fill current skeleton frame data
                                     currentSkeletonFrameData += position.Z + " " + position.X + " " + position.Y + " "
                                         + timestamp + " "
-                                        + body.TrackingId + " " + (int)jointType + " " + depthSpacePoint.X + " "
-                                        + depthSpacePoint.Y + " " + SkeletonStreamWidth + " "
+                                        + body.TrackingId + " " + (int)jointType + " " + ColorX + " "
+                                        + ColorY + " " + DepthX + " " + DepthY + " " + SkeletonStreamWidth + " "
                                         + SkeletonStreamHeight + " " + Environment.NewLine;
                                 }
                             }else if (joints[jointType].TrackingState == TrackingState.Inferred && isRecording)
@@ -249,8 +257,8 @@ namespace Stream
                                     //fill current skeleton frame data
                                     currentSkeletonFrameData2 += position.Z + " " + position.X + " " + position.Y + " "
                                         + timestamp + " "
-                                        + body.TrackingId + " " + (int)jointType + " " + depthSpacePoint.X + " "
-                                        + depthSpacePoint.Y + " " + SkeletonStreamWidth + " "
+                                        + body.TrackingId + " " + (int)jointType + " " + ColorX + " "
+                                        + ColorY + " " + DepthX + " " + DepthY + " " + SkeletonStreamWidth + " "
                                         + SkeletonStreamHeight + " " + Environment.NewLine;
                                 }
                             }

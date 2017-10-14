@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +23,14 @@ namespace Stream
         //color frame size (not video size)
         public float colorDisplayHeight = ColorStream.ColorDisplayHeight;
         public float colorDisplayWidth = ColorStream.ColorDisplayWidth;
+
+        //video (full hd) size
+        private float VideoHeight = 1080;
+        private float VideoWidth = 1920;
+        /// <summary>
+        /// Coordinate mapper to map one type of point to another
+        /// </summary>
+        private CoordinateMapper coordinateMapper = null;
 
         public StreamPlayer()
         {
@@ -111,32 +120,17 @@ namespace Stream
                     if (currentFrame.Timestamp == 0) currentFrame.Timestamp = Convert.ToInt64(words[3]);
 
                     int jointTypeNr = Convert.ToInt32(words[5]); //(int)jointType
-                    double X = Convert.ToDouble(words[6]); //depthSpacePoint.X
-                    double Y = Convert.ToDouble(words[7]); //depthSpacePoint.Y
+                    double X = Convert.ToDouble(words[6]); //colorSpacePoint.X
+                    double Y = Convert.ToDouble(words[7]); //colorSpacePoint.Y
 
-                    double skeletonWidth = Convert.ToDouble(words[8]); //skeleton display Width
-                    double skeletonHeight = Convert.ToDouble(words[9]); //skeleton display Height
+                    double skeletonWidth = Convert.ToDouble(words[10]); //skeleton display Width
+                    double skeletonHeight = Convert.ToDouble(words[11]); //skeleton display Height
 
                     // display size -> skeleton size; colorstream size -> the color frame size
-                    double skeletonZoomOutX = 3 * skeletonWidth / 1920;
-                    double skeletonZoomOutY = 1080 / (3 * skeletonHeight);
 
-                    double shiftX = 1920 - (2 * 3 * skeletonWidth * skeletonZoomOutX) + colorDisplayWidth;// ((1920 - (3 * skeletonWidth) * skeletonKicsinyitesX) - ((3 * skeletonWidth) * skeletonKicsinyitesX - colorStreamWidth));
-                    double shiftY = (1080 - (3 * skeletonHeight * skeletonZoomOutX)) / 2;
-
-                    X = X * skeletonZoomOutX;
-                    Y = Y * skeletonZoomOutY;
-                    X = X + shiftX;
-                    Y = Y - shiftY;
-
-
-
-                    //map to the color stream
-                    //Y = Y * 0.8;
-                    //X = X * 0.8;
-                    //Y = Y - 25;
-                    //X = X + 60;
-                    //-----------------------
+                    
+                    X = X * skeletonWidth / VideoWidth; // (512 / 1920)
+                    Y = Y * skeletonWidth / VideoWidth;// (512 / 1920)
 
 
                     if (jointNumber > Convert.ToInt32(words[5]))

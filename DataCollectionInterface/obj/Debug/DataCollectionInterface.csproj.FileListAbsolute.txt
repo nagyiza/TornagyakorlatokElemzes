@@ -14,3 +14,12 @@ C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\DataCollectionInterface\
 C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\DataCollectionInterface\bin\Debug\Microsoft.Kinect.Tools.xml
 C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\DataCollectionInterface\obj\Debug\DataCollectionInterface.dll
 C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\DataCollectionInterface\obj\Debug\DataCollectionInterface.pdb
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollectionInterface\bin\Debug\DataCollectionInterface.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollectionInterface\bin\Debug\DataCollectionInterface.pdb
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollectionInterface\bin\Debug\Microsoft.Kinect.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollectionInterface\bin\Debug\Microsoft.Kinect.Tools.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollectionInterface\bin\Debug\Microsoft.Kinect.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollectionInterface\bin\Debug\Microsoft.Kinect.Tools.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollectionInterface\obj\Debug\DataCollectionInterface.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollectionInterface\obj\Debug\DataCollectionInterface.pdb
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollectionInterface\obj\Debug\DataCollectionInterface.csprojResolveAssemblyReference.cache

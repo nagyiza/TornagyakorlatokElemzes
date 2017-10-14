@@ -68,8 +68,8 @@ namespace Stream
             streamWriter2 = new StreamWriter(fileName + "ErrorFrameData.txt");
 
             // In file is bill head:
-            streamWriter.Write("Z           X           Y     Timestamp     Body id     Joint type DepthSpacePointX DepthSpacePointY    WidthOfDisplay  HeightOfDisplay" + Environment.NewLine);
-            streamWriter2.Write("Z           X            Y     Timestamp     Body id     Joint type DepthSpacePointX DepthSpacePointY    WidthOfDisplay  HeightOfDisplay" + Environment.NewLine);
+            streamWriter.Write("Z           X           Y     Timestamp     Body id     Joint type ColorPointX ColorPointY  DepthPointX DepthPointY  WidthOfDisplay  HeightOfDisplay" + Environment.NewLine);
+            streamWriter2.Write("Z           X            Y     Timestamp     Body id     Joint type ColorPointX ColorPointY  DepthPointX DepthPointY  WidthOfDisplay  HeightOfDisplay" + Environment.NewLine);
 
             //color stream saving event
             if (saveEventHandler == null) saveEventHandler = new ElapsedEventHandler(Record);

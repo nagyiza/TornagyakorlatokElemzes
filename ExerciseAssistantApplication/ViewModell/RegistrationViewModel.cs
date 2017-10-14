@@ -77,7 +77,7 @@ namespace ExerciseAssistantApplication.ViewModell
             set
             {
                 upassword = value;
-                this.RaisePropertyChanged("uPassword");
+                this.OnPropertyChanged("uPassword");
             }
         }
         public string upassword2;
@@ -87,7 +87,7 @@ namespace ExerciseAssistantApplication.ViewModell
             set
             {
                 upassword2 = value;
-                this.RaisePropertyChanged("uPassword2");
+                this.OnPropertyChanged("uPassword2");
             }
         }
         
@@ -101,7 +101,7 @@ namespace ExerciseAssistantApplication.ViewModell
                 if (!string.Equals(this.email_box, value))
                 {
                     this.email_box = value;
-                    this.RaisePropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
+                    this.OnPropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
                 }
             }
         }
@@ -115,7 +115,7 @@ namespace ExerciseAssistantApplication.ViewModell
                 if (!string.Equals(this.username_box, value))
                 {
                     this.username_box = value;
-                    this.RaisePropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
+                    this.OnPropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
                 }
             }
         }
@@ -128,7 +128,7 @@ namespace ExerciseAssistantApplication.ViewModell
                 if (!string.Equals(this.password_box, value))
                 {
                     this.password_box = value;
-                    this.RaisePropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
+                    this.OnPropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
                 }
             }
         }
@@ -141,7 +141,7 @@ namespace ExerciseAssistantApplication.ViewModell
                 if (!string.Equals(this.passwordagain_box, value))
                 {
                     this.passwordagain_box = value;
-                    this.RaisePropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
+                    this.OnPropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
                 }
             }
         }

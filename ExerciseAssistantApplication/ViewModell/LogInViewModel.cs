@@ -114,7 +114,7 @@ namespace ExerciseAssistantApplication.ViewModell
             set
             {
                 upassword = value;
-                this.RaisePropertyChanged("uPassword");
+                this.OnPropertyChanged("uPassword");
             }
         }
         public string Email_box
@@ -126,7 +126,7 @@ namespace ExerciseAssistantApplication.ViewModell
                 if (!string.Equals(this.email_box, value))
                 {
                     this.email_box = value;
-                    this.RaisePropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
+                    this.OnPropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
                 }
             }
         }

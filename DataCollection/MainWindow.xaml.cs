@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using Microsoft.VisualBasic;
 using System.IO;
 
+
 namespace ReferenceDataCollection
 {
     /// <summary>
@@ -56,7 +57,7 @@ namespace ReferenceDataCollection
         }
 
         private void RecordButton_Click(object sender, RoutedEventArgs e)
-        {
+        {   
             ControlKeyEnable(false, false, true);
 
             string file = Interaction.InputBox("Write the exercise name!", "Exercise save", "");
@@ -113,6 +114,7 @@ namespace ReferenceDataCollection
             {
                 streamPlayer.StopPlayback();
             }
+            
             ControlKeyEnable(true, true, false);
         }
 
@@ -139,6 +141,8 @@ namespace ReferenceDataCollection
             { 
                 ControlKeyEnable(true, true, false);
             }
+
+            Skeleton3D();
         }
 
         private void ControlKeyEnable(bool rec, bool play, bool stop)
@@ -209,6 +213,40 @@ namespace ReferenceDataCollection
                     streamPlayer.NewFrame -= ShowFrameEvent;
                 }
             }
+        }
+
+        public void Skeleton3D()
+        {
+            //Glut.glutInit();
+            //Glut.glutInitDisplayMode(Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
+            //Glut.glutInitWindowSize(512, 424);
+            //Glut.glutCreateWindow("3D Skeleton");
+
+            //Glut.glutIdleFunc(OnReaderFrame);
+            //Glut.glutDisplayFunc(OnDisplay);
+
+            //Glut.glutMainLoop();
+      
+            //Glut.glutKeyboardFunc(keyboard);                   
+            //Glut.glutReshapeFunc(reshape);            
+            //Glut.glutMouseFunc(mouse);            
+            //Glut.glutMainLoop();
+
+            //Glut.glutInitWindowPosition(100, 100);
+
+
+        }
+        private void OnDisplay()
+        {
+  
+        }
+
+        private void OnReaderFrame()
+        {
+            //Gl.Viewport(0,0,512,424);
+            //Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            //Glut.glutSwapBuffers();
         }
     }
 }

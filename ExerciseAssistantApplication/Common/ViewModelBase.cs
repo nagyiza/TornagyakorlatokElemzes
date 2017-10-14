@@ -15,7 +15,7 @@ namespace ExerciseAssistantApplication.Common
         /// Raises the property changed.
         /// </summary>
         /// <param name="name">The name.</param>
-        public void RaisePropertyChanged([CallerMemberName]string name = null)// ha nem irok semmit akkor veszi a property nevet
+        public void OnPropertyChanged([CallerMemberName]string name = null)// ha nem irok semmit akkor veszi a property nevet
         {
             if (this.PropertyChanged != null)
             {

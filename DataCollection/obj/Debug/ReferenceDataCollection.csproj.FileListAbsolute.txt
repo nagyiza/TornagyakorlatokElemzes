@@ -157,3 +157,11 @@ C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKin
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\DataCollection.g.resources
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\DataCollection.Properties.Resources.resources
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\ReferenceDataCollection.csproj.GenerateResource.Cache
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Tao.FreeGlut.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServerCompact.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\System.Data.SqlServerCe.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServerCompact.xml

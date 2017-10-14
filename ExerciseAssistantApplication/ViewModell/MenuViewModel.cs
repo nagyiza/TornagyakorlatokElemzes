@@ -42,8 +42,8 @@ namespace ExerciseAssistantApplication.ViewModell
         }
         public void StartClick()
         {
-            //AddUserViewModel auvm = new AddUserViewModel();
-            //ViewService.ShowDialog(auvm);
+            StartViewModel auvm = new StartViewModel();
+            ViewService.ShowDialog(auvm);
         }
         public bool StartCancel()
         {
