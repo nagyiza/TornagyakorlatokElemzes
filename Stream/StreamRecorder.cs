@@ -118,14 +118,13 @@ namespace Stream
                             //write the tracked skeleton
                             streamWriter.Write(correct);
                         }
-                        else
+
+                        if (frame != null && notCorrect != null)
                         {
-                            if (frame != null && notCorrect != null)
-                            {
-                                //write the not tracked skeleton
-                                streamWriter2.Write(notCorrect);
-                            }
+                            //write the not tracked skeleton
+                            streamWriter2.Write(notCorrect);
                         }
+
                     }
                     catch (Exception ex)
                     {

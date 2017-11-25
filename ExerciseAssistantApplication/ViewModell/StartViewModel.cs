@@ -6,8 +6,10 @@ using Microsoft.Win32;
 using Stream;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +21,7 @@ namespace ExerciseAssistantApplication.ViewModell
 {
     public class StartViewModel : ViewModelBase, IDisposable
     {
+        
         KinectSensor sensor = null;
         ColorStream colorStream = null;
         ColorStream referenceStream = null;
@@ -61,6 +64,11 @@ namespace ExerciseAssistantApplication.ViewModell
             drawingImage = new DrawingImage(drawingGroup);
 
             SkeletonReplayImage = drawingImage;
+
+
+           
+
+
         }
         public ColorStream ColorStreamView
         {

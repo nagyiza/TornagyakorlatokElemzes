@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Start Application" Height="700" Width="900" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
+        <!--
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -15,7 +16,9 @@
             <Viewbox DataContext="{Binding ColorStreamView}" Grid.Column="0" HorizontalAlignment="Center" Height="300">
                 <Grid>
                     <Image Source="{Binding colorImage}" Stretch="UniformToFill"/>
+        -->
                     <!--Image Source="{Binding ColorPlayback}" Stretch="UniformToFill"/-->
+        <!--
                     <Image Source="{Binding SkeletonReplayImage}" Stretch="UniformToFill"/>
                 </Grid>
             </Viewbox>
@@ -28,6 +31,7 @@
             <Button  Content="" Command="{Binding Replay}" IsEnabled="{Binding btnPlayback}"  Height="30" Width="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"/>
             <Button  Content="" Command="{Binding Stop}" IsEnabled="{Binding btnStop}"  Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" />
         </Grid>
+        -->
     </Grid>
 
 </Window>

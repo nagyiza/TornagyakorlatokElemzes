@@ -142,7 +142,6 @@ namespace ReferenceDataCollection
                 ControlKeyEnable(true, true, false);
             }
 
-            Skeleton3D();
         }
 
         private void ControlKeyEnable(bool rec, bool play, bool stop)
