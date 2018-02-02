@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton3D", "Assembly-CSharp-firstpass.csproj", "{DF63B158-0A79-69D0-1AA5-57A0639A63EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton3D", "Assembly-CSharp.csproj", "{31EB718C-BD60-5D51-2E67-F521922CEB31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton3D", "Assembly-CSharp-Editor-firstpass.csproj", "{54C4DD82-C1AB-DE05-DD2A-82C8B2DC3834}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF63B158-0A79-69D0-1AA5-57A0639A63EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF63B158-0A79-69D0-1AA5-57A0639A63EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF63B158-0A79-69D0-1AA5-57A0639A63EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF63B158-0A79-69D0-1AA5-57A0639A63EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31EB718C-BD60-5D51-2E67-F521922CEB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31EB718C-BD60-5D51-2E67-F521922CEB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31EB718C-BD60-5D51-2E67-F521922CEB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31EB718C-BD60-5D51-2E67-F521922CEB31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C4DD82-C1AB-DE05-DD2A-82C8B2DC3834}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C4DD82-C1AB-DE05-DD2A-82C8B2DC3834}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C4DD82-C1AB-DE05-DD2A-82C8B2DC3834}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C4DD82-C1AB-DE05-DD2A-82C8B2DC3834}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

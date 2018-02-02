@@ -165,3 +165,4 @@ C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKin
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServerCompact.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\ReferenceDataCollection.csproj.CoreCompileInputs.cache

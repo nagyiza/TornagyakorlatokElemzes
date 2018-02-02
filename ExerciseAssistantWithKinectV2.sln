@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCollectionInterface", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseAssistantApplication", "ExerciseAssistantApplication\ExerciseAssistantApplication.csproj", "{720743E0-7902-4AE3-AC72-9848506BDFBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeletonCompare", "SkeletonCompare\SkeletonCompare.csproj", "{81703D05-7514-4388-9EBB-AF9C62958145}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{720743E0-7902-4AE3-AC72-9848506BDFBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{720743E0-7902-4AE3-AC72-9848506BDFBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{720743E0-7902-4AE3-AC72-9848506BDFBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81703D05-7514-4388-9EBB-AF9C62958145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81703D05-7514-4388-9EBB-AF9C62958145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81703D05-7514-4388-9EBB-AF9C62958145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81703D05-7514-4388-9EBB-AF9C62958145}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
