@@ -14,9 +14,9 @@ namespace SkeletonCompare
         private int jointCount = 25;
         private List<Skeleton> skeletons;
         private List<Skeleton> skeletonsRef;
-        private String path = @"C:\Users\Izabella\Desktop";
+        private String path = "";
 
-        private Tuple<double,double,double> bodyDistance;
+        private Tuple<double, double, double> bodyDistance;
         /// <summary>
         /// The skeletons's coordinate's averages
         /// </summary>
@@ -31,20 +31,30 @@ namespace SkeletonCompare
         /// </summary>
         List<Tuple<JointType, double>> anglesList;
 
-        public Compare()
+        /// <summary>
+        /// The count of angles
+        /// </summary>
+        private int angleCount = 0;
+        
+        /// <summary>
+        /// The count of joints
+        /// </summary>
+        private int scatterCount = 0;
+
+        public Compare(String path, String userSkeletonData, String refSkeletonData)
         {
+            this.path = path;
             skeletons = new List<Skeleton>();
             skeletonsRef = new List<Skeleton>();
-            skeletons = ProcessSkeletonData(path + @"\skeleton.txt");
-            skeletonsRef = ProcessSkeletonData(path + @"\skeletonRef.txt");
+            skeletons = ProcessSkeletonData(path + userSkeletonData);
+            skeletonsRef = ProcessSkeletonData(path + refSkeletonData);
 
             //DTW compare algorithm
             DTW();
-            //compare skeletons with angles
 
         }
 
-
+        #region Process skeleton data
         /// <summary>
         /// This method process the skeleton data (from the file)
         /// </summary>
@@ -52,7 +62,7 @@ namespace SkeletonCompare
         public List<Skeleton> ProcessSkeletonData(string path)
         {
             List<Skeleton> Skeletons = new List<Skeleton>();
-            string line; // A line in the file
+            string line = ""; // A line in the file
             char[] separators = { ' ' };
             string[] pathSplit = path.Split('\\');
             // Just file name
@@ -77,6 +87,14 @@ namespace SkeletonCompare
                 {
                     // split the data 
                     string[] words = line.Split(separators);
+
+                    //if the line is a first line
+                    double number;
+                    if (!Double.TryParse(words[0], out number))
+                    {
+                        break;
+                    }
+                    
                     // in one line is 10 data from skeleton
                     if (words.Length < 4)
                     {
@@ -129,8 +147,17 @@ namespace SkeletonCompare
                         joints.Add(new Vector3D(0, 0, 0));
                     }
                     joints.Add(new Vector3D(X, Y, Z));
-                }
 
+                }
+                if (Skeletons.Count == 0)
+                {
+                    //set the list to the frame
+                    currentFrame.Joints = joints;
+                    //determine bones
+                    currentFrame.DetermineBones();
+                    //put in a list
+                    Skeletons.Add(currentFrame);
+                }
                 file.Close();
                 return Skeletons;
 
@@ -140,7 +167,92 @@ namespace SkeletonCompare
                 return null;
             }
         }
+        #endregion
 
+        #region DTW algorithm
+        public void DTW()
+        {
+            try
+            {
+                if (skeletonsRef.Count > 0 && skeletons.Count > 0)
+                {
+                    //scatter of reference skeleton
+                    Scatter(skeletonsRef);
+                    //print scatter
+                    SkeletonPrint(scattersSkeleton, path + @"\scatterSkeletonRef.txt");
+
+                    //calculat angles
+                    CalculateSkeletonAngles(skeletonsRef);
+                    CalculateSkeletonAngles(skeletons);
+
+
+                    int[] dtw = DTWDistance(skeletonsRef, skeletons);
+                    double scatterPercent = (scatterCount - dtw[0]) * 100 / (double)scatterCount;
+                    double anglePercent = (angleCount - dtw[1]) * 100 / (double)angleCount;
+                    Console.WriteLine("Scatter: " + dtw[0] + Environment.NewLine + "Angles: " + dtw[1] + Environment.NewLine);
+                    Console.WriteLine("Scatter (%): " + scatterPercent + Environment.NewLine + "Angles (%): " + anglePercent);
+
+                    Console.WriteLine(Environment.NewLine + "scatter count: " + scatterCount + Environment.NewLine + "angles count: " + angleCount);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exeption " + e.Message);
+            }
+        }
+
+        public int[] DTWDistance(List<Skeleton> s, List<Skeleton> t)
+        {
+            //List<Tuple<double, double, double>> skeletonRef = new List<Tuple<double, double, double>>();
+            //List<Tuple<double, double, double>> skeleton = new List<Tuple<double, double, double>>();
+
+            int n = s.Count; //reference
+            int m = t.Count; //user
+
+            int[,] DTW = new int[n, m]; //scatter 
+            int[,] DTW2 = new int[n, m];//angles
+            int cost;
+
+            for (int i = 0; i < n; ++i)
+            {
+                DTW[i, 0] = 100000;
+                DTW2[i, 0] = 100000;
+            }
+            for (int i = 0; i < m; ++i)
+            {
+                DTW[0, i] = 100000;
+                DTW2[0, i] = 100000;
+            }
+            DTW[0, 0] = 0;
+            DTW2[0, 0] = 0;
+            for (int i = 1; i < n; ++i) // for the reference skeleton
+            {
+                for (int j = 1; j < m; ++j) // for the real skeleton
+                {
+                    //DTW with scatters
+                    cost = CompareSkeletonWithScatters(skeletonsRef[i], skeletons[j], scattersSkeleton[i]);
+                    int min = Math.Min(DTW[i - 1, j], DTW[i, j - 1]);
+                    DTW[i, j] = cost + Math.Min(min, DTW[i - 1, j - 1]);
+                    //Console.Write(DTW[i, j] + " ");
+
+                    //compare skeletons with angles
+                    cost = CompareSkeletonWithAngles(skeletonsRef[i], skeletons[j]);
+                    int min2 = Math.Min(DTW2[i - 1, j], DTW2[i, j - 1]);
+                    DTW2[i, j] = cost + Math.Min(min2, DTW2[i - 1, j - 1]);
+                }
+                //Console.WriteLine();
+
+            }
+
+            int[] result = new int[2];
+            result[0] = DTW[n - 1, m - 1];
+            result[1] = DTW2[n - 1, m - 1];
+            return result;
+        }
+        #endregion
+
+        #region For scatter
         //atlag
         /// <summary>
         /// This method calculates the coordinates's averages
@@ -152,48 +264,50 @@ namespace SkeletonCompare
             List<Tuple<double, double, double>> sums = new List<Tuple<double, double, double>>(jointCount);//osszegek
             List<Tuple<double, double, double>> sums2 = new List<Tuple<double, double, double>>(jointCount);//seged valtozo
             List<int> count = new List<int>(jointCount) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            foreach (Skeleton skeleton in Skeletons)
-            {
-                if (skeleton == Skeletons[0])
+            if (Skeletons.Count > 0) {
+                foreach (Skeleton skeleton in Skeletons)
                 {
+                    if (skeleton == Skeletons[0])
+                    {
+                        for (int i = 0; i < jointCount; ++i)
+                        {
+                            sums.Add(new Tuple<double, double, double>(skeleton.Joints[i].X, skeleton.Joints[i].Y, skeleton.Joints[i].Z));
+                        }
+                    }
+                    //for joints
                     for (int i = 0; i < jointCount; ++i)
                     {
-                        sums.Add(new Tuple<double, double, double>(skeleton.Joints[i].X, skeleton.Joints[i].Y, skeleton.Joints[i].Z));
+                        if (skeleton.Joints[i].X != 0)
+                        {
+                            count[i]++;
+
+                            double X = sums[i].Item1 + skeleton.Joints[i].X;
+                            double Y = sums[i].Item2 + skeleton.Joints[i].Y;
+                            double Z = sums[i].Item3 + skeleton.Joints[i].Z;
+                            sums2.Add(new Tuple<double, double, double>(X, Y, Z)); // x,y,z
+                        }
+                        else
+                        {
+                            sums2.Add(new Tuple<double, double, double>(sums[i].Item1, sums[i].Item2, sums[i].Item3));
+                        }
+
                     }
+                    sums = sums2;
+                    sums2 = new List<Tuple<double, double, double>>(25);
+
                 }
-                //for joints
+                //average
+                averages = new List<Tuple<double, double, double>>();//atlagok
                 for (int i = 0; i < jointCount; ++i)
                 {
-                    if (skeleton.Joints[i].X != 0)
+                    if (count[i] != 0)
                     {
-                        count[i]++;
-
-                        double X = sums[i].Item1 + skeleton.Joints[i].X;
-                        double Y = sums[i].Item2 + skeleton.Joints[i].Y;
-                        double Z = sums[i].Item3 + skeleton.Joints[i].Z;
-                        sums2.Add(new Tuple<double, double, double>(X, Y, Z)); // x,y,z
+                        averages.Add(new Tuple<double, double, double>(sums[i].Item1 / count[i], sums[i].Item2 / count[i], sums[i].Item3 / count[i]));
                     }
                     else
                     {
-                        sums2.Add(new Tuple<double, double, double>(sums[i].Item1, sums[i].Item2, sums[i].Item3));
+                        averages.Add(new Tuple<double, double, double>(sums[i].Item1, sums[i].Item2, sums[i].Item3));
                     }
-
-                }
-                sums = sums2;
-                sums2 = new List<Tuple<double, double, double>>(25);
-
-            }
-            //average
-            averages = new List<Tuple<double, double, double>>(25);//atlagok
-            for (int i = 0; i < jointCount; ++i)
-            {
-                if (count[i] != 0)
-                {
-                    averages.Add(new Tuple<double, double, double>(sums[i].Item1 / count[i], sums[i].Item2 / count[i], sums[i].Item3 / count[i]));
-                }
-                else
-                {
-                    averages.Add(new Tuple<double, double, double>(sums[i].Item1, sums[i].Item2, sums[i].Item3));
                 }
             }
         }
@@ -205,7 +319,7 @@ namespace SkeletonCompare
             Average(Skeletons);
 
             //calculates the scetters
-            List<Vector3D> scatters = new List<Vector3D>(25);//atlagok
+            List<Vector3D> scatters = new List<Vector3D>();//atlagok
             scattersSkeleton = new List<Skeleton>();
             foreach (Skeleton skeleton in Skeletons)
             {
@@ -214,9 +328,9 @@ namespace SkeletonCompare
                 for (int i = 0; i < jointCount; ++i)
                 {
                     //scatter = coordinate - average
-                    double X = skeleton.Joints[i].X - averages[i].Item1;
-                    double Y = skeleton.Joints[i].Y - averages[i].Item2;
-                    double Z = skeleton.Joints[i].Z - averages[i].Item3;
+                    double X = Math.Abs(skeleton.Joints[i].X - averages[i].Item1);
+                    double Y = Math.Abs(skeleton.Joints[i].Y - averages[i].Item2);
+                    double Z = Math.Abs(skeleton.Joints[i].Z - averages[i].Item3);
                     scatters.Add(new Vector3D(X, Y, Z));
                 }
                 scatterSkeleton.Joints = scatters;
@@ -225,77 +339,9 @@ namespace SkeletonCompare
                 scattersSkeleton.Add(scatterSkeleton);
             }
         }
+        #endregion
 
-        public void DTW()
-        {
-            try
-            {
-                //scatter of reference skeleton
-                Scatter(skeletonsRef);
-                //print scatter
-                //SkeletonPrint(scattersSkeleton, path + @"\scatterSkeletonRef.txt");
-
-                //calculat angles
-                CalculateSkeletonAngles(skeletonsRef);
-                CalculateSkeletonAngles(skeletons);
-                
-
-                int dtw = DTWDistance(skeletonsRef, skeletons);
-                Console.WriteLine(dtw);
-                Console.ReadLine();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exeption " + e.Message);
-                Console.ReadLine();
-            }
-        }
-
-        public int DTWDistance(List<Skeleton> s, List<Skeleton> t)
-        {
-            //List<Tuple<double, double, double>> skeletonRef = new List<Tuple<double, double, double>>();
-            //List<Tuple<double, double, double>> skeleton = new List<Tuple<double, double, double>>();
-
-            int n = s.Count;
-            int m = t.Count;
-
-            int[,] DTW = new int[n, m];
-            int cost;
-
-            for (int i = 0; i < n; ++i)
-            {
-                DTW[i, 0] = 100000;
-            }
-            for (int i = 0; i < m; ++i)
-            {
-                DTW[0, i] = 100000;
-            }
-            DTW[0, 0] = 0;
-            for (int i = 1; i < n; ++i) // for the reference skeleton
-            {
-                for (int j = 1; j < m; ++j) // for the real skeleton
-                {
-                    //DTW with scatters
-                    //cost = CompareSkeletonWithScatters(skeletonsRef[i], skeletons[j], scattersSkeleton[i]);
-                    //int min = Math.Min(DTW[i - 1, j], DTW[i, j - 1]);
-                    //DTW[i, j] = cost + Math.Min(min, DTW[i - 1, j - 1]);
-                    //Console.Write(DTW[i, j] + " ");
-
-                    //DTW with angles
-                    //TODO
-                    cost = CompareSkeletonWithAngles(skeletonsRef[i], skeletons[j]);
-                    int min2 = Math.Min(DTW[i - 1, j], DTW[i, j - 1]);
-                    DTW[i, j] = cost + Math.Min(min2, DTW[i - 1, j - 1]);
-                }
-                Console.WriteLine();
-              
-            }
-
-
-            return DTW[n - 1, m - 1];
-        }
-
-
+        #region Compare skeletons
         /// <summary>
         /// Calculate the distance beetween skeletonRef coordinates and skeleton coordinates with scatters
         /// skeletonRef.x - skeleton.x ...
@@ -317,9 +363,12 @@ namespace SkeletonCompare
                 if (isJointTracked(skeletonRef, i)
                     && isJointTracked(skeleton, i))
                 {
-                    double x = Math.Abs(skeletonRef.Joints[i].X  - skeleton.Joints[i].X - bodyDistance.Item1);
+
+                    double x = Math.Abs(skeletonRef.Joints[i].X - skeleton.Joints[i].X - bodyDistance.Item1);
                     double y = Math.Abs(skeletonRef.Joints[i].Y - skeleton.Joints[i].Y - bodyDistance.Item2);
                     double z = Math.Abs(skeletonRef.Joints[i].Z - skeleton.Joints[i].Z - bodyDistance.Item3);
+                    //count the joints
+                    scatterCount++;
                     if (x > scatterSkeleton.Joints[i].X || y > scatterSkeleton.Joints[i].Y || z > scatterSkeleton.Joints[i].Z)
                     {
                         diferenceJoint++;
@@ -339,7 +388,7 @@ namespace SkeletonCompare
         /// <returns></returns>
         private int CompareSkeletonWithAngles(Skeleton skeletonRef, Skeleton skeleton)
         {
-            int diferenceJoint = 0;
+            int diferenceAngel = 0;
             for (int i = 0; i < skeletonRef.AngleList.Count; ++i) // for skeleton angles; one for, because the skeletonRef's angels and skeleton's angles array lenght are same
             {
                 if (isJointTracked(skeletonRef, i)
@@ -348,18 +397,30 @@ namespace SkeletonCompare
                     && skeleton.AngleList[i].Item3 > 0
                     )
                 {
-                    double angleDistance = Math.Abs(skeletonRef.AngleList[i].Item3 - skeleton.AngleList[i].Item3);
-
-                    if (angleDistance > 10)
+                    // without hand tip and without foot, because these are not important
+                    if ((int)skeletonRef.AngleList[i].Item1 != 23 // HandTipRight
+                        && (int)skeletonRef.AngleList[i].Item1 != 24 // ThumbRight
+                        && (int)skeletonRef.AngleList[i].Item1 != 21 // HandTipLeft
+                        && (int)skeletonRef.AngleList[i].Item1 != 22 // ThumbLeft
+                        && (int)skeletonRef.AngleList[i].Item1 != 19 // FootRight
+                        && (int)skeletonRef.AngleList[i].Item1 != 15) // FootLeft
                     {
-                        diferenceJoint++;
+                        double angleDistance = Math.Abs(skeletonRef.AngleList[i].Item3 - skeleton.AngleList[i].Item3);
+
+                        if (angleDistance > 0)  
+                        {
+                            diferenceAngel++;
+                        }
+                        //count the angles
+                        angleCount++;
                     }
                 }
 
             }
 
-            return diferenceJoint;
+            return diferenceAngel;
         }
+        
 
         /// <summary>
         /// This method tell if the bone is valid
@@ -401,13 +462,16 @@ namespace SkeletonCompare
         /// <param name="skeleton"> List of skeletons</param>
         public void CalculateSkeletonAngles(List<Skeleton> skeleton)
         {
-            foreach (var skl in skeleton)
-            {
-                skl.SkeletonAngle();
+            if (skeleton.Count > 0) {
+                foreach (var skl in skeleton)
+                {
+                    skl.SkeletonAngle();
+                }
             }
         }
+        #endregion
 
-
+        #region Skeleton print
         public void SkeletonPrint(List<Skeleton> skeletonList, string path)
         {
             StreamWriter streamWriter = new StreamWriter(path);
@@ -424,5 +488,6 @@ namespace SkeletonCompare
                 }
             }
         }
+        #endregion
     }
 }

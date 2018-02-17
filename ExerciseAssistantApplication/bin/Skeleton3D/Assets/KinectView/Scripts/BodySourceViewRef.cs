@@ -173,7 +173,7 @@ public class BodySourceViewRef : MonoBehaviour
         else
         {
             //default path
-            path = @"C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ReferenceData\gugolas2.txt";
+            path = @"..\..\..\ReferenceData\allas.txt";
 
         }
 
@@ -240,7 +240,7 @@ public class BodySourceViewRef : MonoBehaviour
                         lr.SetColors(Color.green, Color.green);
                         lr.SetWidth(0.2f, 0.2f);
 
-                        System.IO.File.AppendAllText(@"C:\Users\Izabella\Desktop\koordinateRef.txt", v.x + " " + v.y + " " + v.z + Environment.NewLine);
+                        //System.IO.File.AppendAllText(@"C:\Users\Izabella\Desktop\koordinateRef.txt", v.x + " " + v.y + " " + v.z + Environment.NewLine);
 
                     }
                     else
@@ -294,7 +294,7 @@ public class BodySourceViewRef : MonoBehaviour
                     // split the data 
                     string[] words = line.Split(separators);
 
-                    if (jointType > Convert.ToInt32(words[5])) // jointType
+                     if (jointType > Convert.ToInt32(words[5])) // jointType
                     {
                         jointType = Convert.ToInt32(words[5]);
                         break;

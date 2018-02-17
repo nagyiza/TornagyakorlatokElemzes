@@ -157,7 +157,11 @@ namespace Stream
                 //Stop write
                 if (streamWriter != null)
                 {
-                    streamWriter.Close();
+                    streamWriter.Close();     
+                }
+                if (streamWriter2 != null)
+                {
+                    streamWriter2.Close();
                 }
                 if (videoWriter != null)
                 {

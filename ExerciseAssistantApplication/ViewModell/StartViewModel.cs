@@ -35,7 +35,7 @@ namespace ExerciseAssistantApplication.ViewModell
         public ColorStream referenceStreamView;
 
         public DrawingImage skeletonReplayImage;
-        public string referenceVideo = "C:\\Users\\Izabella\\Documents\\Visual Studio 2015\\Projects\\ExerciseAssistantWithKinectV2\\TornagyakorlatokElemzese\\ReferenceData\\anyu.avi";
+        public string referenceVideo = "";
 
         public RelayCommand SelectExercise { get; set; }
         //public RelayCommand Replay { get; set; }

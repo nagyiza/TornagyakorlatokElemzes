@@ -68,7 +68,7 @@ namespace ReferenceDataCollection
                 ckecking = CheckPath(file);
             }
 
-            streamRecorder.StartRecord(path);
+            streamRecorder.StartRecord(path + file);
         }
 
         private bool CheckPath(string file)
@@ -77,10 +77,6 @@ namespace ReferenceDataCollection
             {
                 MessageBox.Show("The exercise name is empty");
                 return false;
-            }
-            else
-            {
-                path = path + file;
             }
             
             //existing file

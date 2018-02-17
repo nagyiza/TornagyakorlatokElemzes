@@ -23,43 +23,414 @@ Platform assembly: C:\Users\Izabella\Documents\Visual Studio 2015\Projects\Exerc
 Loading C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\Skeleton3D_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
 Platform assembly: C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\Skeleton3D_Data\Managed\System.dll (this message is harmless)
 Platform assembly: C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\Skeleton3D_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.043 seconds
+- Completed reload, in  0.038 seconds
 <RI> Initializing input.
-XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.438985 ms
-The path is ..\..\..\ReferenceData\gugolas.txt
+UnloadTime: 65.817984 ms
+The path is ..\..\..\ReferenceData\allas.txt
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-The path is ..\..\..\ReferenceData\gugolas2.txt
+The path is BodySourceView ..\..\..\ReferenceData\allas.txt
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-ArgumentException: An element with the same key already exists in the dictionary.
-  at System.Collections.Generic.Dictionary`2[Windows.Kinect.JointType,Windows.Kinect.Joint].Add (JointType key, Joint value) [0x00000] in <filename unknown>:0 
-  at BodySourceViewRef.SkeletonData () [0x00000] in <filename unknown>:0 
-  at BodySourceViewRef.GetInput (System.String path) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Events.InvokableCall`1[System.String].Invoke (System.Object[] args) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Events.InvokableCallList.Invoke (System.Object[] parameters) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Events.UnityEventBase.Invoke (System.Object[] parameters) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Events.UnityEvent`1[T0].Invoke (.T0 arg0) [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.InputField.SendOnSubmit () [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.InputField.DeactivateInputField () [0x00000] in <filename unknown>:0 
-  at UnityEngine.UI.InputField.OnUpdateSelected (UnityEngine.EventSystems.BaseEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute (IUpdateSelectedHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute[IUpdateSelectedHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00000] in <filename unknown>:0 
-UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
-UnityEngine.DebugLogHandler:LogException(Exception, Object)
-UnityEngine.Logger:LogException(Exception, Object)
-UnityEngine.Debug:LogException(Exception)
-UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1)
-UnityEngine.EventSystems.StandaloneInputModule:SendUpdateEventToSelectedObject()
-UnityEngine.EventSystems.StandaloneInputModule:Process()
-UnityEngine.EventSystems.EventSystem:Update()
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Collections.Generic.List`1[UnityEngine.Vector4].get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at BodySourceView.DTWDistance (System.Collections.Generic.List`1 s, System.Collections.Generic.List`1 t, Int32 n) [0x00000] in <filename unknown>:0 
+  at BodySourceView.RefreshBodyObject (Windows.Kinect.Body body, UnityEngine.GameObject bodyObject) [0x00000] in <filename unknown>:0 
+  at BodySourceView.Update () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: d70 -> priority: 1 
+  Thread -> id: 2810 -> priority: 1 

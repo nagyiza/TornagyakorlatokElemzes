@@ -58,8 +58,10 @@
      <Compile Include="Assets\KinectView\Scripts\BodySourceViewRef.cs" />
      <Compile Include="Assets\KinectView\Scripts\ColorSourceManager.cs" />
      <Compile Include="Assets\KinectView\Scripts\ColorSourceView.cs" />
+     <Compile Include="Assets\KinectView\Scripts\Compare.cs" />
      <Compile Include="Assets\KinectView\Scripts\DisableOnStart.cs" />
      <Compile Include="Assets\KinectView\Scripts\GameContoller.cs" />
+     <Compile Include="Assets\KinectView\Scripts\Skeleton.cs" />
      <None Include="Assets\GreenScreen\Materials\GreenScreenShader.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

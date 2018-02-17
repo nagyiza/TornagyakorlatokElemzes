@@ -15,6 +15,9 @@ namespace SkeletonCompare
         private List<Vector3D> joints;
         private List<Tuple<JointType, JointType, double>> angleList;
 
+        /// <summary>
+        /// Constructor, in witch create the bones
+        /// </summary>
         public Skeleton()
         {
             bones = new List<Tuple<JointType, JointType, bool>>();
@@ -50,6 +53,9 @@ namespace SkeletonCompare
 
         }
 
+        /// <summary>
+        /// Determine bones
+        /// </summary>
         public void DetermineBones()
         {
             for (int index = 0; index < bones.Count; index++)
@@ -62,21 +68,25 @@ namespace SkeletonCompare
             }
         }
 
+        /// <summary>
+        /// Calculate and save the angles in a list
+        /// </summary>
         public void SkeletonAngle()
         {
             angleList = new List<Tuple<JointType, JointType, double>>();
             for (int i = 0; i < bones.Count; ++i)
             {
                 var bone = bones[i];
-                //if (bone.Item3) {
-               
-                JointType first = bone.Item1;
+
+                JointType first = bone.Item1; 
                 JointType center = bone.Item2;
+                //search the first joint's pair
                 for (int j = i + 1; j < bones.Count; ++j)
                 {
-                    if (bones[j].Item1 == center)
+                    if (bones[j].Item1 == center) // if found the the first joint's pair
                     {
                         JointType second = bones[j].Item2;
+                        //if the bones (first-center, center-second) is tracked 
                         if (bone.Item3 && bones[j].Item3)
                         {
                             // three vector
@@ -85,18 +95,28 @@ namespace SkeletonCompare
                             Vector3D secondVector = joints[(int)(bones[j].Item2)];
                             //calculate angle
                             double angle = AngleBetweenTwoVectors(firstVector, centerVector, secondVector);
+                            //save angels in the list
                             angleList.Add(new Tuple<JointType, JointType, double>(first, second, angle));
                         }
                         else
                         {
+                            //save angels in the list
+                            //if the bones are not tracked, the angle going to be -1
                             angleList.Add(new Tuple<JointType, JointType, double>(first, second, -1));
                         }
 
                     }
                 }
-                //}
             }
         }
+
+        /// <summary>
+        /// Calculate the angels beetween 2 joints
+        /// </summary>
+        /// <param name="a"> First joint's coordinate</param>
+        /// <param name="b"> Have to be origo </param>
+        /// <param name="c"> Second joint's coordinate</param>
+        /// <returns> Return the angles beetween a and c points</returns>
         public double AngleBetweenTwoVectors(Vector3D a, Vector3D b, Vector3D c)
         {
             //b going to be origo
@@ -116,6 +136,9 @@ namespace SkeletonCompare
             return (double)Math.Acos(dotProduct) / Math.PI * 180; ;
         }
 
+        /// <summary>
+        /// Get and set the skeleton's joints list
+        /// </summary>
         public List<Vector3D> Joints
         {
             get
@@ -128,7 +151,9 @@ namespace SkeletonCompare
                 joints = value;
             }
         }
-
+        /// <summary>
+        /// Get and set the skeleton's joints bones list
+        /// </summary>
         public List<Tuple<JointType, JointType, bool>> Bones
         {
             get
@@ -141,6 +166,9 @@ namespace SkeletonCompare
                 bones = value;
             }
         }
+        /// <summary>
+        /// Get and set the skeleton's angles list
+        /// </summary>
         public List<Tuple<JointType, JointType, double>> AngleList
         {
             get

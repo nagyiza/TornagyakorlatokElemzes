@@ -142,5 +142,3 @@ C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKin
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.csproj.GenerateResource.Cache
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\Start.g.cs
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\Start.baml
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\DataCollection.exe.config
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.csproj.CoreCompileInputs.cache
