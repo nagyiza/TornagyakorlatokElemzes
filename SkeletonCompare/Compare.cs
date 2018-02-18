@@ -177,9 +177,9 @@ namespace SkeletonCompare
                 if (skeletonsRef.Count > 0 && skeletons.Count > 0)
                 {
                     //scatter of reference skeleton
-                    Scatter(skeletonsRef);
+                    Scatter(skeletonsRef);//nem jo
                     //print scatter
-                    SkeletonPrint(scattersSkeleton, path + @"\scatterSkeletonRef.txt");
+                    Skeleton.SkeletonPrint(scattersSkeleton, path + @"\scatterSkeletonRef.txt");
 
                     //calculat angles
                     CalculateSkeletonAngles(skeletonsRef);
@@ -252,6 +252,9 @@ namespace SkeletonCompare
         }
         #endregion
 
+        //ujragondolni
+        //ujra van irva az atlag szamitas
+        //szorast megvalositani
         #region For scatter
         //atlag
         /// <summary>
@@ -471,23 +474,5 @@ namespace SkeletonCompare
         }
         #endregion
 
-        #region Skeleton print
-        public void SkeletonPrint(List<Skeleton> skeletonList, string path)
-        {
-            StreamWriter streamWriter = new StreamWriter(path);
-            streamWriter.Write("  X                    Y                  Z                   JointType" + Environment.NewLine);
-
-            foreach (Skeleton skeleton in skeletonList)
-            {
-                for (int i = 0; i < jointCount; ++i)
-                {
-                    double X = skeleton.Joints[i].X;
-                    double Y = skeleton.Joints[i].Y;
-                    double Z = skeleton.Joints[i].Z;
-                    streamWriter.Write(X + " " + Y + " " + Z + "      " + i + Environment.NewLine);
-                }
-            }
-        }
-        #endregion
     }
 }

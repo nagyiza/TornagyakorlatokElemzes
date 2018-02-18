@@ -5,6 +5,7 @@ using Kinect = Windows.Kinect;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using System.IO;
 
 namespace Assets.KinectView.Scripts
 {
@@ -113,39 +114,36 @@ namespace Assets.KinectView.Scripts
         public void SkeletonAngle()
         {
             angleList = new List<Vector3>();
-            for (int i = 0; i < bones.Count; ++i)
+            for (int i = 0; i < 24; ++i)
             {
                 var bone = bones[getJoinType(i)];
 
                 Kinect.JointType first = getJoinType(i);
                 Kinect.JointType center = bone;
-                //search the first joint's pair
-                for (int j = i + 1; j < bones.Count; ++j)
-                {
-                    if (getJoinType(j) == center) // if found the the first joint's pair
-                    {
-                        Kinect.JointType second = bones[getJoinType(j)];
-                        //if the bones (first-center, center-second) is tracked 
-                        if (joinIsValid[first] && joinIsValid[second] && joinIsValid[center])
-                        {
-                            // three vector
-                            Vector3 firstVector = joints[(int)(first)];
-                            Vector3 centerVector = joints[(int)(center)];
-                            Vector3 secondVector = joints[(int)(second)];
-                            //calculate angle
-                            float angle = AngleBetweenTwoVectors(firstVector, centerVector, secondVector);
-                            //save angels in the list
-                            angleList.Add(new Vector3((int)first, (int)second, angle));
-                        }
-                        else
-                        {
-                            //save angels in the list
-                            //if the bones are not tracked, the angle going to be -1
-                            angleList.Add(new Vector3((int)first, (int)second, -1));
-                        }
+                Kinect.JointType second = bones[center];
 
-                    }
+                //if the bones (first-center, center-second) is tracked 
+                if (joinIsValid[first] && joinIsValid[second] && joinIsValid[center])
+                {
+                    // three vector
+                    Vector3 firstVector = joints[(int)(first)];
+                    Vector3 centerVector = joints[(int)(center)];
+                    Vector3 secondVector = joints[(int)(second)];
+                    //calculate angle
+                    float angle = AngleBetweenTwoVectors(firstVector, centerVector, secondVector);
+                    Debug.Log("angle: "+angle);
+                    //save angels in the list
+                    angleList.Add(new Vector3((int)first, (int)second, angle));
                 }
+                else
+                {
+                    //save angels in the list
+                    //if the bones are not tracked, the angle going to be -1
+                    angleList.Add(new Vector3((int)first, (int)second, -1));
+                }
+
+
+
             }
         }
 
@@ -209,9 +207,124 @@ namespace Assets.KinectView.Scripts
             a.Normalize();
             c.Normalize();
             dotProduct = a.x * c.x + a.y * c.y + a.z * c.z;
-            
+
             float result = Convert.ToSingle(Math.Acos(dotProduct) / Math.PI * 180);
             return result;
+        }
+
+        /// <summary>
+        /// Process skeleton data from a file
+        /// </summary>
+        /// <param name="pathName"> File </param>
+        /// <returns>List of skeletons</returns>
+        public static List<Skeleton> ProcessSkeletonFromFile(string pathName)
+        {
+            int jointCount = 25;
+            List<Skeleton> Skeletons = new List<Skeleton>();
+            string line = ""; // A line in the file
+            char[] separators = { ' ' };
+            string[] pathSplit = pathName.Split('\\');
+            // Just file name
+            if (pathSplit[pathSplit.Length - 1] != ".txt")
+            {
+                StreamReader file;
+                if (File.Exists(pathName))
+                {
+                    file = new StreamReader(pathName);
+                }
+                else
+                {
+                    return null;
+                }
+                Skeleton currentFrame = new Skeleton();
+                int jointNumber = 0;
+                List<Vector3> joints = new List<Vector3>();
+                //read the first line, because it is the bill head and this not need it
+                line = file.ReadLine();
+                //read the skeleton data
+                while ((line = file.ReadLine()) != null)
+                {
+                    // split the data 
+                    string[] words = line.Split(separators);
+
+                    //if the line is a first line
+                    double number;
+                    if (!Double.TryParse(words[0], out number))
+                    {
+                        break;
+                    }
+
+                    // in one line is 10 data from skeleton
+                    if (words.Length < 4)
+                    {
+                        // skeleton has 25 joints data
+                        while (joints.Count < jointCount)
+                        {
+                            joints.Add(new Vector3(0, 0, 0));
+                        }
+
+                        //set the list to the frame
+                        currentFrame.Joints = joints;
+                        //determine bones
+                        currentFrame.DetermineBones();
+                        //save the last frame
+                        Skeletons.Add(currentFrame);
+                        break;
+                    }
+
+
+                    int jointTypeNr = Convert.ToInt32(words[5]); //(int)jointType
+                    float X = Convert.ToSingle(words[8]); //unitySpacePoint.X
+                    float Y = Convert.ToSingle(words[9]); //unitySpacePoint.Y
+                    float Z = 15; //unitySpacePoint.Z
+
+
+                    if (jointNumber > Convert.ToInt32(words[5]))
+                    {
+                        //fill the end with (0, 0)
+                        while (joints.Count < 25)
+                        {
+                            //will with (0, 0)
+                            joints.Add(new Vector3(0, 0, 0));
+                        }
+                        //set the list to the frame
+                        currentFrame.Joints = joints;
+                        //determine bones
+                        currentFrame.DetermineBones();
+                        //put in a list
+                        Skeletons.Add(currentFrame);
+                        //create new frame
+                        currentFrame = new Skeleton();
+                        joints = new List<Vector3>();
+
+                    }
+                    // skeleton joint type in number
+                    jointNumber = Convert.ToInt32(words[5]);
+                    while (joints.Count < jointNumber)
+                    {
+                        //will with (0, 0)
+                        joints.Add(new Vector3(0, 0, 0));
+                    }
+                    joints.Add(new Vector3(X, Y, Z));
+
+                }
+                if (Skeletons.Count == 0)
+                {
+                    //set the list to the frame
+                    currentFrame.Joints = joints;
+                    //determine bones
+                    currentFrame.DetermineBones();
+                    //put in a list
+                    Skeletons.Add(currentFrame);
+                }
+                file.Close();
+                return Skeletons;
+
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -229,7 +342,7 @@ namespace Assets.KinectView.Scripts
                 joints = value;
             }
         }
-        
+
         /// <summary>
         /// Get and set the skeleton's angles list
         /// </summary>

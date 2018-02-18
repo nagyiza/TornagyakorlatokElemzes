@@ -31,13 +31,21 @@ public class BodySourceView : MonoBehaviour
     /// </summary>
     public GameObject bodyObject;
     /// <summary>
-    /// Result textbox
+    /// Result textbox for result with scatter method
     /// </summary>
     public Text result;
     /// <summary>
-    /// The bone witch is not correct
+    /// Result textbox for result with angles method
+    /// </summary>
+    public Text result2;
+    /// <summary>
+    /// The bone witch is not correct (scatter mathod)
     /// </summary>
     public string errorjointType = "";
+    /// <summary>
+    /// The bone witch is not correct (angles method)
+    /// </summary>
+    public string errorjointTypeAngles = "";
     /// <summary>
     /// In this object is bodies.
     /// </summary>
@@ -51,6 +59,10 @@ public class BodySourceView : MonoBehaviour
     /// Name of the exercise witch get from input.
     /// </summary>
     private String exerciseName = "";
+    /// <summary>
+    /// Name of the exercise in witch write unity data.
+    /// </summary>
+    private String lastExerciseName = "";
 
     /// <summary>
     /// The path in which is the reference skeleton data
@@ -198,12 +210,12 @@ public class BodySourceView : MonoBehaviour
                             {
                                 if (!File.Exists(writePath + "User\\" + exerciseName + i + ".txt"))
                                 {
-                                    exerciseName = exerciseName + i;
+                                    lastExerciseName = exerciseName + i;
                                     break;
                                 }
                             }
                         }
-                        File.WriteAllText(writePath + "User\\" + exerciseName + ".txt", "X              " + "Y         " + "Z     " + " JointType " + Environment.NewLine);
+                        File.WriteAllText(writePath + "User\\" + lastExerciseName + ".txt", "X              " + "Y         " + "Z     " + " JointType " + Environment.NewLine);
 
                         //if the body is oke, create the body object
                         _Bodies[body.TrackingId] = CreateBodyObject(body.TrackingId);
@@ -283,9 +295,8 @@ public class BodySourceView : MonoBehaviour
             LineRenderer lr = jointObj.GetComponent<LineRenderer>();
             if (targetJoint.HasValue)
             {
-                if (errorjointType == jt.ToString())
+                if (errorjointType == jt.ToString() || errorjointTypeAngles == jt.ToString())
                 {
-                    Debug.Log(errorjointType);
                     lr.SetColors(Color.red, Color.red);
                     //size
                     lr.SetWidth(0.5f, 0.5f);
@@ -308,7 +319,7 @@ public class BodySourceView : MonoBehaviour
                 if (targetJoint.Value.TrackingState == Kinect.TrackingState.Tracked)
                 {
                     //write user coordinates in a file
-                    File.AppendAllText(writePath + "User\\" + exerciseName + ".txt", sourceJoint.Position.X + " " + sourceJoint.Position.Y + " " + sourceJoint.Position.Z + " " + (int)jt + " " + jt.ToString() + Environment.NewLine);
+                    File.AppendAllText(writePath + "User\\" + lastExerciseName + ".txt", sourceJoint.Position.X + " " + sourceJoint.Position.Y + " " + sourceJoint.Position.Z + " " + (int)jt + " " + jt.ToString() + Environment.NewLine);
 
                     Vector3 pos = new Vector3(sourceJoint.Position.X, sourceJoint.Position.Y, sourceJoint.Position.Z);
                     j++;//skeleton'skRef position counter
@@ -329,9 +340,8 @@ public class BodySourceView : MonoBehaviour
 
         if (reference.Count != 0)
         {
-            Compare cmp = new Compare(reference, userSkeleton);
+            Compare cmp = new Compare(reference, userSkeleton, exerciseName);
             
-            //int dtw = DTWDistance(reference, userSkeleton, skeletonRefCount);
             if (cmp.dtwResult[0] == 0) // dtwResult[0] - result with scatter
             {
                 result.text = "Good";
@@ -340,7 +350,19 @@ public class BodySourceView : MonoBehaviour
             }else
             {
                 result.text = cmp.errorjointType;
-                result.color = Color.green;
+                result.color = Color.red;
+            }
+
+            if (cmp.dtwResult[1] == 0) // dtwResult[0] - result with scatter
+            {
+                result2.text = "Good";
+                result2.color = Color.green;
+                errorjointTypeAngles = "";
+            }
+            else
+            {
+                result2.text = cmp.errorjointTypeAngles;
+                result2.color = Color.red;
             }
 
         }
@@ -426,183 +448,115 @@ public class BodySourceView : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Dtw algorithm matrix
-    /// </summary>
-    //private static  DTW;
-    public int DTWDistance(List<Vector4> skRef, List<Vector4> sk, int skeletonRefCount)
-    {
-        //one reference skeleton position(24 joint)
-        List<Vector4> skeletonRef = new List<Vector4>();
-        List<Vector4> skeleton = new List<Vector4>();
-
-        int userSkeletonCount = 2;
-        j = 1;
-
-        int[,] DTW = new int[skeletonRefCount, userSkeletonCount];
-        int cost;
-
-        for (int i = 0; i < skeletonRefCount; ++i)
-        {
-            DTW[i, 0] = 100000;
-        }
-        for (int i = 0; i < userSkeletonCount; ++i)
-        {
-            DTW[0, i] = 100000;
-        }
-        DTW[0, 0] = 0;
-
-        for (int i = 1; i < skeletonRefCount; ++i)
-        {
-            //for (int j = 1; j < userSkeletonCount; ++j)
-            //{
-            skeletonRef = new List<Vector4>();
-            skeleton = new List<Vector4>();
-            int type = (int)skRef[0].w;
-
-            for (int k = 0; k < 25; ++k)
-            {
-                if ((int)skRef[k].w < type)
-                {
-                    break;
-                }
-                skeletonRef.Add(skRef[k]);
-                type = (int)skRef[k].w;
-            }
-            int type2 = (int)sk[0].w;
-            for (int k = 0; k < 25; ++k)
-            {
-                if ((int)sk[k].w < type2)
-                {
-                    break;
-                }
-                skeleton.Add(sk[k]);
-                type2 = (int)sk[k].w;
-            }
-            cost = distance(skeletonRef, skeleton);
-            int min = Math.Min(DTW[i - 1, j], DTW[i, j - 1]);
-            DTW[i, j] = cost + Math.Min(min, DTW[i - 1, j - 1]);
-
-
-            //}
-
-        }
-        return DTW[skeletonRefCount - 1, userSkeletonCount - 1];
-    }
-
-    private int distance(List<Vector4> skeletonRef, List<Vector4> skeleton)
-    {
-        int diferenceJoint = 0;
-        int k = 0;
-        for (int i = 0; i < skeletonRef.Count; ++i)
-        {
-            for (int j = k; j <= (int)skeletonRef[i].w; ++j)
-            {
-                if (j < skeleton.Count)
-                {
-                    //ha ugyanaz a csomopont
-                    if ((int)skeletonRef[i].w == (int)skeleton[j].w)
-                    {
-                        float z = Math.Abs(skeletonRef[i].z - skeleton[j].z);
-                        float x = Math.Abs(skeletonRef[i].x - skeleton[j].x);
-                        float y = Math.Abs(skeletonRef[i].y - skeleton[j].y);
-                        if (x > 0.2 || y > 0.2 || z > 0.2)
-                        {
-                            diferenceJoint++;
-                            // without hand tip and without foot, because these are not important
-                            if ((int)skeleton[j].w != 23 // HandTipRight
-                            && (int)skeleton[j].w != 24 // ThumbRight
-                            && (int)skeleton[j].w != 21 // HandTipLeft
-                            && (int)skeleton[j].w != 22 // ThumbLeft
-                            && (int)skeleton[j].w != 19 // FootRight
-                            && (int)skeleton[j].w != 15  // FootLeft
-                            && (int)skeleton[j].w != 7
-                            && (int)skeleton[j].w != 11
-                            && (int)skeleton[j].w != 18
-                            && (int)skeleton[j].w != 14)
-                            {
-                                errorjointType = getJoinType((int)skeleton[j].w).ToString();
-
-                                result.text = errorjointType;
-                                result.color = Color.red;
-                            }
-                        }
-                        k = j + 1;
-                    }
-                }
-            }
-        }
-
-        return diferenceJoint;
-    }
-
-
-    //public void Scatter(List<List<Vector4>> skeletons)
+    ///// <summary>
+    ///// Dtw algorithm matrix
+    ///// </summary>
+    ////private static  DTW;
+    //public int DTWDistance(List<Vector4> skRef, List<Vector4> sk, int skeletonRefCount)
     //{
-    //    //calculates the averages
-    //    Average(skeletons);
-    //}
+    //    //one reference skeleton position(24 joint)
+    //    List<Vector4> skeletonRef = new List<Vector4>();
+    //    List<Vector4> skeleton = new List<Vector4>();
 
-    //public void Average(List<List<Vector4>> skeletons)
-    //{
-    //    int jointCount = 25;
-    //    int counter = 0;
-    //    //sum coordinate
-    //    List<Vector3> sums = new List<Vector3>(jointCount);//osszegek
-    //    List<Vector3> sums2 = new List<Vector3>(jointCount);//seged valtozo
-    //    List<int> count = new List<int>(jointCount) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    //    if (skeletons.Count > 0)
+    //    int userSkeletonCount = 2;
+    //    j = 1;
+
+    //    int[,] DTW = new int[skeletonRefCount, userSkeletonCount];
+    //    int cost;
+
+    //    for (int i = 0; i < skeletonRefCount; ++i)
     //    {
-    //        foreach (Vector4 skeleton in skeletons)
+    //        DTW[i, 0] = 100000;
+    //    }
+    //    for (int i = 0; i < userSkeletonCount; ++i)
+    //    {
+    //        DTW[0, i] = 100000;
+    //    }
+    //    DTW[0, 0] = 0;
+
+    //    for (int i = 1; i < skeletonRefCount; ++i)
+    //    {
+    //        //for (int j = 1; j < userSkeletonCount; ++j)
+    //        //{
+    //        skeletonRef = new List<Vector4>();
+    //        skeleton = new List<Vector4>();
+    //        int type = (int)skRef[0].w;
+
+    //        for (int k = 0; k < 25; ++k)
     //        {
-    //            if (skeleton == skeletons[0])
+    //            if ((int)skRef[k].w < type)
     //            {
-    //                for (int i = 0; i < jointCount; ++i)
-    //                {
-    //                    sums.Add(new Vector3(skeleton.x, skeleton.y, skeleton.z));
-    //                }
+    //                break;
     //            }
-    //            //for joints
-    //            for (int i = 0; i < jointCount; ++i)
-    //            {
-    //                if (skeleton.x != 0)
-    //                {
-    //                    count[i]++;
-
-    //                    float X = sums[i].x + skeleton.x;
-    //                    float Y = sums[i].y + skeleton.y;
-    //                    float Z = sums[i].z + skeleton.z;
-    //                    sums2.Add(new Vector3(X, Y, Z)); // x,y,z
-    //                }
-    //                else
-    //                {
-    //                    sums2.Add(new Vector3(sums[i].x, sums[i].y, sums[i].z));
-    //                }
-
-    //            }
-    //            sums = sums2;
-    //            sums2 = new List<Vector3>(25);
-
+    //            skeletonRef.Add(skRef[k]);
+    //            type = (int)skRef[k].w;
     //        }
-    //        //average
-    //        averages = new List<Vector3>();//atlagok
-    //        for (int i = 0; i < jointCount; ++i)
+    //        int type2 = (int)sk[0].w;
+    //        for (int k = 0; k < 25; ++k)
     //        {
-    //            if (count[i] != 0)
+    //            if ((int)sk[k].w < type2)
     //            {
-    //                averages.Add(new Vector3(sums[i].x / count[i], sums[i].y / count[i], sums[i].z / count[i]));
+    //                break;
     //            }
-    //            else
-    //            {
-    //                averages.Add(new Tuple<double, double, double>(sums[i].Item1, sums[i].Item2, sums[i].Item3));
-    //            }
+    //            skeleton.Add(sk[k]);
+    //            type2 = (int)sk[k].w;
     //        }
+    //        cost = distance(skeletonRef, skeleton);
+    //        int min = Math.Min(DTW[i - 1, j], DTW[i, j - 1]);
+    //        DTW[i, j] = cost + Math.Min(min, DTW[i - 1, j - 1]);
+
+
+    //        //}
 
     //    }
+    //    return DTW[skeletonRefCount - 1, userSkeletonCount - 1];
     //}
 
+    //private int distance(List<Vector4> skeletonRef, List<Vector4> skeleton)
+    //{
+    //    int diferenceJoint = 0;
+    //    int k = 0;
+    //    for (int i = 0; i < skeletonRef.Count; ++i)
+    //    {
+    //        for (int j = k; j <= (int)skeletonRef[i].w; ++j)
+    //        {
+    //            if (j < skeleton.Count)
+    //            {
+    //                //ha ugyanaz a csomopont
+    //                if ((int)skeletonRef[i].w == (int)skeleton[j].w)
+    //                {
+    //                    float z = Math.Abs(skeletonRef[i].z - skeleton[j].z);
+    //                    float x = Math.Abs(skeletonRef[i].x - skeleton[j].x);
+    //                    float y = Math.Abs(skeletonRef[i].y - skeleton[j].y);
+    //                    if (x > 0.2 || y > 0.2 || z > 0.2)
+    //                    {
+    //                        diferenceJoint++;
+    //                        // without hand tip and without foot, because these are not important
+    //                        if ((int)skeleton[j].w != 23 // HandTipRight
+    //                        && (int)skeleton[j].w != 24 // ThumbRight
+    //                        && (int)skeleton[j].w != 21 // HandTipLeft
+    //                        && (int)skeleton[j].w != 22 // ThumbLeft
+    //                        && (int)skeleton[j].w != 19 // FootRight
+    //                        && (int)skeleton[j].w != 15  // FootLeft
+    //                        && (int)skeleton[j].w != 7
+    //                        && (int)skeleton[j].w != 11
+    //                        && (int)skeleton[j].w != 18
+    //                        && (int)skeleton[j].w != 14)
+    //                        {
+    //                            errorjointType = getJoinType((int)skeleton[j].w).ToString();
 
+    //                            result.text = errorjointType;
+    //                            result.color = Color.red;
+    //                        }
+    //                    }
+    //                    k = j + 1;
+    //                }
+    //            }
+    //        }
+    //    }
 
+    //    return diferenceJoint;
+    //}
 
 
     /// <summary>

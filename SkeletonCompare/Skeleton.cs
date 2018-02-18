@@ -136,6 +136,145 @@ namespace SkeletonCompare
             return (double)Math.Acos(dotProduct) / Math.PI * 180; ;
         }
 
+
+        /// <summary>
+        /// Process skeleton data from a file
+        /// </summary>
+        /// <param name="pathName"> File </param>
+        /// <returns>List of skeletons</returns>
+        public static List<Skeleton> ProcessSkeletonFromFile(string pathName)
+        {
+            int jointCount = 25;
+            List<Skeleton> Skeletons = new List<Skeleton>();
+            string line = ""; // A line in the file
+            char[] separators = { ' ' };
+            string[] pathSplit = pathName.Split('\\');
+            // Just file name
+            if (pathSplit[pathSplit.Length - 1] != ".txt")
+            {
+                StreamReader file;
+                if (File.Exists(pathName))
+                {
+                    file = new StreamReader(pathName);
+                }
+                else
+                {
+                    return null;
+                }
+                Skeleton currentFrame = new Skeleton();
+                int jointNumber = 0;
+                List<Vector3D> joints = new List<Vector3D>();
+                //read the first line, because it is the bill head and this not need it
+                line = file.ReadLine();
+                //read the skeleton data
+                while ((line = file.ReadLine()) != null)
+                {
+                    // split the data 
+                    string[] words = line.Split(separators);
+
+                    //if the line is a first line
+                    double number;
+                    if (!Double.TryParse(words[0], out number))
+                    {
+                        break;
+                    }
+
+                    // in one line is 10 data from skeleton
+                    if (words.Length < 4)
+                    {
+                        // skeleton has 25 joints data
+                        while (joints.Count < jointCount)
+                        {
+                            joints.Add(new Vector3D(0, 0, 0));
+                        }
+
+                        //set the list to the frame
+                        currentFrame.Joints = joints;
+                        //determine bones
+                        currentFrame.DetermineBones();
+                        //save the last frame
+                        Skeletons.Add(currentFrame);
+                        break;
+                    }
+
+
+                    int jointTypeNr = Convert.ToInt32(words[5]); //(int)jointType
+                    float X = Convert.ToSingle(words[8]); //unitySpacePoint.X
+                    float Y = Convert.ToSingle(words[9]); //unitySpacePoint.Y
+                    float Z = 15; //unitySpacePoint.Z
+
+
+                    if (jointNumber > Convert.ToInt32(words[5]))
+                    {
+                        //fill the end with (0, 0)
+                        while (joints.Count < 25)
+                        {
+                            //will with (0, 0)
+                            joints.Add(new Vector3D(0, 0, 0));
+                        }
+                        //set the list to the frame
+                        currentFrame.Joints = joints;
+                        //determine bones
+                        currentFrame.DetermineBones();
+                        //put in a list
+                        Skeletons.Add(currentFrame);
+                        //create new frame
+                        currentFrame = new Skeleton();
+                        joints = new List<Vector3D>();
+
+                    }
+                    // skeleton joint type in number
+                    jointNumber = Convert.ToInt32(words[5]);
+                    while (joints.Count < jointNumber)
+                    {
+                        //will with (0, 0)
+                        joints.Add(new Vector3D(0, 0, 0));
+                    }
+                    joints.Add(new Vector3D(X, Y, Z));
+
+                }
+                if (Skeletons.Count == 0)
+                {
+                    //set the list to the frame
+                    currentFrame.Joints = joints;
+                    //determine bones
+                    currentFrame.DetermineBones();
+                    //put in a list
+                    Skeletons.Add(currentFrame);
+                }
+                file.Close();
+                return Skeletons;
+
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Print skeletons in a file
+        /// </summary>
+        /// <param name="skeletonList"></param>
+        /// <param name="path"></param>
+        public static void SkeletonPrint(List<Skeleton> skeletonList, string path)
+        {
+            int jointCount = 25;
+            StreamWriter streamWriter = new StreamWriter(path);
+            streamWriter.Write("               JointType               X                    Y  WidthOfDisplay  HeightOfDisplay" + Environment.NewLine);
+
+            foreach (Skeleton skeleton in skeletonList)
+            {
+                for (int i = 0; i < jointCount; ++i)
+                {
+                    double X = skeleton.Joints[i].X;
+                    double Y = skeleton.Joints[i].Y;
+                    double Z = skeleton.Joints[i].Z;
+                    streamWriter.Write("0 0 0 0 0 " + i + " 0 0 " + X + " " + Y + " 512 424" + Environment.NewLine);
+                }
+            }
+        }
+
         /// <summary>
         /// Get and set the skeleton's joints list
         /// </summary>

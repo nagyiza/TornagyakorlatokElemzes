@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Kinect;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,22 +12,43 @@ namespace SkeletonCompare
     public class Teaching
     {
         private string path = "..\\..\\..\\ReferenceData\\";
+        /// <summary>
+        /// Name of reference exercise
+        /// </summary>
         private List<string> exerciseNamesRef;
+        /// <summary>
+        /// List of Skeletons
+        /// </summary>
         private List<Skeleton> Skeletons;
+        /// <summary>
+        /// List of the data, witch read in the files
+        /// </summary>
+        private List<List<Skeleton>> filesData;
+        /// <summary>
+        /// List of the avarage
+        /// </summary>
+        private List<Skeleton> average;
         public Teaching(string exerciseNameRef)
         {
-            if (!File.Exists(path + exerciseNameRef + "Average.txt")) {
+            if (!File.Exists(path + exerciseNameRef + "Average.txt"))
+            {
                 exerciseNamesRef = new List<string>();
                 Skeletons = new List<Skeleton>();
+                filesData = new List<List<Skeleton>>();
+                average = new List<Skeleton>();
                 if (File.Exists(path + exerciseNameRef + ".txt"))
                 {
                     exerciseNamesRef.Add(exerciseNameRef + ".txt");
+                    filesData.Add(Skeleton.ProcessSkeletonFromFile(path + exerciseNameRef + ".txt"));
+                    CalculateSkeletonAngles(filesData[filesData.Count - 1]);
 
                     for (int i = 1; ; ++i)
                     {
                         if (File.Exists(path + exerciseNameRef + i + ".txt"))
                         {
                             exerciseNamesRef.Add(exerciseNameRef + i + ".txt");
+                            filesData.Add(Skeleton.ProcessSkeletonFromFile(path + exerciseNameRef + i + ".txt"));
+                            CalculateSkeletonAngles(filesData[filesData.Count - 1]);
                         }
                         else
                         {
@@ -35,117 +57,117 @@ namespace SkeletonCompare
                     }
                 }
                 Average();
+                string[] names = exerciseNamesRef[0].Split('.');
+                Skeleton.SkeletonPrint(average, path + names[0] + "Average.txt");
             }
         }
 
+
         public void Average()
         {
-            string[] names = exerciseNamesRef[0].Split('.');
-            //StreamWriter streamWriter = new StreamWriter(path + names[0] + "Avarage.txt");
-            System.IO.File.WriteAllText(path + names[0] + "Average.txt", "0 0 0 0 0 JointType     DepthPointX        DepthPointY         WidthOfDisplay  HeightOfDisplay" + Environment.NewLine);
-            string width = "";
-            string height = "";
-            List<string> line = new List<string>(); // A line in the file
-            List<string[]> words = new List<string[]>();
-            char[] separators = { ' ' };
-
-            List<StreamReader> file = new List<StreamReader>();
-            foreach (string fileName in exerciseNamesRef)
+            List<Skeleton> sum = new List<Skeleton>();
+            int counter = 0;
+            for (int j = 0; ; j++)
             {
-                if (File.Exists(path + fileName))
+                for (int i = 0; i < filesData.Count; ++i)
                 {
-                    file.Add(new StreamReader(path + fileName));
-                    //read the first line, because it is the bill head and this not need it
-                    string firstLine = file[file.Count - 1].ReadLine();
-                    line.Add(null);
-                    words.Add(null);
+                    if (filesData[i].Count > j)
+                    {
+                        sum.Add(filesData[i][j]);
+                    }
+                    else
+                    {
+                        counter++;
+                    }
                 }
-                else
+
+                average.Add(AverageSkeletons(sum));
+
+                if (counter == filesData.Count)
                 {
-                    return;
+                    break;
                 }
 
             }
+        }
 
-
-            //read the skeleton data
-            while (true)
+        private Skeleton AverageSkeletons(List<Skeleton> skeletons)
+        {
+            Skeleton average = new Skeleton();
+            int[] div = new int[25];
+            int[] div2 = new int[25];
+            average.Joints = skeletons[0].Joints;
+            average.AngleList = new List<Tuple<JointType, JointType, double>>();
+            double[] anglesSum = new double[25];
+            for (int i = 1; i < skeletons.Count; ++i)
             {
-                int jointNumber = 25;
-                int counter = 0;
-                Vector3D sum = new Vector3D(0, 0, 0); // the coordinates sum
-                for (int i = 0; i < file.Count(); ++i)
+                //joint
+                for (int j = 0; j < 25; ++j) //for joint
                 {
-                    if (line[i] == null)
-                    {
-                        line[i] = file[i].ReadLine();
-                        // split the data
-                        words[i] = line[i].Split(separators);
-                        //if the line is a first line
-                        double number;
-                        if (!Double.TryParse(words[i][0], out number))
-                        {
-                            break;
-                        }
-                        width = words[i][10];
-                        height = words[i][11];
+                    Vector3D v = new Vector3D();
+                    v = average.Joints[j];
+                    v.X += skeletons[i].Joints[j].X;
+                    v.Y += skeletons[i].Joints[j].Y;
+                    v.Z += skeletons[i].Joints[j].Z;
+                    average.Joints[j] = v;
+                    if (skeletons[i].Joints[j].X != 0 && skeletons[i].Joints[j].Y != 0 && skeletons[i].Joints[j].Z != 0) {
+                        div[j]++;
                     }
-
-                    foreach (string[] w in words)
+                    else
                     {
-                        if (w != null) {
-                            if (Convert.ToInt32(w[5]) < jointNumber)
-                            {
-                                jointNumber = Convert.ToInt32(w[5]);
-                            }
-                        }
-                    }
-
-
-                    if (Convert.ToInt32(words[i][5]) == jointNumber)
-                    {
-                        sum.X += Convert.ToDouble(words[i][8]);//depth point
-                        sum.Y += Convert.ToDouble(words[i][9]);//depth point
-
-                        line[i] = null;
-                        words[i] = null;
-                        counter++;
-                    }
-
-                    //if the file end
-                    if (file[i].Peek() < 0)
-                    {
-                        file.Remove(file[i]);
-                        if (file.Count() == 0)
-                        {
-                            break;
-                        }
+                        int l =6;
                     }
                 }
-
-                //average
-                if (counter != 0)
+               
+                //angles
+                for (int j = 0; j < 23; ++j) //for angles
                 {
-                    double X = sum.X / (double)counter;
-                    double Y = sum.Y / (double)counter;
-                    //print avreage   
-                    System.IO.File.AppendAllText(path + names[0] + "Average.txt", "0 0 0 0 0 " + jointNumber + " 0 0 " + X + " " + Y + " " + width + " " + height+ Environment.NewLine);
-                }               
-
-                //if all file ended
-                if (file.Count() == 0)
-                {
-                    break;
+                    anglesSum[j] += skeletons[i].AngleList[j].Item3;
+                    div2[j]++;
                 }
                 
             }
 
-
-            foreach (StreamReader fileName in file)
+            for (int j = 0; j < 25; ++j)
             {
-                fileName.Close();
+                average.Joints[j] = average.Joints[j] / div[j];
+            }
+            for (int j = 0; j < 23; ++j)
+            {
+                JointType first = skeletons[0].AngleList[j].Item1;
+                JointType second = skeletons[0].AngleList[j].Item2;
+                double av = anglesSum[j] / div2[j];
+                average.AngleList.Add(new Tuple<JointType, JointType, double>(first, second, av));
             }
 
+            return average;
         }
+
+        /// <summary>
+        /// Scatter
+        /// </summary>
+        public void Scatter()
+        {
+            string[] names = exerciseNamesRef[0].Split('.');
+            average = Skeleton.ProcessSkeletonFromFile(path + names[0] + "Average.txt");
+
+
+        }
+
+        /// <summary>
+        /// Calculate the angles beetween skeleton's bones
+        /// </summary>
+        /// <param name="skeleton"> List of skeletons</param>
+        public void CalculateSkeletonAngles(List<Skeleton> skeleton)
+        {
+            if (skeleton.Count > 0)
+            {
+                foreach (var skl in skeleton)
+                {
+                    skl.SkeletonAngle();
+                }
+            }
+        }
+
     }
 }

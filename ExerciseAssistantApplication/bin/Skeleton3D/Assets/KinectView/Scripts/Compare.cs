@@ -12,13 +12,14 @@ namespace Assets.KinectView.Scripts
         private int jointCount = 25;
         private List<Skeleton> skeletons;
         private List<Skeleton> skeletonsRef;
-        private String path = "..\\..\\..\\UnityData\\";
+        private String unityPath = "..\\..\\..\\UnityData\\";
+        private String refDataPath = "..\\..\\..\\ReferenceData\\";
 
         private Vector3 bodyDistance;
         /// <summary>
         /// The skeletons's coordinate's averages
         /// </summary>
-        private List<Vector3> averages;
+        private List<Skeleton> averages;
         /// <summary>
         /// The skeletons's coordinate's scatters
         /// </summary>
@@ -27,7 +28,7 @@ namespace Assets.KinectView.Scripts
         /// <summary>
         /// The joints's angle
         /// </summary>
-        List<Vector4> anglesList;
+        List<Skeleton> anglesList;
 
         /// <summary>
         /// The count of angles
@@ -40,14 +41,40 @@ namespace Assets.KinectView.Scripts
         private int scatterCount = 0;
 
         /// <summary>
-        /// The bone witch is not correct
+        /// The joint witch is not correct
         /// </summary>
         public string errorjointType = "";
-
+        /// <summary>
+        /// The joint witch is not correct in angles method
+        /// </summary>
+        public string errorjointTypeAngles = "";
+        /// <summary>
+        /// Result of dtw algorithm
+        /// 0 - result with scatter
+        /// 1 - result with angles
+        /// </summary>
         public int[] dtwResult;
+        /// <summary>
+        /// Average file name of exercise
+        /// </summary>
+        private string exerciseNameAverage = "";
+        /// <summary>
+        /// Average file name of exercise
+        /// </summary>
+        private string exerciseNameScatter = "";
 
-        public Compare(List<Vector4> reference, List<Vector4> user)
+        public Compare(List<Vector4> reference, List<Vector4> user, string exercise)
         {
+            if (exercise.Contains("Average"))
+            {
+                exerciseNameAverage = exercise;
+            }
+            else
+            {
+                exerciseNameAverage = exercise + "Average";
+            }
+            //exerciseNameScatter = "scatterSkeletonRefUnity";
+
             skeletons = ProcessSkeletonData(user);
             skeletonsRef = ProcessSkeletonData(reference);
 
@@ -71,29 +98,14 @@ namespace Assets.KinectView.Scripts
             //read the skeleton data
             foreach (Vector4 line in reference)
             {
-
-                // skeleton has 25 joints data
-                while (joints.Count < jointCount)
-                {
-                    joints.Add(new Vector3(0, 0, 0));
-                }
-
-                //set the list to the frame
-                currentFrame.Joints = joints;
-                //determine bones
-                currentFrame.DetermineBones();
-                //save the last frame
-                Skeletons.Add(currentFrame);
-                break;
-
-
                 int jointTypeNr = Convert.ToInt32(line.w); //(int)jointType
-                float X = Convert.ToInt32(line.x); //unitySpacePoint.X
-                float Y = Convert.ToInt32(line.y); //unitySpacePoint.Y
-                float Z = Convert.ToInt32(line.z); //unitySpacePoint.Z
+                float X = line.x; //unitySpacePoint.X
+                float Y = line.y; //unitySpacePoint.Y
+                float Z = line.z; //unitySpacePoint.Z
 
+                currentFrame.joinIsValid[currentFrame.getJoinType(jointTypeNr)] = true;
 
-                if (jointNumber > Convert.ToInt32(line.w))
+                if (jointNumber > jointTypeNr)
                 {
                     //fill the end with (0, 0)
                     while (joints.Count < 25)
@@ -121,6 +133,7 @@ namespace Assets.KinectView.Scripts
                 }
                 joints.Add(new Vector3(X, Y, Z));
 
+
             }
             if (Skeletons.Count == 0)
             {
@@ -132,7 +145,6 @@ namespace Assets.KinectView.Scripts
                 Skeletons.Add(currentFrame);
             }
             return Skeletons;
-
         }
         #endregion
 
@@ -144,9 +156,9 @@ namespace Assets.KinectView.Scripts
                 if (skeletonsRef.Count > 0 && skeletons.Count > 0)
                 {
                     //scatter of reference skeleton
-                    Scatter(skeletonsRef);
+                    //Scatter(skeletonsRef);
                     //print scatter
-                    SkeletonPrint(scattersSkeleton, path + @"\scatterSkeletonRefUnity.txt");
+                    //SkeletonPrint(scattersSkeleton, unityPath + @"\scatterSkeletonRefUnity.txt");
 
                     //calculat angles
                     CalculateSkeletonAngles(skeletonsRef);
@@ -155,7 +167,7 @@ namespace Assets.KinectView.Scripts
 
                     dtwResult = DTWDistance(skeletonsRef, skeletons);
 
-                    File.WriteAllText("..\\..\\..\\UnityData\\", dtwResult[0] + " " + dtwResult[1] + Environment.NewLine);
+                    File.WriteAllText(unityPath + "result.txt", dtwResult[0] + " " + dtwResult[1] + Environment.NewLine);
                 }
 
             }
@@ -167,51 +179,47 @@ namespace Assets.KinectView.Scripts
 
         public int[] DTWDistance(List<Skeleton> s, List<Skeleton> t)
         {
-            //List<Tuple<double, double, double>> skeletonRef = new List<Tuple<double, double, double>>();
-            //List<Tuple<double, double, double>> skeleton = new List<Tuple<double, double, double>>();
+            //one reference skeleton position(24 joint)
 
-            int n = s.Count; //reference
-            int m = t.Count + 1; //user
+            int skeletonRefCount = s.Count; // reference
+            int userSkeletonCount = 2; //user
+            int j = 1; //user
 
-            int[,] DTW = new int[n, m]; //scatter 
-            int[,] DTW2 = new int[n, m];//angles
+            int[,] DTW = new int[skeletonRefCount, userSkeletonCount];
+            int[,] DTW2 = new int[skeletonRefCount, userSkeletonCount];
             int cost;
 
-            for (int i = 0; i < n; ++i)
+            for (int i = 0; i < skeletonRefCount; ++i)
             {
                 DTW[i, 0] = 100000;
                 DTW2[i, 0] = 100000;
             }
-            for (int i = 0; i < m; ++i)
+            for (int i = 0; i < userSkeletonCount; ++i)
             {
                 DTW[0, i] = 100000;
                 DTW2[0, i] = 100000;
             }
             DTW[0, 0] = 0;
             DTW2[0, 0] = 0;
-            for (int i = 1; i < n; ++i) // for the reference skeleton
+            for (int i = 1; i < skeletonRefCount; ++i) // for the reference skeleton
             {
-                //for (int j = 1; j < m; ++j) // for the real skeleton
-                //{
-                int j = 1;
                 //DTW with scatters
-                cost = CompareSkeletonWithScatters(skeletonsRef[i], skeletons[j], scattersSkeleton[i]);
+                cost = CompareSkeletonWithScatters(skeletonsRef[i], skeletons[j], null);//scattersSkeleton[i]);
                 int min = Math.Min(DTW[i - 1, j], DTW[i, j - 1]);
                 DTW[i, j] = cost + Math.Min(min, DTW[i - 1, j - 1]);
-                //Console.Write(DTW[i, j] + " ");
-
+                
                 //compare skeletons with angles
                 cost = CompareSkeletonWithAngles(skeletonsRef[i], skeletons[j]);
                 int min2 = Math.Min(DTW2[i - 1, j], DTW2[i, j - 1]);
                 DTW2[i, j] = cost + Math.Min(min2, DTW2[i - 1, j - 1]);
-                // }
-                //Console.WriteLine();
 
             }
 
             int[] result = new int[2];
-            result[0] = DTW[n - 1, m - 1];
-            result[1] = DTW2[n - 1, m - 1];
+            result[0] = DTW[skeletonRefCount - 1, userSkeletonCount - 1];
+            result[1] = DTW2[skeletonRefCount - 1, userSkeletonCount - 1];
+
+            Debug.Log("Result: " + result[0] + " " + result[1]);
             return result;
         }
         #endregion
@@ -219,90 +227,23 @@ namespace Assets.KinectView.Scripts
         #region For scatter
         //atlag
         /// <summary>
-        /// This method calculates the coordinates's averages
+        /// This method read the coordinates's averages in a file
         /// </summary>
         /// <param name="Skeletons"></param>
-        public void Average(List<Skeleton> Skeletons)
+        public void Average()
         {
-            //sum coordinate
-            List<Vector3> sums = new List<Vector3>(jointCount);//osszegek
-            List<Vector3> sums2 = new List<Vector3>(jointCount);//seged valtozo
-            List<int> count = new List<int>(jointCount) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            if (Skeletons.Count > 0)
-            {
-                foreach (Skeleton skeleton in Skeletons)
-                {
-                    if (skeleton == Skeletons[0])
-                    {
-                        for (int i = 0; i < jointCount; ++i)
-                        {
-                            sums.Add(new Vector3(skeleton.Joints[i].x, skeleton.Joints[i].y, skeleton.Joints[i].z));
-                        }
-                    }
-                    //for joints
-                    for (int i = 0; i < jointCount; ++i)
-                    {
-                        if (skeleton.Joints[i].x != 0)
-                        {
-                            count[i]++;
-
-                            float X = sums[i].x + skeleton.Joints[i].x;
-                            float Y = sums[i].y + skeleton.Joints[i].y;
-                            float Z = sums[i].z + skeleton.Joints[i].z;
-                            sums2.Add(new Vector3(X, Y, Z)); // x,y,z
-                        }
-                        else
-                        {
-                            sums2.Add(new Vector3(sums[i].x, sums[i].y, sums[i].z));
-                        }
-
-                    }
-                    sums = sums2;
-                    sums2 = new List<Vector3>(25);
-
-                }
-                //average
-                averages = new List<Vector3>();//atlagok
-                for (int i = 0; i < jointCount; ++i)
-                {
-                    if (count[i] != 0)
-                    {
-                        averages.Add(new Vector3(sums[i].x / count[i], sums[i].y / count[i], sums[i].z / count[i]));
-                    }
-                    else
-                    {
-                        averages.Add(new Vector3(sums[i].x, sums[i].y, sums[i].z));
-                    }
-                }
-            }
+            string pathName = refDataPath + exerciseNameAverage + ".txt";
+            averages = Skeleton.ProcessSkeletonFromFile(pathName);
         }
-
-        //szoras
+        /// <summary>
+        /// This method read the coordinates's scatter in a file
+        /// </summary>
+        /// <param name="Skeletons"></param>
         public void Scatter(List<Skeleton> Skeletons)
         {
-            //calculates the averages
-            Average(Skeletons);
-
-            //calculates the scetters
-            List<Vector3> scatters = new List<Vector3>();//atlagok
-            scattersSkeleton = new List<Skeleton>();
-            foreach (Skeleton skeleton in Skeletons)
-            {
-                Skeleton scatterSkeleton = new Skeleton();
-                //for joints
-                for (int i = 0; i < jointCount; ++i)
-                {
-                    //scatter = coordinate - average
-                    float X = Math.Abs(skeleton.Joints[i].x - averages[i].x);
-                    float Y = Math.Abs(skeleton.Joints[i].y - averages[i].y);
-                    float Z = Math.Abs(skeleton.Joints[i].z - averages[i].z);
-                    scatters.Add(new Vector3(X, Y, Z));
-                }
-                scatterSkeleton.Joints = scatters;
-                scatters = new List<Vector3>();
-                //add the new Skeleton data
-                scattersSkeleton.Add(scatterSkeleton);
-            }
+            Average();
+            //string pathName = refDataPath + exerciseNameScatter + ".txt";
+            //scattersSkeleton = Skeleton.ProcessSkeletonFromFile(pathName);
         }
         #endregion
 
@@ -325,16 +266,27 @@ namespace Assets.KinectView.Scripts
             int diferenceJoint = 0;
             for (int i = 0; i < jointCount; ++i) // for skeleton joint; one for, because the skeletonRef and skeleton array lenght are same
             {
+                // without hand tip and without foot, because these are not important
                 if (isJointTracked(skeletonRef, i)
-                    && isJointTracked(skeleton, i))
+                    && isJointTracked(skeleton, i)
+                    && i != 23 // HandTipRight
+                    && i != 24 // ThumbRight
+                    && i != 21 // HandTipLeft
+                    && i != 22 // ThumbLeft
+                    && i != 19 // FootRight
+                    && i != 15  // FootLeft
+                    && i != 7
+                    && i != 11
+                    && i != 18
+                    && i != 14)
                 {
-
                     double x = Math.Abs(skeletonRef.Joints[i].x - skeleton.Joints[i].x - bodyDistance.x);
                     double y = Math.Abs(skeletonRef.Joints[i].y - skeleton.Joints[i].y - bodyDistance.y);
                     double z = Math.Abs(skeletonRef.Joints[i].z - skeleton.Joints[i].z - bodyDistance.z);
                     //count the joints
                     scatterCount++;
-                    if (x > scatterSkeleton.Joints[i].x || y > scatterSkeleton.Joints[i].y || z > scatterSkeleton.Joints[i].z)
+                    //TODO
+                    if (x > 0.2 || y > 0.2 || z > 0.2)//x > scatterSkeleton.Joints[i].x || y > scatterSkeleton.Joints[i].y || z > scatterSkeleton.Joints[i].z)
                     {
                         diferenceJoint++;
                         errorjointType = skeleton.getJoinType(i).ToString();
@@ -342,7 +294,6 @@ namespace Assets.KinectView.Scripts
                 }
 
             }
-
             return diferenceJoint;
         }
 
@@ -376,6 +327,8 @@ namespace Assets.KinectView.Scripts
                         if (angleDistance > 0)
                         {
                             diferenceAngel++;
+
+                            errorjointTypeAngles = skeleton.getJoinType(i).ToString();
                         }
                         //count the angles
                         angleCount++;
