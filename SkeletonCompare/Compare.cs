@@ -16,11 +16,19 @@ namespace SkeletonCompare
         private List<Skeleton> skeletonsRef;
         private String path = "";
 
+        private Teaching teaching;
+
         private Tuple<double, double, double> bodyDistance;
+
         /// <summary>
         /// The skeletons's coordinate's averages
         /// </summary>
-        private List<Tuple<double, double, double>> averages;
+        //private List<Tuple<double, double, double>> averages;
+
+        /// <summary>
+        /// The skeletons's coordinate's averages
+        /// </summary>
+        private List<Skeleton> averages;
         /// <summary>
         /// The skeletons's coordinate's scatters
         /// </summary>
@@ -41,16 +49,15 @@ namespace SkeletonCompare
         /// </summary>
         private int scatterCount = 0;
 
-        public Compare(String path, String userSkeletonData, String refSkeletonData)
+        public Compare(Teaching teaching, String path, String userSkeletonData, String refSkeletonData)
         {
+            this.teaching = teaching;
             this.path = path;
             skeletons = new List<Skeleton>();
             skeletonsRef = new List<Skeleton>();
             skeletons = ProcessSkeletonData(path + userSkeletonData);
             skeletonsRef = ProcessSkeletonData(path + refSkeletonData);
 
-            //DTW compare algorithm
-            DTW();
 
         }
 
@@ -263,56 +270,57 @@ namespace SkeletonCompare
         /// <param name="Skeletons"></param>
         public void Average(List<Skeleton> Skeletons)
         {
-            //sum coordinate
-            List<Tuple<double, double, double>> sums = new List<Tuple<double, double, double>>(jointCount);//osszegek
-            List<Tuple<double, double, double>> sums2 = new List<Tuple<double, double, double>>(jointCount);//seged valtozo
-            List<int> count = new List<int>(jointCount) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            if (Skeletons.Count > 0) {
-                foreach (Skeleton skeleton in Skeletons)
-                {
-                    if (skeleton == Skeletons[0])
-                    {
-                        for (int i = 0; i < jointCount; ++i)
-                        {
-                            sums.Add(new Tuple<double, double, double>(skeleton.Joints[i].X, skeleton.Joints[i].Y, skeleton.Joints[i].Z));
-                        }
-                    }
-                    //for joints
-                    for (int i = 0; i < jointCount; ++i)
-                    {
-                        if (skeleton.Joints[i].X != 0)
-                        {
-                            count[i]++;
+            averages = teaching.GetAverages;
+            ////sum coordinate
+            //List<Tuple<double, double, double>> sums = new List<Tuple<double, double, double>>(jointCount);//osszegek
+            //List<Tuple<double, double, double>> sums2 = new List<Tuple<double, double, double>>(jointCount);//seged valtozo
+            //List<int> count = new List<int>(jointCount) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            //if (Skeletons.Count > 0) {
+            //    foreach (Skeleton skeleton in Skeletons)
+            //    {
+            //        if (skeleton == Skeletons[0])
+            //        {
+            //            for (int i = 0; i < jointCount; ++i)
+            //            {
+            //                sums.Add(new Tuple<double, double, double>(skeleton.Joints[i].X, skeleton.Joints[i].Y, skeleton.Joints[i].Z));
+            //            }
+            //        }
+            //        //for joints
+            //        for (int i = 0; i < jointCount; ++i)
+            //        {
+            //            if (skeleton.Joints[i].X != 0)
+            //            {
+            //                count[i]++;
 
-                            double X = sums[i].Item1 + skeleton.Joints[i].X;
-                            double Y = sums[i].Item2 + skeleton.Joints[i].Y;
-                            double Z = sums[i].Item3 + skeleton.Joints[i].Z;
-                            sums2.Add(new Tuple<double, double, double>(X, Y, Z)); // x,y,z
-                        }
-                        else
-                        {
-                            sums2.Add(new Tuple<double, double, double>(sums[i].Item1, sums[i].Item2, sums[i].Item3));
-                        }
+            //                double X = sums[i].Item1 + skeleton.Joints[i].X;
+            //                double Y = sums[i].Item2 + skeleton.Joints[i].Y;
+            //                double Z = sums[i].Item3 + skeleton.Joints[i].Z;
+            //                sums2.Add(new Tuple<double, double, double>(X, Y, Z)); // x,y,z
+            //            }
+            //            else
+            //            {
+            //                sums2.Add(new Tuple<double, double, double>(sums[i].Item1, sums[i].Item2, sums[i].Item3));
+            //            }
 
-                    }
-                    sums = sums2;
-                    sums2 = new List<Tuple<double, double, double>>(25);
+            //        }
+            //        sums = sums2;
+            //        sums2 = new List<Tuple<double, double, double>>(25);
 
-                }
-                //average
-                averages = new List<Tuple<double, double, double>>();//atlagok
-                for (int i = 0; i < jointCount; ++i)
-                {
-                    if (count[i] != 0)
-                    {
-                        averages.Add(new Tuple<double, double, double>(sums[i].Item1 / count[i], sums[i].Item2 / count[i], sums[i].Item3 / count[i]));
-                    }
-                    else
-                    {
-                        averages.Add(new Tuple<double, double, double>(sums[i].Item1, sums[i].Item2, sums[i].Item3));
-                    }
-                }
-            }
+            //    }
+            //    //average
+            //    averages = new List<Tuple<double, double, double>>();//atlagok
+            //    for (int i = 0; i < jointCount; ++i)
+            //    {
+            //        if (count[i] != 0)
+            //        {
+            //            averages.Add(new Tuple<double, double, double>(sums[i].Item1 / count[i], sums[i].Item2 / count[i], sums[i].Item3 / count[i]));
+            //        }
+            //        else
+            //        {
+            //            averages.Add(new Tuple<double, double, double>(sums[i].Item1, sums[i].Item2, sums[i].Item3));
+            //        }
+            //    }
+            //}
         }
 
         //szoras
@@ -320,27 +328,28 @@ namespace SkeletonCompare
         {
             //calculates the averages
             Average(Skeletons);
+            scattersSkeleton = teaching.GetScatters;
 
             //calculates the scetters
-            List<Vector3D> scatters = new List<Vector3D>();//atlagok
-            scattersSkeleton = new List<Skeleton>();
-            foreach (Skeleton skeleton in Skeletons)
-            {
-                Skeleton scatterSkeleton = new Skeleton();
-                //for joints
-                for (int i = 0; i < jointCount; ++i)
-                {
-                    //scatter = coordinate - average
-                    double X = Math.Abs(skeleton.Joints[i].X - averages[i].Item1);
-                    double Y = Math.Abs(skeleton.Joints[i].Y - averages[i].Item2);
-                    double Z = Math.Abs(skeleton.Joints[i].Z - averages[i].Item3);
-                    scatters.Add(new Vector3D(X, Y, Z));
-                }
-                scatterSkeleton.Joints = scatters;
-                scatters = new List<Vector3D>();
-                //add the new Skeleton data
-                scattersSkeleton.Add(scatterSkeleton);
-            }
+            //List<Vector3D> scatters = new List<Vector3D>();//atlagok
+            //scattersSkeleton = new List<Skeleton>();
+            //foreach (Skeleton skeleton in Skeletons)
+            //{
+            //    Skeleton scatterSkeleton = new Skeleton();
+            //    //for joints
+            //    for (int i = 0; i < jointCount; ++i)
+            //    {
+            //        //scatter = coordinate - average
+            //        double X = Math.Abs(skeleton.Joints[i].X - averages[i].Item1);
+            //        double Y = Math.Abs(skeleton.Joints[i].Y - averages[i].Item2);
+            //        double Z = Math.Abs(skeleton.Joints[i].Z - averages[i].Item3);
+            //        scatters.Add(new Vector3D(X, Y, Z));
+            //    }
+            //    scatterSkeleton.Joints = scatters;
+            //    scatters = new List<Vector3D>();
+            //    //add the new Skeleton data
+            //    scattersSkeleton.Add(scatterSkeleton);
+            //}
         }
         #endregion
 
@@ -354,7 +363,7 @@ namespace SkeletonCompare
         /// <returns></returns>
         private int CompareSkeletonWithScatters(Skeleton skeletonRef, Skeleton skeleton, Skeleton scatterSkeleton)
         {
-            //distance beetween reference body and real body
+            //distance beetween reference body and user body
             bodyDistance = new Tuple<double, double, double>(
                 Math.Abs(skeleton.Joints[0].X - skeleton.Joints[0].X),
                 Math.Abs(skeleton.Joints[0].Y - skeleton.Joints[0].Y),
@@ -372,7 +381,7 @@ namespace SkeletonCompare
                     double z = Math.Abs(skeletonRef.Joints[i].Z - skeleton.Joints[i].Z - bodyDistance.Item3);
                     //count the joints
                     scatterCount++;
-                    if (x > scatterSkeleton.Joints[i].X || y > scatterSkeleton.Joints[i].Y || z > scatterSkeleton.Joints[i].Z)
+                    if (x > 0 || y > 0 || z > 0)
                     {
                         diferenceJoint++;
                     }

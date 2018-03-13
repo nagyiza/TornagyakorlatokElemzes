@@ -53,7 +53,8 @@ namespace SkeletonCompare
                 }
 
 
-                Teaching t = new Teaching(exerciseNameRef);
+                Teaching teaching = new Teaching(exerciseNameRef);
+                teaching.TeachingSkeleton();
 
                 //if the exercise is exist
                 if (File.Exists(path + "User\\" + exerciseName + ".txt")
@@ -61,8 +62,10 @@ namespace SkeletonCompare
                 {
                     Console.WriteLine("Result: ");
                     //compare the user and the reference skeletons
-                    skeletonCompare = new Compare(path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "Ref.txt");
-
+                    skeletonCompare = new Compare(teaching, path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "Ref.txt");
+                    var time = DateTime.Now;
+                    skeletonCompare.DTW();//the dtw algorithm
+                    Console.WriteLine(Environment.NewLine + (DateTime.Now - time).ToString());
                     Console.WriteLine(Environment.NewLine + "Press enter and try again or press esc and application close"+ Environment.NewLine);
                     //if press esc, the application close
                     if (Console.ReadKey(true).Key == ConsoleKey.Escape)

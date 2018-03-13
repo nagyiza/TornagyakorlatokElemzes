@@ -78,7 +78,7 @@ namespace SkeletonCompare
             {
                 var bone = bones[i];
 
-                JointType first = bone.Item1; 
+                JointType first = bone.Item1;
                 JointType center = bone.Item2;
                 //search the first joint's pair
                 for (int j = i + 1; j < bones.Count; ++j)
@@ -253,6 +253,64 @@ namespace SkeletonCompare
         }
 
         /// <summary>
+        /// Process skeleton data from a file
+        /// </summary>
+        /// <param name="pathName"></param>
+        /// <returns></returns>
+        public static List<Tuple<JointType, JointType, double>> ProcessSkeletonAngelsFromFile(string pathName)
+        {
+            List<Tuple<JointType, JointType, double>> Angles = new List<Tuple<JointType, JointType, double>>();
+            string line = ""; // A line in the file
+            char[] separators = { ' ' };
+            string[] pathSplit = pathName.Split('\\');
+            // Just file name
+            if (pathSplit[pathSplit.Length - 1] != ".txt")
+            {
+                StreamReader file;
+                if (File.Exists(pathName))
+                {
+                    file = new StreamReader(pathName);
+                }
+                else
+                {
+                    return null;
+                }
+
+                //read the first line, because it is the bill head and this not need it
+                line = file.ReadLine();
+                //read the skeleton data
+                while ((line = file.ReadLine()) != null)
+                {
+                    // split the data 
+                    string[] words = line.Split(separators);
+
+                    //if the line is a first line
+                    double number;
+                    if (!Double.TryParse(words[0], out number))
+                    {
+                        break;
+                    }
+
+
+                    //2 joint type, whitch beetween is te angle
+                    JointType jointType1 = GetJointType(Convert.ToInt32(words[0]));
+                    JointType jointType2 = GetJointType(Convert.ToInt32(words[1]));
+
+                    double angle = Convert.ToDouble(words[2]);
+
+                    Angles.Add(new Tuple<JointType, JointType, double>(jointType1, jointType2, angle));
+
+                }
+                file.Close();
+                return Angles;
+
+
+            }
+            return null;
+        }
+
+
+        /// <summary>
         /// Print skeletons in a file
         /// </summary>
         /// <param name="skeletonList"></param>
@@ -273,8 +331,77 @@ namespace SkeletonCompare
                     streamWriter.Write("0 0 0 0 0 " + i + " 0 0 " + X + " " + Y + " 512 424" + Environment.NewLine);
                 }
             }
+            streamWriter.Close();
         }
+        /// <summary>
+        /// Print skeleton's angels in a file
+        /// </summary>
+        /// <param name="skeletonList"></param>
+        /// <param name="path"></param>
+        public static void SkeletonAnglePrint(List<Skeleton> skeletonList, string path)
+        {
+            int angelCount = 23;
+            StreamWriter streamWriter = new StreamWriter(path);
+            streamWriter.Write("First JointType Second JointType  Angel" + Environment.NewLine);
 
+            foreach (Skeleton skeleton in skeletonList)
+            {
+                for (int i = 0; i < angelCount; ++i)
+                {
+                    JointType first = skeleton.AngleList[i].Item1;
+                    JointType second = skeleton.AngleList[i].Item2;
+                    double angle = skeleton.AngleList[i].Item3;
+                    streamWriter.Write((int)first + " " + (int)second + " " + angle + Environment.NewLine);
+                }
+            }
+            streamWriter.Close();
+        }
+        /// <summary>
+        /// Print skeletons in a file
+        /// </summary>
+        /// <param name="skeletonList"></param>
+        /// <param name="path"></param>
+        public static void ScatterPrint(List<Skeleton> skeletonList, List<double> percent, string path)
+        {
+            int jointCount = 25;
+            StreamWriter streamWriter = new StreamWriter(path);
+            streamWriter.Write("               JointType               X                    Y  WidthOfDisplay  HeightOfDisplay    IsImportant?(%)" + Environment.NewLine);
+
+            for (int i = 0; i < skeletonList.Count; ++i)
+            {
+                for (int j = 0; j < jointCount; ++j)
+                {
+                    double X = skeletonList[i].Joints[j].X;
+                    double Y = skeletonList[i].Joints[j].Y;
+                    double Z = skeletonList[i].Joints[j].Z;
+                    streamWriter.Write("0 0 0 0 0 " + j + " 0 0 " + X + " " + Y + " 512 424 " + percent[i+j*jointCount]+ Environment.NewLine);
+                }
+            }
+            streamWriter.Close();
+        }
+        /// <summary>
+        /// Print skeleton's angels in a file
+        /// </summary>
+        /// <param name="skeletonList"></param>
+        /// <param name="path"></param>
+        public static void ScatterAnglePrint(List<Skeleton> skeletonList, List<double> percent, string path)
+        {
+            int angelCount = 23;
+            StreamWriter streamWriter = new StreamWriter(path);
+            streamWriter.Write("First JointType Second JointType  Angle   IsImportant?(%)" + Environment.NewLine);
+
+            for(int i =0; i < skeletonList.Count; ++i)
+            {
+                for (int j = 0; j < angelCount; ++j)
+                {
+                    JointType first = skeletonList[i].AngleList[j].Item1;
+                    JointType second = skeletonList[i].AngleList[j].Item2;
+                    double angle = skeletonList[i].AngleList[j].Item3;
+                    streamWriter.Write((int)first + " " + (int)second + " " + angle + " " + percent[i+j*angelCount]+ Environment.NewLine);
+                }
+            }
+            streamWriter.Close();
+        }
         /// <summary>
         /// Get and set the skeleton's joints list
         /// </summary>
@@ -318,6 +445,44 @@ namespace SkeletonCompare
             set
             {
                 angleList = value;
+            }
+        }
+
+        /// <summary>
+        /// Get the joint type in format JointType
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        private static JointType GetJointType(int jointTypeInt)
+        {
+            switch (jointTypeInt)
+            {
+                case 0: return JointType.SpineBase;
+                case 1: return JointType.SpineMid;
+                case 2: return JointType.Neck;
+                case 3: return JointType.Head;
+                case 4: return JointType.ShoulderLeft;
+                case 5: return JointType.ElbowLeft;
+                case 6: return JointType.WristLeft;
+                case 7: return JointType.HandLeft;
+                case 8: return JointType.ShoulderRight;
+                case 9: return JointType.ElbowRight;
+                case 10: return JointType.WristRight;
+                case 11: return JointType.HandRight;
+                case 12: return JointType.HipLeft;
+                case 13: return JointType.KneeLeft;
+                case 14: return JointType.AnkleLeft;
+                case 15: return JointType.FootLeft;
+                case 16: return JointType.HipRight;
+                case 17: return JointType.KneeRight;
+                case 18: return JointType.AnkleRight;
+                case 19: return JointType.FootRight;
+                case 20: return JointType.SpineShoulder;
+                case 21: return JointType.HandTipLeft;
+                case 22: return JointType.ThumbLeft;
+                case 23: return JointType.HandTipRight;
+                case 24: return JointType.ThumbRight;
+                default: return JointType.SpineBase;
             }
         }
     }

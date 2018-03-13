@@ -127,7 +127,6 @@ namespace Stream
                     double skeletonHeight = Convert.ToDouble(words[11]); //skeleton display Height
 
                     // display size -> skeleton size; colorstream size -> the color frame size
-
                     
                     X = X * skeletonWidth / VideoWidth; // (512 / 1920)
                     Y = Y * skeletonWidth / VideoWidth;// (512 / 1920)
