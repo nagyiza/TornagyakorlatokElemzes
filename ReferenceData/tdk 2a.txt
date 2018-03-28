@@ -1,0 +1,1 @@
+Z           X           Y     Timestamp     Body id     Joint type ColorPointX ColorPointY  DepthPointX DepthPointY  WidthOfDisplay  HeightOfDisplay

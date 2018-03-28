@@ -161,8 +161,8 @@ namespace Assets.KinectView.Scripts
                     //SkeletonPrint(scattersSkeleton, unityPath + @"\scatterSkeletonRefUnity.txt");
 
                     //calculat angles
-                    CalculateSkeletonAngles(skeletonsRef);
-                    CalculateSkeletonAngles(skeletons);
+                    //CalculateSkeletonAngles(skeletonsRef);
+                    //CalculateSkeletonAngles(skeletons);
 
 
                     dtwResult = DTWDistance(skeletonsRef, skeletons);
@@ -209,15 +209,15 @@ namespace Assets.KinectView.Scripts
                 DTW[i, j] = cost + Math.Min(min, DTW[i - 1, j - 1]);
                 
                 //compare skeletons with angles
-                cost = CompareSkeletonWithAngles(skeletonsRef[i], skeletons[j]);
-                int min2 = Math.Min(DTW2[i - 1, j], DTW2[i, j - 1]);
-                DTW2[i, j] = cost + Math.Min(min2, DTW2[i - 1, j - 1]);
+               //cost = CompareSkeletonWithAngles(skeletonsRef[i], skeletons[j]);
+                //int min2 = Math.Min(DTW2[i - 1, j], DTW2[i, j - 1]);
+                //DTW2[i, j] = cost + Math.Min(min2, DTW2[i - 1, j - 1]);
 
             }
 
             int[] result = new int[2];
             result[0] = DTW[skeletonRefCount - 1, userSkeletonCount - 1];
-            result[1] = DTW2[skeletonRefCount - 1, userSkeletonCount - 1];
+            result[1] = 0;//;DTW2[skeletonRefCount - 1, userSkeletonCount - 1];
 
             Debug.Log("Result: " + result[0] + " " + result[1]);
             return result;
@@ -280,13 +280,13 @@ namespace Assets.KinectView.Scripts
                     && i != 18
                     && i != 14)
                 {
-                    double x = Math.Abs(skeletonRef.Joints[i].x - skeleton.Joints[i].x - bodyDistance.x);
-                    double y = Math.Abs(skeletonRef.Joints[i].y - skeleton.Joints[i].y - bodyDistance.y);
-                    double z = Math.Abs(skeletonRef.Joints[i].z - skeleton.Joints[i].z - bodyDistance.z);
+                    double x = Math.Abs(skeletonRef.Joints[i].x - skeleton.Joints[i].x);// - bodyDistance.x);
+                    double y = Math.Abs(skeletonRef.Joints[i].y - skeleton.Joints[i].y);// - bodyDistance.y);
+                    double z = Math.Abs(skeletonRef.Joints[i].z - skeleton.Joints[i].z);// - bodyDistance.z);
                     //count the joints
                     scatterCount++;
                     //TODO
-                    if (x > 0.2 || y > 0.2 || z > 0.2)//x > scatterSkeleton.Joints[i].x || y > scatterSkeleton.Joints[i].y || z > scatterSkeleton.Joints[i].z)
+                    if (x > 0.4 || y > 0.4 || z > 0.4)//x > scatterSkeleton.Joints[i].x || y > scatterSkeleton.Joints[i].y || z > scatterSkeleton.Joints[i].z)
                     {
                         diferenceJoint++;
                         errorjointType = skeleton.getJoinType(i).ToString();

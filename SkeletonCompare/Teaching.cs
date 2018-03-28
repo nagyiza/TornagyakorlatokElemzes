@@ -11,6 +11,9 @@ namespace SkeletonCompare
 {
     public class Teaching
     {
+        /// <summary>
+        /// Path in witch are the reference videos and skeletons
+        /// </summary>
         private string path = "..\\..\\..\\ReferenceData\\";
         /// <summary>
         /// Name of exercise (the first)
@@ -39,17 +42,18 @@ namespace SkeletonCompare
 
         public Teaching(string exerciseNameRef)
         {
+            Skeletons = new List<Skeleton>();
+            average = new List<Skeleton>();
+            scatter = new List<Skeleton>();
+
             exerciseName = exerciseNameRef;
             if (!File.Exists(path + exerciseNameRef + "Average.txt")
                 || !File.Exists(path + exerciseNameRef + "AngleAverage.txt")
                 || !File.Exists(path + exerciseNameRef + "Scatter.txt")
                 || !File.Exists(path + exerciseNameRef + "AngleScatter.txt"))
             {
-                exerciseNamesRef = new List<string>();
-                Skeletons = new List<Skeleton>();
                 filesData = new List<List<Skeleton>>();
-                average = new List<Skeleton>();
-                scatter = new List<Skeleton>();
+                exerciseNamesRef = new List<string>();
                 if (File.Exists(path + exerciseNameRef + ".txt"))
                 {
                     exerciseNamesRef.Add(exerciseNameRef + ".txt");
@@ -73,7 +77,6 @@ namespace SkeletonCompare
 
             }
 
-
         }
 
         /// <summary>
@@ -90,9 +93,7 @@ namespace SkeletonCompare
                 Skeleton.SkeletonPrint(average, path + names[0] + "Average.txt");
                 Skeleton.SkeletonAnglePrint(average, path + names[0] + "AngleAverage.txt");
 
-                //TODO
-                List<double> importanceInPercent = new List<double>();
-                List<double> importanceAngleInPercent = new List<double>();
+
                 for (int i = 0; i < scatter.Count; ++i)
                 {
                     for (int j = 0; j < scatter[i].Joints.Count; ++j)
@@ -100,7 +101,8 @@ namespace SkeletonCompare
                         int counter = 0;
                         for (int k = 0; k < filesData.Count; ++k)
                         {
-                            if (i < filesData[k].Count) {
+                            if (i < filesData[k].Count)
+                            {
                                 if (filesData[k][i].Joints[j].X <= average[i].Joints[j].X + scatter[i].Joints[j].X
                                     && filesData[k][i].Joints[j].X >= average[i].Joints[j].X - scatter[i].Joints[j].X
                                     && filesData[k][i].Joints[j].Y <= average[i].Joints[j].Y + scatter[i].Joints[j].Y
@@ -113,8 +115,7 @@ namespace SkeletonCompare
                                 }
                             }
                         }
-              
-                        importanceInPercent.Add(counter / (double)filesData.Count() * 100);// in %
+                        scatter[i].ImportanceInPercent.Add(counter / (double)filesData.Count() * 100);// in %
                     }
                     //angles
                     for (int j = 0; j < scatter[i].AngleList.Count; ++j)
@@ -135,12 +136,12 @@ namespace SkeletonCompare
                             }
                         }
 
-                        importanceAngleInPercent.Add(counter / (double)filesData.Count() * 100);// in %
+                        scatter[i].ImportanceAngleInPercent.Add(counter / (double)filesData.Count() * 100);// in %
                     }
                 }
 
-                Skeleton.ScatterPrint(scatter, importanceInPercent, path + names[0] + "Scatter.txt");
-                Skeleton.ScatterAnglePrint(scatter, importanceAngleInPercent, path + names[0] + "AngleScatter.txt");
+                Skeleton.ScatterPrint(scatter, path + names[0] + "Scatter.txt");
+                Skeleton.ScatterAnglePrint(scatter, path + names[0] + "AngleScatter.txt");
             }
 
         }
@@ -153,31 +154,47 @@ namespace SkeletonCompare
                 {
                     CalculateSkeletonAngles(filesData[i]);
                 }
+                if (filesData.Count == 1)
+                {
+                    for (int i = 0; i < filesData[0].Count; ++i)
+                    {
+                        average.Add(filesData[0][i]);
+                    }
+                    for (int i = 0; i < average.Count; ++i)
+                    {
+                        scatter.Add(scatterSkeletons(average, average[i]));
+                    }
+                }
+                else
+                {
+                    Average();
 
-                Average();
-
-                Scatter();
+                    Scatter();
+                }
             }
             else
             {
                 //read data in file (joint's averages and scatters)
                 average = Skeleton.ProcessSkeletonFromFile(path + exerciseName + "Average.txt");
                 scatter = Skeleton.ProcessSkeletonFromFile(path + exerciseName + "Scatter.txt");
-
-                List<Tuple<JointType, JointType, double>> angleListAverage = Skeleton.ProcessSkeletonAngelsFromFile(path + exerciseName + "AngleAverage.txt");
-                List<Tuple<JointType, JointType, double>> angleListScatter = Skeleton.ProcessSkeletonAngelsFromFile(path + exerciseName + "AngleScatter.txt");
+                // in this list are the joint, the angle and the teaching percent
+                List<Tuple<JointType, JointType, double, double>> angleListAverage = Skeleton.ProcessSkeletonAngelsFromFile(path + exerciseName + "AngleAverage.txt");
+                List<Tuple<JointType, JointType, double, double>> angleListScatter = Skeleton.ProcessSkeletonAngelsFromFile(path + exerciseName + "AngleScatter.txt");
 
                 for (int i = 0; i < average.Count; ++i)
                 {
                     List<Tuple<JointType, JointType, double>> angleList = new List<Tuple<JointType, JointType, double>>();
                     List<Tuple<JointType, JointType, double>> scatterList = new List<Tuple<JointType, JointType, double>>();
+                    List<double> percentAngle = new List<double>();
                     for (int j = 0; j < 23; ++j)
                     {
                         angleList.Add(new Tuple<JointType, JointType, double>(angleListAverage[j + i * 23].Item1, angleListAverage[j + i * 23].Item2, angleListAverage[j + i * 23].Item3));
-                        scatterList.Add(new Tuple<JointType, JointType, double>(angleListAverage[j + i * 23].Item1, angleListAverage[j + i * 23].Item2, angleListAverage[j + i * 23].Item3));
+                        scatterList.Add(new Tuple<JointType, JointType, double>(angleListScatter[j + i * 23].Item1, angleListScatter[j + i * 23].Item2, angleListScatter[j + i * 23].Item3));
+                        percentAngle.Add(angleListScatter[j + i * 23].Item4);
                     }
                     average[i].AngleList = angleList;
                     scatter[i].AngleList = scatterList;
+                    scatter[i].ImportanceAngleInPercent = percentAngle;
                 }
 
             }
@@ -186,6 +203,7 @@ namespace SkeletonCompare
         public void Average()
         {
             List<Skeleton> sum = new List<Skeleton>();
+
             int counter = 0;
             for (int j = 0; ; j++)
             {
@@ -208,6 +226,7 @@ namespace SkeletonCompare
                 {
                     break;
                 }
+
 
             }
         }
@@ -347,13 +366,22 @@ namespace SkeletonCompare
             for (int j = 0; j < 25; ++j)
             {
                 Vector3D v = new Vector3D();
+                if (div[j] == 0)
+                {
+                    div[j]++;
+                }
                 v.X = Math.Sqrt(scatter.Joints[j].X / div[j]);
                 v.Y = Math.Sqrt(scatter.Joints[j].Y / div[j]);
                 v.Z = Math.Sqrt(scatter.Joints[j].Z / div[j]);
+
                 scatter.Joints[j] = v;
             }
             for (int j = 0; j < 23; ++j)
             {
+                if (div2[j] == 0)
+                {
+                    div2[j]++;
+                }
                 JointType first = skeletons[0].AngleList[j].Item1;
                 JointType second = skeletons[0].AngleList[j].Item2;
                 double av = Math.Sqrt(anglesSum[j] / div2[j]);

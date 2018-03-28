@@ -353,17 +353,17 @@ public class BodySourceView : MonoBehaviour
                 result.color = Color.red;
             }
 
-            if (cmp.dtwResult[1] == 0) // dtwResult[0] - result with scatter
-            {
-                result2.text = "Good";
-                result2.color = Color.green;
-                errorjointTypeAngles = "";
-            }
-            else
-            {
-                result2.text = cmp.errorjointTypeAngles;
-                result2.color = Color.red;
-            }
+            //if (cmp.dtwResult[1] == 0) // dtwResult[0] - result with scatter
+            //{
+            //    result2.text = "Good";
+            //    result2.color = Color.green;
+            //    errorjointTypeAngles = "";
+            //}
+            //else
+            //{
+            //    result2.text = cmp.errorjointTypeAngles;
+            //    result2.color = Color.red;
+            //}
 
         }
         userSkeleton = new List<Vector4>();

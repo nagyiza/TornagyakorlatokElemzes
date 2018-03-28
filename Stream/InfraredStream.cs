@@ -11,6 +11,8 @@ using System.ComponentModel;
 using System.Windows;
 using System.Runtime.InteropServices;
 
+// In this class I used the example code of Kinect SDK 2.0
+
 namespace Stream
 {
     public class InfraredStream : IDataCollection<InfraredFrameArrivedEventArgs>, INotifyPropertyChanged

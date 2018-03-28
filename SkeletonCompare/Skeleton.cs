@@ -11,15 +11,37 @@ namespace SkeletonCompare
 {
     public class Skeleton
     {
+        /// <summary>
+        /// List of bones
+        /// </summary>
         private List<Tuple<JointType, JointType, bool>> bones;
+        /// <summary>
+        /// List of joints
+        /// </summary>
         private List<Vector3D> joints;
+        /// <summary>
+        /// List of angles
+        /// </summary>
         private List<Tuple<JointType, JointType, double>> angleList;
+        /// <summary>
+        /// List of important joint in percent
+        /// </summary>
+        private List<double> importanceInPercent;
+        /// <summary>
+        /// List of important angle in percent
+        /// </summary>
+        private List<double> importanceAngleInPercent;
 
         /// <summary>
         /// Constructor, in witch create the bones
         /// </summary>
         public Skeleton()
         {
+            joints = new List<Vector3D>();
+            angleList = new List<Tuple<JointType, JointType, double>>();
+            importanceAngleInPercent = new List<double>();
+            importanceInPercent = new List<double>();
+
             bones = new List<Tuple<JointType, JointType, bool>>();
             //torso
             bones.Add(new Tuple<JointType, JointType, bool>(JointType.Head, JointType.Neck, false));
@@ -164,6 +186,7 @@ namespace SkeletonCompare
                 Skeleton currentFrame = new Skeleton();
                 int jointNumber = 0;
                 List<Vector3D> joints = new List<Vector3D>();
+                List<double> percents = new List<double>();
                 //read the first line, because it is the bill head and this not need it
                 line = file.ReadLine();
                 //read the skeleton data
@@ -214,12 +237,15 @@ namespace SkeletonCompare
                         }
                         //set the list to the frame
                         currentFrame.Joints = joints;
+                        //set the teaching percent
+                        currentFrame.ImportanceInPercent = percents;
                         //determine bones
                         currentFrame.DetermineBones();
                         //put in a list
                         Skeletons.Add(currentFrame);
                         //create new frame
                         currentFrame = new Skeleton();
+                        percents = new List<double>();
                         joints = new List<Vector3D>();
 
                     }
@@ -232,11 +258,19 @@ namespace SkeletonCompare
                     }
                     joints.Add(new Vector3D(X, Y, Z));
 
+                    //if is in a file the teaching percent
+                    if (words.Length > 12 && words[12] != "")
+                    {
+                        percents.Add(Convert.ToDouble(words[12]));
+                    }
+
                 }
                 if (Skeletons.Count == 0)
                 {
                     //set the list to the frame
                     currentFrame.Joints = joints;
+                    //set the teaching percent
+                    currentFrame.ImportanceInPercent = percents;
                     //determine bones
                     currentFrame.DetermineBones();
                     //put in a list
@@ -257,9 +291,9 @@ namespace SkeletonCompare
         /// </summary>
         /// <param name="pathName"></param>
         /// <returns></returns>
-        public static List<Tuple<JointType, JointType, double>> ProcessSkeletonAngelsFromFile(string pathName)
+        public static List<Tuple<JointType, JointType, double, double>> ProcessSkeletonAngelsFromFile(string pathName)
         {
-            List<Tuple<JointType, JointType, double>> Angles = new List<Tuple<JointType, JointType, double>>();
+            List<Tuple<JointType, JointType, double, double>> Angles = new List<Tuple<JointType, JointType, double, double>>();
             string line = ""; // A line in the file
             char[] separators = { ' ' };
             string[] pathSplit = pathName.Split('\\');
@@ -298,7 +332,17 @@ namespace SkeletonCompare
 
                     double angle = Convert.ToDouble(words[2]);
 
-                    Angles.Add(new Tuple<JointType, JointType, double>(jointType1, jointType2, angle));
+                    
+
+                    //if is in a file the teaching percent
+                    if (words.Length > 3)
+                    {
+                        Angles.Add(new Tuple<JointType, JointType, double, double>(jointType1, jointType2, angle, Convert.ToDouble(words[3])));
+                    }
+                    else
+                    {
+                        Angles.Add(new Tuple<JointType, JointType, double, double>(jointType1, jointType2, angle, 0));
+                    }
 
                 }
                 file.Close();
@@ -361,7 +405,7 @@ namespace SkeletonCompare
         /// </summary>
         /// <param name="skeletonList"></param>
         /// <param name="path"></param>
-        public static void ScatterPrint(List<Skeleton> skeletonList, List<double> percent, string path)
+        public static void ScatterPrint(List<Skeleton> skeletonList, string path)
         {
             int jointCount = 25;
             StreamWriter streamWriter = new StreamWriter(path);
@@ -374,7 +418,7 @@ namespace SkeletonCompare
                     double X = skeletonList[i].Joints[j].X;
                     double Y = skeletonList[i].Joints[j].Y;
                     double Z = skeletonList[i].Joints[j].Z;
-                    streamWriter.Write("0 0 0 0 0 " + j + " 0 0 " + X + " " + Y + " 512 424 " + percent[i+j*jointCount]+ Environment.NewLine);
+                    streamWriter.Write("0 0 0 0 0 " + j + " 0 0 " + X + " " + Y + " 512 424 " + skeletonList[i].ImportanceInPercent[j] + Environment.NewLine);
                 }
             }
             streamWriter.Close();
@@ -384,7 +428,7 @@ namespace SkeletonCompare
         /// </summary>
         /// <param name="skeletonList"></param>
         /// <param name="path"></param>
-        public static void ScatterAnglePrint(List<Skeleton> skeletonList, List<double> percent, string path)
+        public static void ScatterAnglePrint(List<Skeleton> skeletonList, string path)
         {
             int angelCount = 23;
             StreamWriter streamWriter = new StreamWriter(path);
@@ -397,7 +441,7 @@ namespace SkeletonCompare
                     JointType first = skeletonList[i].AngleList[j].Item1;
                     JointType second = skeletonList[i].AngleList[j].Item2;
                     double angle = skeletonList[i].AngleList[j].Item3;
-                    streamWriter.Write((int)first + " " + (int)second + " " + angle + " " + percent[i+j*angelCount]+ Environment.NewLine);
+                    streamWriter.Write((int)first + " " + (int)second + " " + angle + " " + skeletonList[i].ImportanceAngleInPercent[j] + Environment.NewLine);
                 }
             }
             streamWriter.Close();
@@ -447,6 +491,36 @@ namespace SkeletonCompare
                 angleList = value;
             }
         }
+        /// <summary>
+        /// Get and set the important joint list
+        /// </summary>
+        public List<double> ImportanceInPercent
+        {
+            get
+            {
+                return importanceInPercent;
+            }
+
+            set
+            {
+                importanceInPercent = value;
+            }
+        }
+        /// <summary>
+        /// Get and set the important angle list
+        /// </summary>
+        public List<double> ImportanceAngleInPercent
+        {
+            get
+            {
+                return importanceAngleInPercent;
+            }
+
+            set
+            {
+                importanceAngleInPercent = value;
+            }
+        }
 
         /// <summary>
         /// Get the joint type in format JointType
@@ -485,5 +559,7 @@ namespace SkeletonCompare
                 default: return JointType.SpineBase;
             }
         }
+
+        
     }
 }
