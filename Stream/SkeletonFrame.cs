@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
+/// <summary>
+/// I used Bala Zsolt's project, but I modified
+/// </summary>
 namespace Stream
 {
     public class SkeletonFrame

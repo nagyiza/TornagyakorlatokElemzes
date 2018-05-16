@@ -9,12 +9,15 @@ using System.Windows.Media.Media3D;
 
 namespace SkeletonCompare
 {
+    /// <summary>
+    /// Calculate the average and scatter of reference move, and teaching the joints and angles
+    /// </summary>
     public class Teaching
     {
         /// <summary>
         /// Path in witch are the reference videos and skeletons
         /// </summary>
-        private string path = "..\\..\\..\\ReferenceData\\";
+        private string path;
         /// <summary>
         /// Name of exercise (the first)
         /// </summary>
@@ -40,8 +43,9 @@ namespace SkeletonCompare
         /// </summary>
         private List<Skeleton> scatter;
 
-        public Teaching(string exerciseNameRef)
+        public Teaching(string exerciseNameRef, string path)
         {
+            this.path = path;
             Skeletons = new List<Skeleton>();
             average = new List<Skeleton>();
             scatter = new List<Skeleton>();
@@ -145,7 +149,9 @@ namespace SkeletonCompare
             }
 
         }
-
+        /// <summary>
+        /// Calculate the scatter of reference moves
+        /// </summary>
         private void CalculateScatter()
         {
             if (filesData != null)
@@ -199,7 +205,9 @@ namespace SkeletonCompare
 
             }
         }
-
+        /// <summary>
+        /// Calculate the average
+        /// </summary>
         public void Average()
         {
             List<Skeleton> sum = new List<Skeleton>();
@@ -230,7 +238,11 @@ namespace SkeletonCompare
 
             }
         }
-
+        /// <summary>
+        /// Average skeleton
+        /// </summary>
+        /// <param name="skeletons"></param>
+        /// <returns></returns>
         private Skeleton AverageSkeletons(List<Skeleton> skeletons)
         {
             Skeleton average = new Skeleton();
@@ -320,7 +332,12 @@ namespace SkeletonCompare
 
 
         }
-
+        /// <summary>
+        /// Scatter of skeleton
+        /// </summary>
+        /// <param name="skeletons"></param>
+        /// <param name="average"></param>
+        /// <returns></returns>
         private Skeleton scatterSkeletons(List<Skeleton> skeletons, Skeleton average)
         {
             Skeleton scatter = new Skeleton();

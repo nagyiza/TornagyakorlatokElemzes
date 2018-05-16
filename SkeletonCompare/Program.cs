@@ -8,10 +8,13 @@ using System.IO;
 
 namespace SkeletonCompare
 {
+    /// <summary>
+    /// This class teach the algorithm, and compare the moves
+    /// </summary>
     public class Program
     {
         /// <summary>
-        /// Path of the data
+        /// Path of the data from unity
         /// </summary>
         private static String path = "..\\..\\..\\UnityData\\";
         /// <summary>
@@ -20,7 +23,6 @@ namespace SkeletonCompare
         private static Compare skeletonCompare;
 
         /// <summary>
-        /// Main
         /// Compare the user and the reference skeletons
         /// </summary>
         /// <param name="args"></param>
@@ -33,8 +35,10 @@ namespace SkeletonCompare
                 String exerciseName = Console.ReadLine();
                 String exerciseNameRef = "";
                 int isInt;
+                //check the last character
                 if (Int32.TryParse(exerciseName[exerciseName.Length - 1].ToString(), out isInt))
                 {
+                    //delete the number in the exercise name
                     foreach (char c in exerciseName)
                     {
                         if (!Int32.TryParse(c.ToString(), out isInt))
@@ -53,7 +57,7 @@ namespace SkeletonCompare
                 }
 
 
-                Teaching teaching = new Teaching(exerciseNameRef);
+                Teaching teaching = new Teaching(exerciseNameRef, "..\\..\\..\\ReferenceData\\");
                 teaching.TeachingSkeleton();
 
                 //if the exercise is exist
@@ -84,8 +88,7 @@ namespace SkeletonCompare
                     }
                 }
             }
-
-            //skeletonCompare = new Compare(path, "User\\skeleton.txt", "Reference\\skeletonRef.txt");
+            
         }
     }
 

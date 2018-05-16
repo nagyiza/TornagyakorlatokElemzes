@@ -21,9 +21,6 @@
             <Label Grid.Row="1" Content="Welcome" Height="auto" Width="auto" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50" FontSize="20" FontStyle="Italic" />
             <Button Grid.Row="2" Content="Sign in" Width="100" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15" Command="{Binding SignInCommand}"/>
             <Button Grid.Row="3" Content="Registration" Width="100" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15" Command="{Binding RegistrationCommand}" />
-
-            <Button Grid.Row="4" Content="Add a new exercise" Width="120" Height="30"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15" Command="{Binding NewExercise}"/>
-        
         </Grid>
         <Label Content="by Nagy Izabella" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontStyle="Italic" Foreground="Gray"/>
     </Grid>

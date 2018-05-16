@@ -135,7 +135,9 @@ public class BodySourceViewRef : MonoBehaviour
         SkeletonData();
 
     }
-
+    public void StopAllCoroutines()
+    {
+    }
     /// <summary>
     /// Read the all lines in the path and processing the skeleton data
     /// </summary>

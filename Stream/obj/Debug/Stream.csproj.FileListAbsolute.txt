@@ -126,6 +126,6 @@ C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKin
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\Stream\bin\Debug\tr\ZedGraph.resources.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\Stream\bin\Debug\zh-cn\ZedGraph.resources.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\Stream\bin\Debug\zh-tw\ZedGraph.resources.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\Stream\obj\Debug\Stream.csprojResolveAssemblyReference.cache
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\Stream\obj\Debug\Stream.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\Stream\obj\Debug\Stream.pdb
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\Stream\obj\Debug\Stream.csprojResolveAssemblyReference.cache

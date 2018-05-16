@@ -13,6 +13,7 @@ namespace ExerciseAssistantApplication.Modell
         public MyDbContext() //: base("name=ExerciseAssistantDB") // ha nevvel adod akkor kell a connstring az appconfigba
         { }
         public DbSet<User> Users { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
 
     }
 }

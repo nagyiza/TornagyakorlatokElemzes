@@ -15,6 +15,7 @@ namespace Assets.KinectView.Scripts
         private String unityPath = "..\\..\\..\\UnityData\\";
         private String refDataPath = "..\\..\\..\\ReferenceData\\";
 
+        public string offlineResult;
         private Vector3 bodyDistance;
         /// <summary>
         /// The skeletons's coordinate's averages
@@ -166,8 +167,10 @@ namespace Assets.KinectView.Scripts
 
 
                     dtwResult = DTWDistance(skeletonsRef, skeletons);
+                    double percent = (scatterCount - dtwResult[0]) * 100 / (double)scatterCount;
+                    offlineResult = percent.ToString();
 
-                    File.WriteAllText(unityPath + "result.txt", dtwResult[0] + " " + dtwResult[1] + Environment.NewLine);
+                    File.WriteAllText(unityPath + "result.txt", percent + " " + offlineResult+ Environment.NewLine);
                 }
 
             }
@@ -278,7 +281,11 @@ namespace Assets.KinectView.Scripts
                     && i != 7
                     && i != 11
                     && i != 18
-                    && i != 14)
+                    && i != 14
+                    //
+                    //&& i!=3
+                    //&& i!= 2
+                    )
                 {
                     double x = Math.Abs(skeletonRef.Joints[i].x - skeleton.Joints[i].x);// - bodyDistance.x);
                     double y = Math.Abs(skeletonRef.Joints[i].y - skeleton.Joints[i].y);// - bodyDistance.y);

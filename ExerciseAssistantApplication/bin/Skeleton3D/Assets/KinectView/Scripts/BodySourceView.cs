@@ -39,6 +39,10 @@ public class BodySourceView : MonoBehaviour
     /// </summary>
     public Text result2;
     /// <summary>
+    /// Result for offline compare
+    /// </summary>
+    public string offlineResult;
+    /// <summary>
     /// The bone witch is not correct (scatter mathod)
     /// </summary>
     public string errorjointType = "";
@@ -134,6 +138,12 @@ public class BodySourceView : MonoBehaviour
         //processing the skeleton data
         ReferenceSkeleton();
     }
+    public void StopAllCoroutines()
+    {
+        string unityData = @"..\..\..\UnityData\" + "UnityData.txt";
+        File.AppendAllText(unityData, exerciseName + " " + DateTime.Now.ToString() + " " + lastExerciseName + ".txt " + Environment.NewLine);
+        
+    }
 
     void Start()
     {
@@ -214,6 +224,10 @@ public class BodySourceView : MonoBehaviour
                                     break;
                                 }
                             }
+                        }
+                        else
+                        {
+                            lastExerciseName = exerciseName;
                         }
                         File.WriteAllText(writePath + "User\\" + lastExerciseName + ".txt", "X              " + "Y         " + "Z     " + " JointType " + Environment.NewLine);
 
@@ -341,13 +355,14 @@ public class BodySourceView : MonoBehaviour
         if (reference.Count != 0)
         {
             Compare cmp = new Compare(reference, userSkeleton, exerciseName);
-            
+            offlineResult = cmp.offlineResult;
             if (cmp.dtwResult[0] == 0) // dtwResult[0] - result with scatter
             {
                 result.text = "Good";
                 result.color = Color.green;
                 errorjointType = "";
-            }else
+            }
+            else
             {
                 result.text = cmp.errorjointType;
                 result.color = Color.red;

@@ -10,49 +10,55 @@ using System.Threading.Tasks;
 
 namespace ExerciseAssistantApplication.ViewModell
 {
+    /// <summary>
+    /// ViewModel for first screen
+    /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Command for sign in
+        /// </summary>
         public RelayCommand SignInCommand { get; set; }
+        /// <summary>
+        /// Command for registration
+        /// </summary>
         public RelayCommand RegistrationCommand { get; set; }
-
+        /// <summary>
+        /// The constructor
+        /// </summary>
         public MainWindowViewModel()
         {
             this.SignInCommand = new RelayCommand(SignInClick, SignInCancel);
             this.RegistrationCommand = new RelayCommand(Registration, RegistrationCancel);
-
-            this.NewExercise = new RelayCommand(NewExerciseClick, NewExerciseCancel);
         }
-
+        /// <summary>
+        /// Event for sign in button
+        /// </summary>
         public void SignInClick()
         {
             //hide before startup
             LogInViewModel blpvm = new LogInViewModel();
             ViewService.ShowDialog(blpvm);
         }
+        /// <summary>
+        /// Event for cancel the sign in
+        /// </summary>
         private bool SignInCancel()
         {
             return true;
         }
+        /// <summary>
+        /// Event for registration button
+        /// </summary>
         private void Registration()
         {
             RegistrationViewModel rvm = new RegistrationViewModel();
             ViewService.ShowDialog(rvm);
         }
+        /// <summary>
+        /// Event for cancel the registration
+        /// </summary>
         private bool RegistrationCancel()
-        {
-            return true;
-        }
-
-        public RelayCommand NewExercise { get; set; }
-        public void NewExerciseClick()
-        {
-            //NewExerciseViewModel nevm = new NewExerciseViewModel();
-            //ViewService.ShowDialog(nevm);
-
-            ReferenceDataCollection.MainWindow m = new ReferenceDataCollection.MainWindow();
-            m.Show();
-        }
-        public bool NewExerciseCancel()
         {
             return true;
         }

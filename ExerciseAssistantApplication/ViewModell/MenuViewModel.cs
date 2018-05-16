@@ -1,45 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
 using ExerciseAssistantApplication.Common;
-using ExerciseAssistantApplication.Modell;
-using System.Windows.Controls;
 using System.Windows;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.IO;
+using ExerciseAssistantApplication.Modell;
+using SkeletonCompare;
 
 namespace ExerciseAssistantApplication.ViewModell
 {
+    /// <summary>
+    /// ViewModel for menu
+    /// </summary>
     public class MenuViewModel : ViewModelBase
     {
-        [DllImport("User32.dll")]
-        static extern bool MoveWindow(IntPtr handle, int x, int y, int width, int height, bool redraw);
-
-        internal delegate int WindowEnumProc(IntPtr hwnd, IntPtr lparam);
-        [DllImport("user32.dll")]
-        internal static extern bool EnumChildWindows(IntPtr hwnd, WindowEnumProc func, IntPtr lParam);
-
-        [DllImport("user32.dll")]
-        static extern int SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
-
+        /// <summary>
+        /// Username from email
+        /// </summary>
+        private string userName;
+        /// <summary>
+        /// Process for unity
+        /// </summary>
         private Process process;
-        private IntPtr unityHWND = IntPtr.Zero;
+        /// <summary>
+        /// Path of the data from unity
+        /// </summary>
+        private static String path = "..\\..\\..\\UnityData\\";
 
-        private const int WM_ACTIVATE = 0x0006;
-        private readonly IntPtr WA_ACTIVE = new IntPtr(1);
-        private readonly IntPtr WA_INACTIVE = new IntPtr(0);
-
-
-
+        /// <summary>
+        /// Visibility for user 
+        /// If is an admin, visible all buttons, or if is a user hidden admin's buttons
+        /// </summary>
         private string visibility;
+        /// <summary>
+        /// Command for start button
+        /// </summary>
         public RelayCommand Start { get; set; }
+        /// <summary>
+        /// Command for MyExercise button
+        /// </summary>
         public RelayCommand MyExercise { get; set; }
+        /// <summary>
+        ///  Command for NewExercise button
+        /// </summary>
         public RelayCommand NewExercise { get; set; }
-        public MenuViewModel(bool isAdmin)
+        /// <summary>
+        /// The constructor
+        /// </summary>
+        /// <param name="isAdmin"></param>
+        public MenuViewModel(bool isAdmin, string userName)
         {
+            this.userName = userName;
             this.Start = new RelayCommand(StartClick,StartCancel);
             this.MyExercise = new RelayCommand(MyExerciseClick, MyExerciseCancel);
             this.NewExercise = new RelayCommand(NewExerciseClick, NewExerciseCancel);
@@ -55,58 +65,108 @@ namespace ExerciseAssistantApplication.ViewModell
             }
 
         }
-
+        /// <summary>
+        /// Getter and setter for visibility
+        /// </summary>
         public string Visibility
         {
             get { return visibility; }
             set { visibility = value; }
         }
+        /// <summary>
+        /// Event for start button
+        /// </summary>
         public void StartClick()
         {
-            //StartViewModel auvm = new StartViewModel();
-            //ViewService.ShowDialog(auvm);
-
             try
             {
+                //Start the unity game
                 process = new Process();
                 process.StartInfo.FileName = "Skeleton3D.exe";
                 
                 process.StartInfo.UseShellExecute = true;
                 process.StartInfo.CreateNoWindow = true;
-
+                process.EnableRaisingEvents = true;
+                process.Exited += new EventHandler(myProcess_HasExited);
                 process.Start();
-
+                
                 process.WaitForInputIdle();
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + ".\nCheck if Container.exe is placed next to UnityGame.exe.");
             }
-
-
         }
+
+        private void myProcess_HasExited(object sender, EventArgs e)
+        {
+            MyDbContext db = new MyDbContext();
+            char[] separators = { ' ' };
+            StreamReader fileReader;
+            if (File.Exists(path + "UnityData.txt"))
+            {
+                fileReader = new StreamReader(path + "UnityData.txt");
+            }
+            else
+            {
+                return;
+            }
+            
+            string line;
+            //read the skeleton data
+            while ((line = fileReader.ReadLine()) != null)
+            {
+                // split the data 
+                string[] words = line.Split(separators);
+                string[] nameSplit = words[4].Split('.');
+                CompareMain.Compare(nameSplit[0]);
+                string result = CompareMain.Result;
+
+                db.Exercises.Add(new Exercise { Username = userName, ExerciseName = words[0], Date = words[1] + " " + words[2] + " " + words[3], Result = result });
+                db.SaveChanges();
+            }
+            fileReader.Close();
+            File.Delete(path + "UnityData.txt");
+        }
+
+        /// <summary>
+        /// Event for cancel the start
+        /// </summary>
+        /// <returns></returns>
         public bool StartCancel()
         {
             return true;
         }
+        /// <summary>
+        /// Event for myexercise button
+        /// </summary>
         public void MyExerciseClick()
         {
-            //SearchViewModel svm = new SearchViewModel();
-            //ViewService.ShowDialog(svm);
+            MyExerciseViewModel mevm = new MyExerciseViewModel();
+            ViewService.ShowDialog(mevm);
         }
+        /// <summary>
+        /// Event for cancelk the myexercise 
+        /// </summary>
+        /// <returns></returns>
         public bool MyExerciseCancel()
         {
             return true;
         }
+        /// <summary>
+        /// Event for new exercise button
+        /// </summary>
         public void NewExerciseClick()
         {
             //NewExerciseViewModel nevm = new NewExerciseViewModel();
             //ViewService.ShowDialog(nevm);
-
             ReferenceDataCollection.MainWindow m = new ReferenceDataCollection.MainWindow();
             m.Show();
         }
+        /// <summary>
+        /// Event for cancel the new exercise
+        /// </summary>
+        /// <returns></returns>
         public bool NewExerciseCancel()
         {
             return true;

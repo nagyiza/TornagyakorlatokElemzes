@@ -8,8 +8,9 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-// In this class I used the example code of Kinect SDK 2.0
-
+/// <summary>
+/// I used the example of Kinect SDK 2.0
+/// </summary>
 namespace Stream
 {
     public class ColorStream : IDataCollection<ColorFrameArrivedEventArgs>, INotifyPropertyChanged
@@ -41,7 +42,10 @@ namespace Stream
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ColorStream() { }
-        
+        /// <summary>
+        /// Display the frame by Kinect
+        /// </summary>
+        /// <param name="sensor">The Kinect sensor</param>
         public void Stream(KinectSensor kinectSensor)
         {
             if (kinectSensor != null)

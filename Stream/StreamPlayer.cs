@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// I used Bala Zsolt's project, but I modified
+/// </summary>
 namespace Stream
 {
     public class StreamPlayer

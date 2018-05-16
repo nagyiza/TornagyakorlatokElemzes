@@ -3,30 +3,55 @@ using ExerciseAssistantApplication.Modell;
 
 namespace ExerciseAssistantApplication.ViewModell
 {
+    /// <summary>
+    /// ViewModel for registration
+    /// </summary>
     public class RegistrationViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Edit box for username
+        /// </summary>
         private string username_box;
+        /// <summary>
+        /// Edit box for email
+        /// </summary>
         private string email_box;
+        /// <summary>
+        /// Edit box for password
+        /// </summary>
         private string password_box;
+        /// <summary>
+        /// Edit box for password (again)
+        /// </summary>
         private string passwordagain_box;
-
+        /// <summary>
+        /// Command for Ok button
+        /// </summary>
         public RelayCommand OkCommand { get; set; }
+        /// <summary>
+        /// Command for Back button
+        /// </summary>
         public RelayCommand BackCommand { get; set; }
 
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public RegistrationViewModel()
         {
             this.OkCommand = new RelayCommand(OkClick, Cancel);
             this.BackCommand = new RelayCommand(Back, Cancel);
         }
-
+        /// <summary>
+        /// Event for OK button
+        /// </summary>
         public void OkClick()
         {
 
             if (username_box != null && email_box != null && checkEmail(email_box) && upassword != null && (upassword == upassword2))
             {
+                string[] emailSplit = Email_box.Split('@');
                 ViewService.CloseDialog(this);
-                MenuViewModel mvm = new MenuViewModel(false);
+                MenuViewModel mvm = new MenuViewModel(false, emailSplit[0]);
                 ViewService.ShowDialog(mvm);
                 MyDbContext db = new MyDbContext();
 
@@ -36,6 +61,11 @@ namespace ExerciseAssistantApplication.ViewModell
 
 
         }
+        /// <summary>
+        /// Check email format
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns> true - if the email is correct, false - if the email is not correct</returns>
         public bool checkEmail(string email)
         {
             string[] words = email.Split('@');
@@ -57,19 +87,25 @@ namespace ExerciseAssistantApplication.ViewModell
             else return false;
 
         }
+        /// <summary>
+        /// Event for back button
+        /// </summary>
         public void Back()
         {
             ViewService.CloseDialog(this);
 
         }
+        /// <summary>
+        /// Event for cancel
+        /// </summary>
+        /// <returns></returns>
         private bool Cancel()
         {
 
             return true;
         }
 
-        //variables for binding
-
+        //---variables for binding
         public string upassword;
         public string uPassword
         {
@@ -90,8 +126,10 @@ namespace ExerciseAssistantApplication.ViewModell
                 this.OnPropertyChanged("uPassword2");
             }
         }
-        
-        //getting text box content
+        //------
+        /// <summary>
+        /// Getter and setter the email
+        /// </summary>
         public string Email_box
         {
             get { return this.email_box; }
@@ -105,7 +143,9 @@ namespace ExerciseAssistantApplication.ViewModell
                 }
             }
         }
-
+        /// <summary>
+        /// Getter and setter the username
+        /// </summary>
         public string Username_box
         {
             get { return this.username_box; }
@@ -119,6 +159,9 @@ namespace ExerciseAssistantApplication.ViewModell
                 }
             }
         }
+        /// <summary>
+        /// Getter and setter the password
+        /// </summary>
         public string Password_box
         {
             get { return this.password_box; }
@@ -132,6 +175,9 @@ namespace ExerciseAssistantApplication.ViewModell
                 }
             }
         }
+        /// <summary>
+        /// Getter and setter the password
+        /// </summary>
         public string PasswordAgain_box
         {
             get { return this.passwordagain_box; }

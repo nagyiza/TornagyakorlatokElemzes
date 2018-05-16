@@ -31,7 +31,7 @@ namespace ExerciseAssistantApplication
             ViewService.RegisterView(typeof(LogInViewModel), typeof(LogIn));
             ViewService.RegisterView(typeof(RegistrationViewModel), typeof(Registration));
             ViewService.RegisterView(typeof(MenuViewModel), typeof(Menu));
-            ViewService.RegisterView(typeof(StartViewModel), typeof(Start));
+            ViewService.RegisterView(typeof(MyExerciseViewModel), typeof(MyExercise));
             //ViewService.RegisterView(typeof(SearchViewModel), typeof(Search));
             //ViewService.RegisterView(typeof(ModificationViewModel), typeof(Modification));
             //ViewService.RegisterView(typeof(AllUserViewModel), typeof(AllUser));

@@ -105,14 +105,15 @@ C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\DataCollection\obj\Debug
 C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\DataCollection\obj\Debug\DataCollection.exe
 C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\DataCollection\obj\Debug\DataCollection.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\DataCollection.exe.config
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\DataCollection.exe
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\DataCollection.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\DataCollection.exe
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\DataCollection.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\DataCollectionInterface.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Emgu.CV.UI.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Emgu.CV.UI.GL.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Emgu.CV.World.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServerCompact.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Microsoft.Kinect.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Microsoft.Kinect.Face.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Microsoft.Kinect.Fusion.dll
@@ -121,12 +122,16 @@ C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKin
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\OpenTK.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\OpenTK.GLControl.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Stream.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\System.Data.SqlServerCe.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\ZedGraph.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\DataCollectionInterface.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Stream.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Emgu.CV.UI.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Emgu.CV.UI.GL.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Emgu.CV.World.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServerCompact.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Microsoft.Kinect.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Microsoft.Kinect.Face.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Microsoft.Kinect.Fusion.xml
@@ -157,11 +162,5 @@ C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKin
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\DataCollection.g.resources
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\DataCollection.Properties.Resources.resources
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\ReferenceDataCollection.csproj.GenerateResource.Cache
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\Tao.FreeGlut.xml
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.dll
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServerCompact.dll
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\System.Data.SqlServerCe.dll
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.xml
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\bin\Debug\EntityFramework.SqlServerCompact.xml
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\DataCollection.exe
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\DataCollection\obj\Debug\DataCollection.pdb
