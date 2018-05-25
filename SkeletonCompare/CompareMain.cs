@@ -58,11 +58,11 @@ namespace SkeletonCompare
 
                 //if the exercise is exist
                 if (File.Exists(path + "User\\" + exerciseName + ".txt")
-                    && File.Exists(path + "Reference\\" + exerciseNameRef + "Ref.txt"))
+                    && File.Exists(path + "Reference\\" + exerciseNameRef + "AverageRef.txt"))
                 {
                     //Console.WriteLine("Result: ");
                     //compare the user and the reference skeletons
-                    skeletonCompare = new Compare(teaching, path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "Ref.txt");
+                    skeletonCompare = new Compare(teaching, path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "AverageRef.txt");
                     skeletonCompare.DTW();//the dtw algorithm
                     Result = skeletonCompare.scatterPercent.ToString();//or anglesPercent
                 }

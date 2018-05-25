@@ -40,6 +40,10 @@ namespace SkeletonCompare
                 {
                     isNewReference = true;
                 }
+                else
+                {
+                    isNewReference = false;
+                }
 
                 String exerciseNameRef = "";
                 Teaching teaching;
@@ -73,38 +77,35 @@ namespace SkeletonCompare
 
                     //if the exercise is exist
                     if (File.Exists(path + "User\\" + exerciseName + ".txt")
-                        && File.Exists(path + "Reference\\" + exerciseNameRef + "Ref.txt"))
+                        && File.Exists(path + "Reference\\" + exerciseNameRef + "AverageRef.txt"))
                     {
                         Console.WriteLine("Result: ");
                         //compare the user and the reference skeletons
-                        skeletonCompare = new Compare(teaching, path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "Ref.txt");
+                        skeletonCompare = new Compare(teaching, path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "AverageRef.txt");
                         var time = DateTime.Now;
                         skeletonCompare.DTW();//the dtw algorithm
                         Console.WriteLine(Environment.NewLine + (DateTime.Now - time).ToString());
-                        Console.WriteLine(Environment.NewLine + "Press enter and try again or press esc and application close" + Environment.NewLine);
-                        //if press esc, the application close
-                        if (Console.ReadKey(true).Key == ConsoleKey.Escape)
-                        {
-                            Environment.Exit(0);
-                        }
+                       
                     }
                     else
                     {
                         Console.WriteLine("The exercise name is not correct !!!");
-                        Console.WriteLine(Environment.NewLine + "Press enter and try again or press esc and application close" + Environment.NewLine);
-                        //if press esc, the application close
-                        if (Console.ReadKey(true).Key == ConsoleKey.Escape)
-                        {
-                            Environment.Exit(0);
-                        }
+                        
                     }
                 }
                 else
                 {
                     teaching = new Teaching(exerciseName, "..\\..\\..\\ReferenceData\\", isNewReference);
                     Console.WriteLine("The teaching with new reference data completed!");
+                    
                 }
-                
+                Console.WriteLine(Environment.NewLine + "Press enter and try again or press esc and application close" + Environment.NewLine);
+                //if press esc, the application close
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
+
             }
             
         }

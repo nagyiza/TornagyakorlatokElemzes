@@ -42,7 +42,6 @@ namespace SkeletonCompare
         /// List of the scatter
         /// </summary>
         private List<Skeleton> scatter;
-        private string NewReferenceExerciseName;
 
         /// <summary>
         /// 
@@ -57,28 +56,28 @@ namespace SkeletonCompare
             average = new List<Skeleton>();
             scatter = new List<Skeleton>();
 
-            exerciseName = exerciseNameRef;
+            exerciseName = GetName(exerciseNameRef);
             if (!isNew)
             {
-                if (!File.Exists(path + exerciseNameRef + "Average.txt")
-                    || !File.Exists(path + exerciseNameRef + "AngleAverage.txt")
-                    || !File.Exists(path + exerciseNameRef + "Scatter.txt")
-                    || !File.Exists(path + exerciseNameRef + "AngleScatter.txt"))
+                if (!File.Exists(path + exerciseName + "Average.txt")
+                    || !File.Exists(path + exerciseName + "AngleAverage.txt")
+                    || !File.Exists(path + exerciseName + "Scatter.txt")
+                    || !File.Exists(path + exerciseName + "AngleScatter.txt"))
                 {
                     filesData = new List<List<Skeleton>>();
                     exerciseNamesRef = new List<string>();
-                    if (File.Exists(path + exerciseNameRef + ".txt"))
+                    if (File.Exists(path + exerciseName + ".txt"))
                     {
-                        exerciseNamesRef.Add(exerciseNameRef + ".txt");
-                        filesData.Add(Skeleton.ProcessSkeletonFromFile(path + exerciseNameRef + ".txt"));
+                        exerciseNamesRef.Add(exerciseName + ".txt");
+                        filesData.Add(Skeleton.ProcessSkeletonFromFile(path + exerciseName + ".txt"));
                         //CalculateSkeletonAngles(filesData[filesData.Count - 1]);
 
                         for (int i = 1; ; ++i)
                         {
-                            if (File.Exists(path + exerciseNameRef + i + ".txt"))
+                            if (File.Exists(path + exerciseName + i + ".txt"))
                             {
-                                exerciseNamesRef.Add(exerciseNameRef + i + ".txt");
-                                filesData.Add(Skeleton.ProcessSkeletonFromFile(path + exerciseNameRef + i + ".txt"));
+                                exerciseNamesRef.Add(exerciseName + i + ".txt");
+                                filesData.Add(Skeleton.ProcessSkeletonFromFile(path + exerciseName + i + ".txt"));
                                 //CalculateSkeletonAngles(filesData[filesData.Count - 1]);
                             }
                             else
@@ -91,14 +90,35 @@ namespace SkeletonCompare
                 }
                 else
                 {
-                    TeachingSkeleton(exerciseName, isNew);
+                    TeachingSkeleton(exerciseNameRef, isNew);
                 }
             }
             else
             {
-                TeachingSkeleton(exerciseName, isNew);
-            }
+                filesData = new List<List<Skeleton>>();
+                exerciseNamesRef = new List<string>();
+                if (File.Exists(path + exerciseName + ".txt"))
+                {
+                    exerciseNamesRef.Add(exerciseName + ".txt");
+                    filesData.Add(Skeleton.ProcessSkeletonFromFile(path + exerciseName + ".txt"));
+                    //CalculateSkeletonAngles(filesData[filesData.Count - 1]);
 
+                    for (int i = 1; ; ++i)
+                    {
+                        if (File.Exists(path + exerciseName + i + ".txt"))
+                        {
+                            exerciseNamesRef.Add(exerciseName + i + ".txt");
+                            filesData.Add(Skeleton.ProcessSkeletonFromFile(path + exerciseName + i + ".txt"));
+                            //CalculateSkeletonAngles(filesData[filesData.Count - 1]);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                TeachingSkeleton(exerciseNamesRef[0], isNew);
+            }
         }
 
         /// <summary>
@@ -113,19 +133,22 @@ namespace SkeletonCompare
             {
                 string[] names = name.Split('.');
                 names[0] = GetName(names[0]);
-                if (File.Exists(path + names[0] + "Average.txt")
-                 || File.Exists(path + names[0] + "AngleAverage.txt")
-                 || File.Exists(path + names[0] + "Scatter.txt")
-                 || File.Exists(path + names[0] + "AngleScatter.txt"))
+                if (isNew)
                 {
-                    File.Delete(path + names[0] + "Average.txt");
-                    File.Delete(path + names[0] + "AngleAverage.txt");
-                    File.Delete(path + names[0] + "Scatter.txt");
-                    File.Delete(path + names[0] + "AngleScatter.txt");
+                    if (File.Exists(path + names[0] + "Average.txt")
+                     || File.Exists(path + names[0] + "AngleAverage.txt")
+                     || File.Exists(path + names[0] + "Scatter.txt")
+                     || File.Exists(path + names[0] + "AngleScatter.txt"))
+                    {
+                        File.Delete(path + names[0] + "Average.txt");
+                        File.Delete(path + names[0] + "AngleAverage.txt");
+                        File.Delete(path + names[0] + "Scatter.txt");
+                        File.Delete(path + names[0] + "AngleScatter.txt");
+
+                    }
                 }
                 Skeleton.SkeletonPrint(average, path + names[0] + "Average.txt");
                 Skeleton.SkeletonAnglePrint(average, path + names[0] + "AngleAverage.txt");
-
 
                 for (int i = 0; i < scatter.Count; ++i)
                 {
@@ -149,6 +172,7 @@ namespace SkeletonCompare
                             }
                         }
                         scatter[i].ImportanceInPercent.Add(counter / (double)filesData.Count() * 100);// in %
+
                     }
                     //angles
                     for (int j = 0; j < scatter[i].AngleList.Count; ++j)
@@ -170,6 +194,7 @@ namespace SkeletonCompare
                         }
 
                         scatter[i].ImportanceAngleInPercent.Add(counter / (double)filesData.Count() * 100);// in %
+
                     }
                 }
 
@@ -183,28 +208,57 @@ namespace SkeletonCompare
         /// </summary>
         private void CalculateScatter(bool isNew)
         {
-            if (filesData != null)
+            if (!isNew)
             {
-                for (int i = 0; i < filesData.Count; ++i)
+                if (filesData != null)
                 {
-                    CalculateSkeletonAngles(filesData[i]);
-                }
-                if (filesData.Count == 1)
-                {
-                    for (int i = 0; i < filesData[0].Count; ++i)
+                    for (int i = 0; i < filesData.Count; ++i)
                     {
-                        average.Add(filesData[0][i]);
+                        CalculateSkeletonAngles(filesData[i]);
                     }
-                    for (int i = 0; i < average.Count; ++i)
+                    if (filesData.Count == 1)
                     {
-                        scatter.Add(scatterSkeletons(average, average[i]));
+                        for (int i = 0; i < filesData[0].Count; ++i)
+                        {
+                            average.Add(filesData[0][i]);
+                        }
+                        for (int i = 0; i < average.Count; ++i)
+                        {
+                            scatter.Add(scatterSkeletons(average, average[i]));
+                        }
+                    }
+                    else
+                    {
+                        //false - calculate first average and first scatter
+                        Average(false);
+                        Scatter(false);
                     }
                 }
                 else
                 {
-                    //false - calculate first average and first scatter
-                    Average(false);
-                    Scatter(false);
+                    string name = GetName(exerciseName);
+                    //read data in file (joint's averages and scatters)
+                    average = Skeleton.ProcessSkeletonFromFile(path + name + "Average.txt");
+                    scatter = Skeleton.ProcessSkeletonFromFile(path + name + "Scatter.txt");
+                    // in this list are the joint, the angle and the teaching percent
+                    List<Tuple<JointType, JointType, double, double>> angleListAverage = Skeleton.ProcessSkeletonAngelsFromFile(path + name + "AngleAverage.txt");
+                    List<Tuple<JointType, JointType, double, double>> angleListScatter = Skeleton.ProcessSkeletonAngelsFromFile(path + name + "AngleScatter.txt");
+
+                    for (int i = 0; i < average.Count; ++i)
+                    {
+                        List<Tuple<JointType, JointType, double>> angleList = new List<Tuple<JointType, JointType, double>>();
+                        List<Tuple<JointType, JointType, double>> scatterList = new List<Tuple<JointType, JointType, double>>();
+                        List<double> percentAngle = new List<double>();
+                        for (int j = 0; j < 23; ++j)
+                        {
+                            angleList.Add(new Tuple<JointType, JointType, double>(angleListAverage[j + i * 23].Item1, angleListAverage[j + i * 23].Item2, angleListAverage[j + i * 23].Item3));
+                            scatterList.Add(new Tuple<JointType, JointType, double>(angleListScatter[j + i * 23].Item1, angleListScatter[j + i * 23].Item2, angleListScatter[j + i * 23].Item3));
+                            percentAngle.Add(angleListScatter[j + i * 23].Item4);
+                        }
+                        average[i].AngleList = angleList;
+                        scatter[i].AngleList = scatterList;
+                        scatter[i].ImportanceAngleInPercent = percentAngle;
+                    }
                 }
             }
             else
@@ -233,24 +287,20 @@ namespace SkeletonCompare
                     scatter[i].ImportanceAngleInPercent = percentAngle;
                 }
 
-                if (isNew)
+                // UJATLAG
+                List<Skeleton> newRefExercise = Skeleton.ProcessSkeletonFromFile(path + exerciseName + ".txt");
+
+                /*for (int i = 0; i < filesData.Count; ++i)
                 {
-                    //TODO UJATLAG
-                    List<Skeleton> newRefExercise = Skeleton.ProcessSkeletonFromFile(path + exerciseName + ".txt");
-                    filesData = new List<List<Skeleton>>();
+                    CalculateSkeletonAngles(filesData[i]);
+                }*/
 
-                    filesData.Add(newRefExercise);
-                    for (int i = 0; i < filesData.Count; ++i)
-                    {
-                        CalculateSkeletonAngles(filesData[i]);
-                    }
-
-                    //regi, at kell alakitani ugy h ujat is tudjon szamolni
-                    //true - calculate new average and new scatter with old average and old scatter
-                    Average(true);
-                    Scatter(true);
-                }
+                //regi, at kell alakitani ugy h ujat is tudjon szamolni
+                //true - calculate new average and new scatter with old average and old scatter
+                Average(true);
+                Scatter(true);
             }
+
         }
 
 
@@ -292,7 +342,7 @@ namespace SkeletonCompare
             }
             else
             {
-                average = NewAverageSkeletons(filesData[0]);
+                average = NewAverageSkeletons(filesData[filesData.Count() - 1]);
             }
         }
         /// <summary>
@@ -431,7 +481,7 @@ namespace SkeletonCompare
             }
             else
             {
-                scatter = NewScatterSkeletons(filesData[0]);
+                scatter = NewScatterSkeletons(filesData[filesData.Count() - 1]);
             }
 
 
@@ -529,6 +579,8 @@ namespace SkeletonCompare
                 newScatter.Add(new Skeleton());
                 newScatter[i].Joints = new List<Vector3D>();
                 newScatter[i].AngleList = new List<Tuple<JointType, JointType, double>>();
+                newScatter[i].ImportanceInPercent = new List<double>();
+                newScatter[i].ImportanceAngleInPercent = new List<double>();
                 //joint
                 for (int j = 0; j < 25; ++j) //for joint
                 {
@@ -538,7 +590,9 @@ namespace SkeletonCompare
                     double z = Math.Sqrt((n - 1) / n * (scatter[i].Joints[j].Z * scatter[i].Joints[j].Z) + 1 / n * (skeletons[i].Joints[j].Z - average[i].Joints[j].Z));
 
                     newScatter[i].Joints.Add(new Vector3D(x, y, z));
+
                 }
+                newScatter[i].ImportanceInPercent = scatter[i].ImportanceInPercent;
 
                 //angles
                 for (int j = 0; j < 23; ++j) //for angles
@@ -549,6 +603,7 @@ namespace SkeletonCompare
                     double av = Math.Sqrt((n - 1) / n * scatter[i].AngleList[j].Item3 + 1 / n * (skeletons[i].AngleList[j].Item3 - average[i].AngleList[j].Item3));
                     newScatter[i].AngleList.Add(new Tuple<JointType, JointType, double>(first, second, av));
                 }
+                newScatter[i].ImportanceAngleInPercent = scatter[i].ImportanceAngleInPercent;
             }
             return newScatter;
         }
@@ -611,7 +666,7 @@ namespace SkeletonCompare
                 name = exerciseName;
             }
 
-            return name;            
+            return name;
         }
 
     }

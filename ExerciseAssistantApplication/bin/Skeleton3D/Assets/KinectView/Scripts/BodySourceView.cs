@@ -77,6 +77,11 @@ public class BodySourceView : MonoBehaviour
     /// The path in which write the user koordinates (unity koordinates)
     /// </summary>
     private string writePath = @"..\..\..\UnityData\";
+    /// <summary>
+    /// The exercise is stopped?
+    /// </summary>
+    public Button StopButton;
+    public Button StartButton;
 
     /// <summary>
     /// In this object is bones (joint pairs)
@@ -123,27 +128,53 @@ public class BodySourceView : MonoBehaviour
     /// </summary>
     private List<Vector4> userSkeleton = new List<Vector4>();
 
+    //----------- FUNCTION FOR BUTTONS CLICK -------------
+
     /// <summary>
     /// Get the path from input
     /// </summary>
     /// <param name="path">The path in which is skeleton data</param>
     public void GetInput(string path)
     {
+        StopButton.enabled = true;
+        StartButton.enabled = false;
         exerciseName = path;
 
-        path = @"..\..\..\ReferenceData\" + path + ".txt";
+        this.path = @"..\..\..\ReferenceData\" + path + "Average.txt";
 
-        Debug.Log("The path is BodySourceView " + path);
+        Debug.Log("The path is BodySourceView " + this.path);
 
         //processing the skeleton data
         ReferenceSkeleton();
     }
     public void StopAllCoroutines()
     {
-        string unityData = @"..\..\..\UnityData\" + "UnityData.txt";
-        File.AppendAllText(unityData, exerciseName + " " + DateTime.Now.ToString() + " " + lastExerciseName + ".txt " + Environment.NewLine);
-        
+        if (exerciseName != "" && lastExerciseName != "") {
+            string unityData = @"..\..\..\UnityData\" + "UnityData.txt";
+            File.AppendAllText(unityData, exerciseName + " " + DateTime.Now.ToString() + " " + lastExerciseName + ".txt " + Environment.NewLine);
+        }
+        StopButton.enabled = false;
+        StartButton.enabled = true;
     }
+    public void StartExercise()
+    {
+        StopButton.enabled = true;
+        StartButton.enabled = false;
+        // StopButton.enabled = false;
+        if (path == "" || path == null) {
+            path = @"..\..\..\ReferenceData\" + path + "Average.txt";
+
+            Debug.Log("The path is BodySourceView " + path);
+
+            //processing the skeleton data
+            ReferenceSkeleton();
+        }
+    }
+    public void ExitApplication()
+    {
+        Application.Quit();
+    }
+    // ------------------------------------------
 
     void Start()
     {
@@ -156,6 +187,7 @@ public class BodySourceView : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (!StopButton.enabled) return;
         if (path != "" && File.Exists(path))
         {
             if (BodySourceManager == null)
@@ -351,7 +383,7 @@ public class BodySourceView : MonoBehaviour
                 lr.enabled = false;
             }
         }
-
+        Debug.Log(reference.Count());
         if (reference.Count != 0)
         {
             Compare cmp = new Compare(reference, userSkeleton, exerciseName);
@@ -382,7 +414,6 @@ public class BodySourceView : MonoBehaviour
 
         }
         userSkeleton = new List<Vector4>();
-
     }
 
     /// <summary>
@@ -426,9 +457,10 @@ public class BodySourceView : MonoBehaviour
 
     private void ReferenceSkeleton()
     {
-        File.WriteAllText(writePath + "Reference\\" + exerciseName + "Ref.txt", "   X       Y         Z      JointType" + Environment.NewLine);
+        Debug.Log("Path: " + this.path);
+        File.WriteAllText(writePath + "Reference\\" + exerciseName + "AverageRef.txt", "   X       Y         Z      JointType" + Environment.NewLine);
         string[] lines = System.IO.File.ReadAllLines(path);//reference     
-
+        
         int type = 0;
         try
         {

@@ -114,16 +114,23 @@ public class BodySourceViewRef : MonoBehaviour
     /// The first jointType
     /// </summary>
     private int jointType = 0; // for processing skeleton data
-
+    /// <summary>
+    /// The exercise is stopped?
+    /// </summary>
+    public Button StopButton;
+    public Button StartButton;
     //System.IO.File.AppendAllText(@"C:\Users\Izabella\Desktop\koordinateRef.txt", line + Environment.NewLine);
 
-    
+    //----------- FUNCTION FOR BUTTONS CLICK -------------
+
     /// <summary>
     /// Get the path from input
     /// </summary>
     /// <param name="path">The path in which is skeleton data</param>
     public void GetInput(string path)
     {
+        StopButton.enabled = true;
+        StartButton.enabled = false;
         path = @"..\..\..\ReferenceData\" + path + ".txt";
 
         Debug.Log("The path is " + path);
@@ -137,7 +144,33 @@ public class BodySourceViewRef : MonoBehaviour
     }
     public void StopAllCoroutines()
     {
+        StopButton.enabled = false;
+        StartButton.enabled = true;
     }
+    public void StartExercise()
+    {
+        StopButton.enabled = true;
+        StartButton.enabled = false;
+        // StopButton.enabled = false;
+        if (path == "" || path == null)
+        {
+            path = @"..\..\..\ReferenceData\" + path + ".txt";
+
+            Debug.Log("The path is " + path);
+            joinIsValid = jointsIsNotValid();
+
+            //read the all lines in the path
+            lines = File.ReadAllLines(path);
+            //processing the skeleton data
+            SkeletonData();
+        }
+    }
+    public void ExitApplication()
+    {
+        Application.Quit();
+    }
+    // ---------------------------------------
+
     /// <summary>
     /// Read the all lines in the path and processing the skeleton data
     /// </summary>
@@ -156,6 +189,7 @@ public class BodySourceViewRef : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (!StopButton.enabled) return;
         if (path != "" && File.Exists(path))
         {
             if (BodySourceManager == null)
