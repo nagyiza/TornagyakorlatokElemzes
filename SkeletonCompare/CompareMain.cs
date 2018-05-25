@@ -26,9 +26,10 @@ namespace SkeletonCompare
         {
 
         }
-        public static void Compare(string exerciseName)
+        public static void Compare(string exerciseName, bool isNewReference)
         {
             String exerciseNameRef = "";
+            Teaching teaching;
             int isInt;
             //check the last character
             if (Int32.TryParse(exerciseName[exerciseName.Length - 1].ToString(), out isInt))
@@ -51,20 +52,25 @@ namespace SkeletonCompare
                 exerciseNameRef = exerciseName;
             }
 
+            if (!isNewReference) {
+                teaching = new Teaching(exerciseNameRef, "..\\..\\..\\ReferenceData\\", isNewReference);
+                //teaching.TeachingSkeleton();
 
-            Teaching teaching = new Teaching(exerciseNameRef, "..\\..\\..\\ReferenceData\\");
-            teaching.TeachingSkeleton();
-
-            //if the exercise is exist
-            if (File.Exists(path + "User\\" + exerciseName + ".txt")
-                && File.Exists(path + "Reference\\" + exerciseNameRef + "Ref.txt"))
-            {
-                //Console.WriteLine("Result: ");
-                //compare the user and the reference skeletons
-                skeletonCompare = new Compare(teaching, path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "Ref.txt");
-                skeletonCompare.DTW();//the dtw algorithm
-                Result = skeletonCompare.scatterPercent.ToString();//or anglesPercent
+                //if the exercise is exist
+                if (File.Exists(path + "User\\" + exerciseName + ".txt")
+                    && File.Exists(path + "Reference\\" + exerciseNameRef + "Ref.txt"))
+                {
+                    //Console.WriteLine("Result: ");
+                    //compare the user and the reference skeletons
+                    skeletonCompare = new Compare(teaching, path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "Ref.txt");
+                    skeletonCompare.DTW();//the dtw algorithm
+                    Result = skeletonCompare.scatterPercent.ToString();//or anglesPercent
+                }
             }
+            else
+            {
+                teaching = new Teaching(exerciseName, "..\\..\\..\\ReferenceData\\", isNewReference);
+            }           
         
         }
 

@@ -149,6 +149,10 @@
       <Project>{86760932-5215-4adc-a445-1389dd99ecb7}</Project>
       <Name>DataCollectionInterface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SkeletonCompare\SkeletonCompare.csproj">
+      <Project>{81703D05-7514-4388-9EBB-AF9C62958145}</Project>
+      <Name>SkeletonCompare</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Stream\Stream.csproj">
       <Project>{f877f41b-5a40-46f0-a2e2-a99774ca2f12}</Project>
       <Name>Stream</Name>

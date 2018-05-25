@@ -50,7 +50,7 @@ namespace ExerciseAssistantApplication.ViewModell
         public MenuViewModel(bool isAdmin, string userName)
         {
             this.userName = userName;
-            this.Start = new RelayCommand(StartClick,StartCancel);
+            this.Start = new RelayCommand(StartClick, StartCancel);
             this.MyExercise = new RelayCommand(MyExerciseClick, MyExerciseCancel);
             this.NewExercise = new RelayCommand(NewExerciseClick, NewExerciseCancel);
             if (isAdmin)
@@ -83,13 +83,13 @@ namespace ExerciseAssistantApplication.ViewModell
                 //Start the unity game
                 process = new Process();
                 process.StartInfo.FileName = "Skeleton3D.exe";
-                
+
                 process.StartInfo.UseShellExecute = true;
                 process.StartInfo.CreateNoWindow = true;
                 process.EnableRaisingEvents = true;
                 process.Exited += new EventHandler(myProcess_HasExited);
                 process.Start();
-                
+
                 process.WaitForInputIdle();
             }
             catch (Exception ex)
@@ -111,7 +111,7 @@ namespace ExerciseAssistantApplication.ViewModell
             {
                 return;
             }
-            
+
             string line;
             //read the skeleton data
             while ((line = fileReader.ReadLine()) != null)
@@ -119,7 +119,7 @@ namespace ExerciseAssistantApplication.ViewModell
                 // split the data 
                 string[] words = line.Split(separators);
                 string[] nameSplit = words[4].Split('.');
-                CompareMain.Compare(nameSplit[0]);
+                CompareMain.Compare(nameSplit[0], false);// false - without the teaching
                 string result = CompareMain.Result;
 
                 db.Exercises.Add(new Exercise { Username = userName, ExerciseName = words[0], Date = words[1] + " " + words[2] + " " + words[3], Result = result });
@@ -142,7 +142,7 @@ namespace ExerciseAssistantApplication.ViewModell
         /// </summary>
         public void MyExerciseClick()
         {
-            MyExerciseViewModel mevm = new MyExerciseViewModel();
+            MyExerciseViewModel mevm = new MyExerciseViewModel(userName);
             ViewService.ShowDialog(mevm);
         }
         /// <summary>

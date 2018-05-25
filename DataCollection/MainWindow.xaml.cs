@@ -8,7 +8,7 @@ using Stream;
 using Microsoft.Win32;
 using Microsoft.VisualBasic;
 using System.IO;
-
+using SkeletonCompare;
 
 namespace ReferenceDataCollection
 {
@@ -52,6 +52,10 @@ namespace ReferenceDataCollection
         /// </summary>
         public string path = "..\\..\\..\\ReferenceData\\";
         /// <summary>
+        /// Exercise name which the user writed
+        /// </summary>
+        private string exerciseName;
+        /// <summary>
         /// Constructor
         /// </summary>
         public MainWindow()
@@ -92,17 +96,16 @@ namespace ReferenceDataCollection
         private void RecordButton_Click(object sender, RoutedEventArgs e)
         {   
             ControlKeyEnable(false, false, true);
-
-            string file = "";
+            
             //check the file
             bool ckecking = false;
             while (!ckecking) // false
             {
-                file = Interaction.InputBox("Write the exercise name!", "Exercise save", "");
-                ckecking = CheckPath(file);
+                exerciseName = Interaction.InputBox("Write the exercise name!", "Exercise save", "");
+                ckecking = CheckPath(exerciseName);
             }
             //start the recorder
-            streamRecorder.StartRecord(path + file);
+            streamRecorder.StartRecord(path + exerciseName);
         }
         /// <summary>
         /// Check the file
@@ -156,7 +159,8 @@ namespace ReferenceDataCollection
                 //stop the replay
                 streamPlayer.StopPlayback();
             }
-            
+            //Teaching with new reference data
+            CompareMain.Compare(exerciseName, true);// true - teaching with new reference data
             ControlKeyEnable(true, true, false);
         }
         /// <summary>
