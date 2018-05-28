@@ -25,7 +25,11 @@ namespace ExerciseAssistantApplication.ViewModell
         /// <summary>
         /// The result from database
         /// </summary>
-        private string result;
+        private string resultJoint;
+        /// <summary>
+        /// The result from database
+        /// </summary>
+        private string resultAngle;
         /// <summary>
         /// Command for Back button
         /// </summary>
@@ -47,7 +51,9 @@ namespace ExerciseAssistantApplication.ViewModell
 
                 date += exercisesForUser[i].Date + "\n";
 
-                result += exercisesForUser[i].Result + "\n";
+                resultJoint += exercisesForUser[i].ResultJoint + "\n";
+
+                resultAngle += exercisesForUser[i].ResultAngle + "\n";
             }
 
         }
@@ -94,12 +100,24 @@ namespace ExerciseAssistantApplication.ViewModell
         /// <summary>
         /// Getter and setter for item's result
         /// </summary>
-        public string Result
+        public string ResultJoint
         {
-            get { return this.result; }
+            get { return this.resultJoint; }
             set
             {
-                this.result = value;
+                this.resultJoint = value;
+                this.OnPropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
+            }
+        }
+        /// <summary>
+        /// Getter and setter for item's result
+        /// </summary>
+        public string ResultAngle
+        {
+            get { return this.resultAngle; }
+            set
+            {
+                this.resultAngle = value;
                 this.OnPropertyChanged(); // Method to raise the PropertyChanged event in your BaseViewModel class...
             }
         }

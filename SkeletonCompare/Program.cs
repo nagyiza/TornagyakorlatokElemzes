@@ -16,7 +16,7 @@ namespace SkeletonCompare
         /// <summary>
         /// Path of the data from unity
         /// </summary>
-        private static String path = "..\\..\\..\\UnityData\\";
+        private static String unityPath = "..\\..\\..\\UnityData\\";
         /// <summary>
         /// Object
         /// </summary>
@@ -33,19 +33,13 @@ namespace SkeletonCompare
             {
                 Console.WriteLine("Enter the exercise name: ");
                 //read exercise name
-                String exerciseName = Console.ReadLine();
+                string exerciseName = Console.ReadLine();
                 Console.WriteLine("Choose: 1 - unity compare, 2 - new reference data ");
                 string choose = Console.ReadLine();
-                if (int.Parse(choose) == 2)
-                {
-                    isNewReference = true;
-                }
-                else
-                {
-                    isNewReference = false;
-                }
+                isNewReference = int.Parse(choose) == 2 ? true : false;
 
-                String exerciseNameRef = "";
+                //exercise name without number
+                string exerciseNameRef = "";
                 Teaching teaching;
                 int isInt;
                 //check the last character
@@ -69,35 +63,33 @@ namespace SkeletonCompare
                     exerciseNameRef = exerciseName;
                 }
 
+                teaching = new Teaching(exerciseName, exerciseNameRef, "..\\..\\..\\ReferenceData\\", isNewReference);
+
+
+                //if the exercise is exist, and compare with unity data
                 if (!isNewReference)
                 {
-                    teaching = new Teaching(exerciseNameRef, "..\\..\\..\\ReferenceData\\", isNewReference);
-
-                    //teaching.TeachingSkeleton();
-
-                    //if the exercise is exist
-                    if (File.Exists(path + "User\\" + exerciseName + ".txt")
-                        && File.Exists(path + "Reference\\" + exerciseNameRef + "AverageRef.txt"))
+                    if (File.Exists(unityPath + "User\\" + exerciseName + ".txt")
+                        && File.Exists(unityPath + "Reference\\" + exerciseNameRef + "AverageRef.txt"))
                     {
                         Console.WriteLine("Result: ");
                         //compare the user and the reference skeletons
-                        skeletonCompare = new Compare(teaching, path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "AverageRef.txt");
+                        skeletonCompare = new Compare(teaching, unityPath, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "AverageRef.txt");
                         var time = DateTime.Now;
                         skeletonCompare.DTW();//the dtw algorithm
                         Console.WriteLine(Environment.NewLine + (DateTime.Now - time).ToString());
-                       
+
                     }
                     else
                     {
                         Console.WriteLine("The exercise name is not correct !!!");
-                        
+
                     }
                 }
                 else
                 {
-                    teaching = new Teaching(exerciseName, "..\\..\\..\\ReferenceData\\", isNewReference);
                     Console.WriteLine("The teaching with new reference data completed!");
-                    
+
                 }
                 Console.WriteLine(Environment.NewLine + "Press enter and try again or press esc and application close" + Environment.NewLine);
                 //if press esc, the application close
@@ -107,7 +99,7 @@ namespace SkeletonCompare
                 }
 
             }
-            
+
         }
     }
 

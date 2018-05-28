@@ -469,17 +469,24 @@ public class BodySourceView : MonoBehaviour
                 string[] words = line.Split(' ');
                 if (line != lines[0])
                 {
+                    //skeleton display Width
+                    double skeletonWidth = Convert.ToDouble(words[10]);
+
                     Vector4 position = new Vector4();
                     position.w = int.Parse(words[5]);
-                    position.z = float.Parse(words[0]);
-                    position.x = float.Parse(words[1]);
-                    position.y = float.Parse(words[2]);
+                    position.z = float.Parse(words[2]);
+                    position.x = float.Parse(words[0]);
+                    position.y = float.Parse(words[1]);
+
+                    position.x = (float)(position.x * skeletonWidth / 1920); // (512 / 1920)
+                    position.y = (float)(position.y * skeletonWidth / 1920);
+                    position.x = (float)(position.x * 0.2 + 5);
+                    position.y = (float)(position.y * 0.2 - 10) * (-1);
 
                     reference.Add(position);
 
                     //write reference coordinates in a file
-                    File.AppendAllText(writePath + "Reference\\" + exerciseName + "Ref.txt", position.x + " " + position.y + " " + position.z + " " + position.w + Environment.NewLine);
-
+                    File.AppendAllText(writePath + "Reference\\" + exerciseName + "AverageRef.txt", position.x + " " + position.y + " " + position.z + " " + position.w + Environment.NewLine);
                     if (int.Parse(words[5]) <= type)
                     {
                         skeletonRefCount++;

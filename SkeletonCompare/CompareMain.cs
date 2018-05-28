@@ -12,7 +12,7 @@ namespace SkeletonCompare
         /// <summary>
         /// Path of the data from unity
         /// </summary>
-        private static String path = "..\\..\\..\\UnityData\\";
+        private static String unityPath = "..\\..\\..\\UnityData\\";
         /// <summary>
         /// Object
         /// </summary>
@@ -52,25 +52,19 @@ namespace SkeletonCompare
                 exerciseNameRef = exerciseName;
             }
 
-            if (!isNewReference) {
-                teaching = new Teaching(exerciseNameRef, "..\\..\\..\\ReferenceData\\", isNewReference);
-                //teaching.TeachingSkeleton();
+            teaching = new Teaching(exerciseName, exerciseNameRef, "..\\..\\..\\ReferenceData\\", isNewReference);
 
+            if (!isNewReference) {
                 //if the exercise is exist
-                if (File.Exists(path + "User\\" + exerciseName + ".txt")
-                    && File.Exists(path + "Reference\\" + exerciseNameRef + "AverageRef.txt"))
+                if (File.Exists(unityPath + "User\\" + exerciseName + ".txt")
+                    && File.Exists(unityPath + "Reference\\" + exerciseNameRef + "AverageRef.txt"))
                 {
-                    //Console.WriteLine("Result: ");
                     //compare the user and the reference skeletons
-                    skeletonCompare = new Compare(teaching, path, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "AverageRef.txt");
+                    skeletonCompare = new Compare(teaching, unityPath, "User\\" + exerciseName + ".txt", "Reference\\" + exerciseNameRef + "AverageRef.txt");
                     skeletonCompare.DTW();//the dtw algorithm
-                    Result = skeletonCompare.scatterPercent.ToString();//or anglesPercent
+                    Result = skeletonCompare.anglePercent.ToString();//or scatterPercent
                 }
-            }
-            else
-            {
-                teaching = new Teaching(exerciseName, "..\\..\\..\\ReferenceData\\", isNewReference);
-            }           
+            }          
         
         }
 

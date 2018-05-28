@@ -120,9 +120,10 @@ namespace ExerciseAssistantApplication.ViewModell
                 string[] words = line.Split(separators);
                 string[] nameSplit = words[4].Split('.');
                 CompareMain.Compare(nameSplit[0], false);// false - without the teaching
-                string result = CompareMain.Result;
+                string resultJoint = CompareMain.Result;
+                string resultAngle = CompareMain.Result;
 
-                db.Exercises.Add(new Exercise { Username = userName, ExerciseName = words[0], Date = words[1] + " " + words[2] + " " + words[3], Result = result });
+                db.Exercises.Add(new Exercise { Username = userName, ExerciseName = words[0], Date = words[1] + " " + words[2] + " " + words[3], ResultJoint = resultJoint, ResultAngle = resultAngle });
                 db.SaveChanges();
             }
             fileReader.Close();

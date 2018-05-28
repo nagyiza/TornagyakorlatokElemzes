@@ -363,7 +363,7 @@ namespace SkeletonCompare
         {
             int jointCount = 25;
             StreamWriter streamWriter = new StreamWriter(path);
-            streamWriter.Write("               JointType               X                    Y  WidthOfDisplay  HeightOfDisplay" + Environment.NewLine);
+            streamWriter.Write("X                            Y                           Z       JointType             WidthOfDisplay  HeightOfDisplay" + Environment.NewLine);
 
             foreach (Skeleton skeleton in skeletonList)
             {
@@ -372,7 +372,7 @@ namespace SkeletonCompare
                     double X = skeleton.Joints[i].X;
                     double Y = skeleton.Joints[i].Y;
                     double Z = skeleton.Joints[i].Z;
-                    streamWriter.Write("0 0 0 0 0 " + i + " 0 0 " + X + " " + Y + " 512 424" + Environment.NewLine);
+                    streamWriter.Write(X + " " + Y + " " + Z + " 0 0 " + i + " 0 0 0 0" + Y + " 512 424" + Environment.NewLine);
                 }
             }
             streamWriter.Close();

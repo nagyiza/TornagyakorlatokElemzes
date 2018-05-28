@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExerciseAssistantApplication.View"
         mc:Ignorable="d"
-        Title="MyExercise" Height="600" Width="600"
+        Title="MyExercise" Height="600" Width="900"
         d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -24,14 +24,17 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Background="LightGoldenrodYellow" FontSize="14pt" FontWeight="Bold">Exercise Name</Label>
             <Label Grid.Row="0" Grid.Column="1" Background="LightGoldenrodYellow" FontSize="14pt" FontWeight="Bold" Padding="40 0 0 0">Date</Label>
-            <Label Grid.Row="0" Grid.Column="2" Background="LightGoldenrodYellow" FontSize="14pt" FontWeight="Bold">Result(%)</Label>
+            <Label Grid.Row="0" Grid.Column="2" Background="LightGoldenrodYellow" FontSize="14pt" FontWeight="Bold">Result with joints(%)</Label>
+            <Label Grid.Row="0" Grid.Column="3" Background="LightGoldenrodYellow" FontSize="14pt" FontWeight="Bold">Result with angles(%)</Label>
 
             <Label Grid.Row="1" Grid.Column="0" FontSize="12pt" Content="{Binding ExerciseName}"/>
             <Label Grid.Row="1" Grid.Column="1" FontSize="12pt" Content="{Binding Date}"/>
-            <Label Grid.Row="1" Grid.Column="2" FontSize="12pt" Content="{Binding Result}"/>
+            <Label Grid.Row="1" Grid.Column="2" FontSize="12pt" Content="{Binding ResultJoint}"/>
+            <Label Grid.Row="1" Grid.Column="3" FontSize="12pt" Content="{Binding ResultAngle}"/>
 
         </Grid>
 

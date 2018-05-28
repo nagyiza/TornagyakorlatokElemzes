@@ -14,6 +14,7 @@ namespace ExerciseAssistantApplication.Modell
         public string Username { get; set; }
         public string ExerciseName { get; set; }
         public string Date { get; set; }
-        public string Result { get; set; }
+        public string ResultJoint { get; set; }
+        public string ResultAngle { get; set; }
     }
 }

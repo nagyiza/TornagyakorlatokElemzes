@@ -203,7 +203,7 @@ namespace SkeletonCompare
                     averages = teaching.GetAverages;
                     scattersSkeleton = teaching.GetScatters;
                     //print scatter
-                    Skeleton.SkeletonPrint(scattersSkeleton, path + @"\scatterSkeletonRef.txt");
+                    //Skeleton.SkeletonPrint(scattersSkeleton, path + @"\scatterSkeletonRef.txt");
 
                     //calculat angles
                     CalculateSkeletonAngles(skeletonsRef);
@@ -255,13 +255,13 @@ namespace SkeletonCompare
                 for (int j = 1; j < m; ++j) // for the real skeleton
                 {
                     //DTW with scatters
-                    cost = CompareSkeletonWithScatters(skeletonsRef[i], skeletons[j], scattersSkeleton[i]);
+                    cost = CompareSkeletonWithScatters(skeletonsRef[i], skeletons[j], scattersSkeleton[i % scattersSkeleton.Count()]);
                     int min = Math.Min(DTW[i - 1, j], DTW[i, j - 1]);
                     DTW[i, j] = cost + Math.Min(min, DTW[i - 1, j - 1]);
                     //Console.Write(DTW[i, j] + " ");
 
                     //compare skeletons with angles
-                    cost = CompareSkeletonWithAngles(skeletonsRef[i], skeletons[j], scattersSkeleton[i]);
+                    cost = CompareSkeletonWithAngles(skeletonsRef[i], skeletons[j], scattersSkeleton[i % scattersSkeleton.Count()]);
                     int min2 = Math.Min(DTW2[i - 1, j], DTW2[i, j - 1]);
                     DTW2[i, j] = cost + Math.Min(min2, DTW2[i - 1, j - 1]);
                 }

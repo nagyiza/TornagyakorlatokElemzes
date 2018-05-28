@@ -15,7 +15,7 @@ namespace Assets.KinectView.Scripts
         public Dictionary<Kinect.JointType, Kinect.JointType> bones = new Dictionary<Kinect.JointType, Kinect.JointType>();
         public Dictionary<Kinect.JointType, bool> joinIsValid = new Dictionary<Kinect.JointType, bool>();
         private List<Vector3> joints;
-        private List<Vector3> angleList; // JointType, JointType, double
+        private List<Vector4> angleList; // JointType, JointType, double
 
         /// <summary>
         /// Constructor, in witch create the bones
@@ -113,7 +113,7 @@ namespace Assets.KinectView.Scripts
         /// </summary>
         public void SkeletonAngle()
         {
-            angleList = new List<Vector3>();
+            angleList = new List<Vector4>();
             for (int i = 0; i < 24; ++i)
             {
                 var bone = bones[getJoinType(i)];
@@ -131,7 +131,7 @@ namespace Assets.KinectView.Scripts
                     Vector3 secondVector = joints[(int)(second)];
                     //calculate angle
                     float angle = AngleBetweenTwoVectors(firstVector, centerVector, secondVector);
-                    Debug.Log("angle: "+angle);
+                    //Debug.Log("angle: "+angle);
                     //save angels in the list
                     angleList.Add(new Vector3((int)first, (int)second, angle));
                 }
@@ -221,6 +221,7 @@ namespace Assets.KinectView.Scripts
         {
             int jointCount = 25;
             List<Skeleton> Skeletons = new List<Skeleton>();
+            List<double> percents = new List<double>();
             string line = ""; // A line in the file
             char[] separators = { ' ' };
             string[] pathSplit = pathName.Split('\\');
@@ -289,6 +290,8 @@ namespace Assets.KinectView.Scripts
                         }
                         //set the list to the frame
                         currentFrame.Joints = joints;
+                        //set the teaching percent
+                        currentFrame.ImportanceInPercent = percents;
                         //determine bones
                         currentFrame.DetermineBones();
                         //put in a list
@@ -307,11 +310,19 @@ namespace Assets.KinectView.Scripts
                     }
                     joints.Add(new Vector3(X, Y, Z));
 
+                    //if is in a file the teaching percent
+                    if (words.Length > 12 && words[12] != "")
+                    {
+                        percents.Add(Convert.ToDouble(words[12]));
+                    }
+
                 }
                 if (Skeletons.Count == 0)
                 {
                     //set the list to the frame
                     currentFrame.Joints = joints;
+                    //set the teaching percent
+                    currentFrame.ImportanceInPercent = percents;
                     //determine bones
                     currentFrame.DetermineBones();
                     //put in a list
@@ -326,7 +337,85 @@ namespace Assets.KinectView.Scripts
                 return null;
             }
         }
+        
 
+        /// <summary>
+        /// Process skeleton data from a file
+        /// </summary>
+        /// <param name="pathName"></param>
+        /// <returns></returns>
+        public static List<Vector4> ProcessSkeletonAngelsFromFile(string pathName)
+        {
+            //jointtype - jointtype - angle - percent
+            List<Vector4> Angles = new List<Vector4>();
+            string line = ""; // A line in the file
+            char[] separators = { ' ' };
+            string[] pathSplit = pathName.Split('\\');
+            // Just file name
+            if (pathSplit[pathSplit.Length - 1] != ".txt")
+            {
+                StreamReader file;
+                if (File.Exists(pathName))
+                {
+                    file = new StreamReader(pathName);
+                }
+                else
+                {
+                    return null;
+                }
+
+                //read the first line, because it is the bill head and this not need it
+                line = file.ReadLine();
+                //read the skeleton data
+                while ((line = file.ReadLine()) != null)
+                {
+                    // split the data 
+                    string[] words = line.Split(separators);
+
+                    //if the line is a first line
+                    double number;
+                    if (!Double.TryParse(words[0], out number))
+                    {
+                        break;
+                    }
+
+
+                    //2 joint type, whitch beetween is te angle
+                    Kinect.JointType jointType1 = GetJointType(Convert.ToInt32(words[0]));
+                    Kinect.JointType jointType2 = GetJointType(Convert.ToInt32(words[1]));
+
+                    double angle = Convert.ToDouble(words[2]);
+
+
+
+                    //if is in a file the teaching percent
+                    if (words.Length > 3)
+                    {
+                        Vector4 ang = new Vector4();
+                        ang.x = (int)jointType1;
+                        ang.y = (int)jointType2;
+                        ang.z = (float)angle;
+                        ang.w = Convert.ToSingle(words[3]);
+                        Angles.Add(ang);
+                    }
+                    else
+                    {
+                        Vector4 ang = new Vector4();
+                        ang.x = (int)jointType1;
+                        ang.y = (int)jointType2;
+                        ang.z = (float)angle;
+                        ang.w = 0;
+                        Angles.Add(ang);
+                    }
+
+                }
+                file.Close();
+                return Angles;
+
+
+            }
+            return null;
+        }
         /// <summary>
         /// Get and set the skeleton's joints list
         /// </summary>
@@ -346,7 +435,7 @@ namespace Assets.KinectView.Scripts
         /// <summary>
         /// Get and set the skeleton's angles list
         /// </summary>
-        public List<Vector3> AngleList
+        public List<Vector4> AngleList
         {
             get
             {
@@ -356,6 +445,62 @@ namespace Assets.KinectView.Scripts
             set
             {
                 angleList = value;
+            }
+        }
+        /// <summary>
+        /// List of important joint in percent
+        /// </summary>
+        private List<double> importanceInPercent;
+        /// <summary>
+        /// Get and set the important joint list
+        /// </summary>
+        public List<double> ImportanceInPercent
+        {
+            get
+            {
+                return importanceInPercent;
+            }
+
+            set
+            {
+                importanceInPercent = value;
+            }
+        }
+        /// <summary>
+        /// Get the joint type in format JointType
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        private static Kinect.JointType GetJointType(int jointTypeInt)
+        {
+            switch (jointTypeInt)
+            {
+                case 0: return Kinect.JointType.SpineBase;
+                case 1: return Kinect.JointType.SpineMid;
+                case 2: return Kinect.JointType.Neck;
+                case 3: return Kinect.JointType.Head;
+                case 4: return Kinect.JointType.ShoulderLeft;
+                case 5: return Kinect.JointType.ElbowLeft;
+                case 6: return Kinect.JointType.WristLeft;
+                case 7: return Kinect.JointType.HandLeft;
+                case 8: return Kinect.JointType.ShoulderRight;
+                case 9: return Kinect.JointType.ElbowRight;
+                case 10: return Kinect.JointType.WristRight;
+                case 11: return Kinect.JointType.HandRight;
+                case 12: return Kinect.JointType.HipLeft;
+                case 13: return Kinect.JointType.KneeLeft;
+                case 14: return Kinect.JointType.AnkleLeft;
+                case 15: return Kinect.JointType.FootLeft;
+                case 16: return Kinect.JointType.HipRight;
+                case 17: return Kinect.JointType.KneeRight;
+                case 18: return Kinect.JointType.AnkleRight;
+                case 19: return Kinect.JointType.FootRight;
+                case 20: return Kinect.JointType.SpineShoulder;
+                case 21: return Kinect.JointType.HandTipLeft;
+                case 22: return Kinect.JointType.ThumbLeft;
+                case 23: return Kinect.JointType.HandTipRight;
+                case 24: return Kinect.JointType.ThumbRight;
+                default: return Kinect.JointType.SpineBase;
             }
         }
     }
