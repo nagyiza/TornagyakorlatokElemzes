@@ -72,6 +72,8 @@
   <ItemGroup>
     <Compile Include="BitmapSourceConvert.cs" />
     <Compile Include="ColorStream.cs" />
+    <Compile Include="DepthStream.cs" />
+    <Compile Include="InfraredStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkeletonFrame.cs" />
     <Compile Include="SkeletonStream.cs" />

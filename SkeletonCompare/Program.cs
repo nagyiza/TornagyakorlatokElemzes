@@ -8,13 +8,10 @@ using System.IO;
 
 namespace SkeletonCompare
 {
-    /// <summary>
-    /// This class teach the algorithm, and compare the moves
-    /// </summary>
     public class Program
     {
         /// <summary>
-        /// Path of the data from unity
+        /// Path of the data
         /// </summary>
         private static String unityPath = "..\\..\\..\\UnityData\\";
         /// <summary>
@@ -23,6 +20,7 @@ namespace SkeletonCompare
         private static Compare skeletonCompare;
 
         /// <summary>
+        /// Main
         /// Compare the user and the reference skeletons
         /// </summary>
         /// <param name="args"></param>
@@ -42,10 +40,8 @@ namespace SkeletonCompare
                 string exerciseNameRef = "";
                 Teaching teaching;
                 int isInt;
-                //check the last character
                 if (Int32.TryParse(exerciseName[exerciseName.Length - 1].ToString(), out isInt))
                 {
-                    //delete the number in the exercise name
                     foreach (char c in exerciseName)
                     {
                         if (!Int32.TryParse(c.ToString(), out isInt))
@@ -65,6 +61,11 @@ namespace SkeletonCompare
 
                 teaching = new Teaching(exerciseName, exerciseNameRef, "..\\..\\..\\ReferenceData\\", isNewReference);
 
+<<<<<<< HEAD
+=======
+                Teaching teaching = new Teaching(exerciseNameRef);
+                teaching.TeachingSkeleton();
+>>>>>>> parent of d3daa5c... comment + database
 
                 //if the exercise is exist, and compare with unity data
                 if (!isNewReference)
@@ -100,6 +101,10 @@ namespace SkeletonCompare
 
             }
 
+<<<<<<< HEAD
+=======
+            //skeletonCompare = new Compare(path, "User\\skeleton.txt", "Reference\\skeletonRef.txt");
+>>>>>>> parent of d3daa5c... comment + database
         }
     }
 

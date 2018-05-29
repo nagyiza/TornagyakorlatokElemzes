@@ -10,11 +10,17 @@ none
 false
 DEBUG;TRACE
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\App.xaml
-5-1118497938
+5591535394
 
+<<<<<<< HEAD
 27-603686545
 25-442105158
 MainWindow.xaml;View\LogIn.xaml;View\Menu.xaml;View\MyExercise.xaml;View\Registration.xaml;
+=======
+25487589653
+24-1566728356
+MainWindow.xaml;View\LogIn.xaml;View\Menu.xaml;View\Registration.xaml;View\Start.xaml;
+>>>>>>> parent of d3daa5c... comment + database
 
-False
+True
 

@@ -9,15 +9,16 @@ using System.Windows.Media.Media3D;
 
 namespace SkeletonCompare
 {
-    /// <summary>
-    /// Calculate the average and scatter of reference move, and teaching the joints and angles
-    /// </summary>
     public class Teaching
     {
         /// <summary>
         /// Path in witch are the reference videos and skeletons
         /// </summary>
+<<<<<<< HEAD
         private string referencePath;
+=======
+        private string path = "..\\..\\..\\ReferenceData\\";
+>>>>>>> parent of d3daa5c... comment + database
         /// <summary>
         /// Name of exercise (the first)
         /// </summary>
@@ -47,6 +48,7 @@ namespace SkeletonCompare
         /// </summary>
         private List<Skeleton> scatter;
 
+<<<<<<< HEAD
         private int newRefExerciseIndex;
 
         /// <summary>
@@ -59,6 +61,10 @@ namespace SkeletonCompare
         {
             this.input = input;
             this.referencePath = path;
+=======
+        public Teaching(string exerciseNameRef)
+        {
+>>>>>>> parent of d3daa5c... comment + database
             Skeletons = new List<Skeleton>();
             average = new List<Skeleton>();
             scatter = new List<Skeleton>();
@@ -181,10 +187,15 @@ namespace SkeletonCompare
             }
 
         }
+<<<<<<< HEAD
         /// <summary>
         /// Calculate the scatter of reference moves
         /// </summary>
         private void CalculateScatter(bool isNew)
+=======
+
+        private void CalculateScatter()
+>>>>>>> parent of d3daa5c... comment + database
         {
             if (filesData == null
                 || isNew)
@@ -247,6 +258,14 @@ namespace SkeletonCompare
                     return;
                 }
             }
+<<<<<<< HEAD
+=======
+        }
+
+        public void Average()
+        {
+            List<Skeleton> sum = new List<Skeleton>();
+>>>>>>> parent of d3daa5c... comment + database
 
             if (!isNew)
             {
@@ -275,7 +294,21 @@ namespace SkeletonCompare
                     }
                 }
             }
+<<<<<<< HEAD
             else
+=======
+        }
+
+        private Skeleton AverageSkeletons(List<Skeleton> skeletons)
+        {
+            Skeleton average = new Skeleton();
+            int[] div = new int[25];
+            int[] div2 = new int[25];
+            average.Joints = skeletons[0].Joints;
+            average.AngleList = new List<Tuple<JointType, JointType, double>>();
+            double[] anglesSum = new double[25];
+            for (int i = 1; i < skeletons.Count; ++i)
+>>>>>>> parent of d3daa5c... comment + database
             {
                 for (int i = 0; i < filesData.Count; ++i)
                 {
@@ -339,10 +372,16 @@ namespace SkeletonCompare
         }
 
 
+<<<<<<< HEAD
         /// <summary>
         /// Scatter
         /// </summary>
         public void Scatter(bool isNew)
+=======
+        }
+
+        private Skeleton scatterSkeletons(List<Skeleton> skeletons, Skeleton average)
+>>>>>>> parent of d3daa5c... comment + database
         {
             List<Skeleton> sum = new List<Skeleton>();
             List<Skeleton> averages = new List<Skeleton>();

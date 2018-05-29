@@ -94,21 +94,21 @@ C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\ExerciseAssistantApplica
 C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.g.resources
 C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.Properties.Resources.resources
 C:\Users\Izabella\Desktop\ExerciseAssistantWithKinectV2\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.csproj.GenerateResource.Cache
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\EntityFramework.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\ExerciseAssistantApplication.exe.config
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.exe
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\ExerciseAssistantApplication.exe
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\ExerciseAssistantApplication.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\DataCollection.exe
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\DataCollectionInterface.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\Emgu.CV.World.dll
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\EntityFramework.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\Microsoft.Kinect.dll
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\SkeletonCompare.exe
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\Stream.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\System.Windows.Interactivity.dll
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\DataCollectionInterface.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\DataCollection.pdb
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\SkeletonCompare.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\Stream.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\Emgu.CV.World.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\bin\Debug\EntityFramework.xml
@@ -128,7 +128,6 @@ C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKin
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\MainWindow.g.cs
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\LogIn.g.cs
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\Menu.g.cs
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\MyExercise.g.cs
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\Registration.g.cs
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\App.g.cs
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -137,11 +136,15 @@ C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKin
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\MainWindow.baml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\LogIn.baml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\Menu.baml
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\MyExercise.baml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\Registration.baml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.g.resources
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.Properties.Resources.resources
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.csproj.GenerateResource.Cache
+<<<<<<< HEAD
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.exe
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\ExerciseAssistantApplication.Migrations.mydb.resources
+=======
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\Start.g.cs
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\ExerciseAssistantApplication\obj\Debug\View\Start.baml
+>>>>>>> parent of d3daa5c... comment + database

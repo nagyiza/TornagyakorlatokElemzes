@@ -142,6 +142,7 @@ public class BodySourceViewRef : MonoBehaviour
         SkeletonData();
 
     }
+<<<<<<< HEAD
     public void StopAllCoroutines()
     {
         StopButton.enabled = false;
@@ -170,6 +171,8 @@ public class BodySourceViewRef : MonoBehaviour
         Application.Quit();
     }
     // ---------------------------------------
+=======
+>>>>>>> parent of d3daa5c... comment + database
 
     /// <summary>
     /// Read the all lines in the path and processing the skeleton data

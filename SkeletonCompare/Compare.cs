@@ -9,9 +9,6 @@ using System.Windows.Media.Media3D;
 
 namespace SkeletonCompare
 {
-    /// <summary>
-    /// Compare the moves
-    /// </summary>
     public class Compare
     {
         /// <summary>
@@ -58,14 +55,6 @@ namespace SkeletonCompare
         /// The count of joints
         /// </summary>
         private int scatterCount = 0;
-        /// <summary>
-        /// Result with scatter
-        /// </summary>
-        public double scatterPercent;
-        /// <summary>
-        /// Result with angles
-        /// </summary>
-        public double anglePercent;
 
         public Compare(Teaching teaching, String path, String userSkeletonData, String refSkeletonData)
         {
@@ -211,8 +200,8 @@ namespace SkeletonCompare
 
 
                     int[] dtw = DTWDistance(skeletonsRef, skeletons);
-                    scatterPercent = (scatterCount - dtw[0]) * 100 / (double)scatterCount;
-                    anglePercent = (angleCount - dtw[1]) * 100 / (double)angleCount;
+                    double scatterPercent = (scatterCount - dtw[0]) * 100 / (double)scatterCount;
+                    double anglePercent = (angleCount - dtw[1]) * 100 / (double)angleCount;
                     Console.WriteLine("Scatter: " + dtw[0] + Environment.NewLine + "Angles: " + dtw[1] + Environment.NewLine);
                     Console.WriteLine("Scatter (%): " + scatterPercent + Environment.NewLine + "Angles (%): " + anglePercent);
 
@@ -265,6 +254,8 @@ namespace SkeletonCompare
                     int min2 = Math.Min(DTW2[i - 1, j], DTW2[i, j - 1]);
                     DTW2[i, j] = cost + Math.Min(min2, DTW2[i - 1, j - 1]);
                 }
+                //Console.WriteLine();
+
             }
 
             int[] result = new int[2];

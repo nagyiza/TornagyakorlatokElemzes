@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 
-/// <summary>
-/// I used Bala Zsolt's project, but I modified
-/// </summary>
 namespace Stream
 {
     public class StreamRecorder

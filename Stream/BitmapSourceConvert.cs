@@ -6,9 +6,6 @@ using System.Windows.Media.Imaging;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 
-/// <summary>
-/// I used Bala Zsolt's project, but I modified
-/// </summary>
 namespace Stream
 {
     public static class BitmapSourceConvert
@@ -42,11 +39,7 @@ namespace Stream
                 return bs;
             }
         }
-        /// <summary>
-        /// Convert the bitmap to mat format for current frame
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
+
         public static Mat ToMat(BitmapSource source)
         {
             if (source.Format == PixelFormats.Bgra32)
@@ -78,11 +71,7 @@ namespace Stream
                 throw new Exception(String.Format("Conversion from BitmapSource of format {0} is not supported.", source.Format));
             }
         }
-        /// <summary>
-        /// Convert the bitmap to bitmap source for playback
-        /// </summary>
-        /// <param name="bitmap"></param>
-        /// <returns></returns>
+
         public static BitmapSource BitmapToBitmapSource(System.Drawing.Bitmap bitmap)
         {
             var bitmapData = bitmap.LockBits(

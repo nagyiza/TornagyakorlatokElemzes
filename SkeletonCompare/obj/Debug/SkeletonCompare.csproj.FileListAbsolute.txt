@@ -1,4 +1,5 @@
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\bin\Debug\SkeletonCompare.exe.config
+C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\obj\Debug\SkeletonCompare.csprojResolveAssemblyReference.cache
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\bin\Debug\SkeletonCompare.exe
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\bin\Debug\SkeletonCompare.pdb
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\bin\Debug\Microsoft.Kinect.dll
@@ -9,6 +10,5 @@ C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKin
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\bin\Debug\Microsoft.Kinect.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\bin\Debug\Emgu.CV.World.xml
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\bin\Debug\DataCollectionInterface.pdb
-C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\obj\Debug\SkeletonCompare.csprojResolveAssemblyReference.cache
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\obj\Debug\SkeletonCompare.exe
 C:\Users\Izabella\Documents\Visual Studio 2015\Projects\ExerciseAssistantWithKinectV2\TornagyakorlatokElemzese\SkeletonCompare\obj\Debug\SkeletonCompare.pdb

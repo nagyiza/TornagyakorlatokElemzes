@@ -17,40 +17,18 @@ namespace ReferenceDataCollection
     /// </summary>
     public partial class MainWindow : Window, IDisposable
     {
-        /// <summary>
-        /// Kinect sensor
-        /// </summary>
         KinectSensor sensor = null;
-        /// <summary>
-        /// Stream for color frame
-        /// </summary>
         ColorStream colorStream = null;
 
-        /// <summary>
-        /// Stream for skeleton frame
-        /// </summary>
         SkeletonStream skeletonStream = null;
-        /// <summary>
-        /// Drawing image for skeleton 
-        /// </summary>
+
         DrawingImage drawingImage;
-        /// <summary>
-        /// Drawing group for skeleton 
-        /// </summary>
         DrawingGroup drawingGroup;
 
-        /// <summary>
-        /// Record the video and skeleton
-        /// </summary>
         StreamRecorder streamRecorder = null;
-        /// <summary>
-        /// Play the stream by replay button
-        /// </summary>
         StreamPlayer streamPlayer = null;
-        /// <summary>
-        /// Path for data, save the video and skeleton in this path
-        /// </summary>
         public string path = "..\\..\\..\\ReferenceData\\";
+<<<<<<< HEAD
         /// <summary>
         /// Exercise name which the user writed
         /// </summary>
@@ -58,6 +36,9 @@ namespace ReferenceDataCollection
         /// <summary>
         /// Constructor
         /// </summary>
+=======
+
+>>>>>>> parent of d3daa5c... comment + database
         public MainWindow()
         {
             sensor = KinectSensor.GetDefault();
@@ -72,11 +53,7 @@ namespace ReferenceDataCollection
 
             InitializeComponent();
         }
-        /// <summary>
-        /// When load the window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DataContext = this; //data binding
@@ -88,33 +65,35 @@ namespace ReferenceDataCollection
 
             skeletonReplayImage.Source = drawingImage;
         }
-        /// <summary>
-        /// Event for record button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void RecordButton_Click(object sender, RoutedEventArgs e)
         {   
             ControlKeyEnable(false, false, true);
+<<<<<<< HEAD
             
             //check the file
             bool ckecking = false;
+=======
+
+            string file = Interaction.InputBox("Write the exercise name!", "Exercise save", "");
+            bool ckecking = CheckPath(file);
+>>>>>>> parent of d3daa5c... comment + database
             while (!ckecking) // false
             {
                 exerciseName = Interaction.InputBox("Write the exercise name!", "Exercise save", "");
                 ckecking = CheckPath(exerciseName);
             }
+<<<<<<< HEAD
             //start the recorder
             streamRecorder.StartRecord(path + exerciseName);
+=======
+
+            streamRecorder.StartRecord(path + file);
+>>>>>>> parent of d3daa5c... comment + database
         }
-        /// <summary>
-        /// Check the file
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns>true - the file is correct and false - the file is not correct</returns>
+
         private bool CheckPath(string file)
         {
-            //if file is null or empty, return
             if (file == null || file == "")
             {
                 MessageBox.Show("The exercise name is empty");
@@ -122,7 +101,7 @@ namespace ReferenceDataCollection
             }
             
             //existing file
-            if (File.Exists(path + file + ".avi") == true || File.Exists(path + file + ".txt") == true)
+            if (File.Exists(path + ".avi") == true || File.Exists(path + ".txt") == true)
             {
                 MessageBoxResult result = MessageBox.Show("The exercise exists! Are you sure you want to replace?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result.ToString() == "Yes")
@@ -141,45 +120,33 @@ namespace ReferenceDataCollection
             }
 
         }
-        /// <summary>
-        /// Event for stop button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            //if the recorder is in process
             if (colorStream.IsRecording || skeletonStream.IsRecording)
             {
-                //stop the recorder
                 streamRecorder.StopRecording();
             }
             else
             {
-                //stop the replay
                 streamPlayer.StopPlayback();
             }
             //Teaching with new reference data
             CompareMain.Compare(exerciseName, true);// true - teaching with new reference data
             ControlKeyEnable(true, true, false);
         }
-        /// <summary>
-        /// Event for play button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             ControlKeyEnable(false, false, true);
-            //open the file explorer
+
             OpenFileDialog playing = new OpenFileDialog();
             playing.Filter = "All files(*.*)|*.*";
             playing.FilterIndex = 2;
             playing.RestoreDirectory = true;
-
             if (playing.ShowDialog() == true)
             {
-                //get the file name 
+                // file name 
                 string[] split = playing.FileName.Split('\\');
                 split = split[split.Length - 1].Split('.');
                 path = "..\\..\\..\\ReferenceData\\" + split[0]; // ReferenceData\filename
@@ -188,34 +155,39 @@ namespace ReferenceDataCollection
             if (pathSplit[pathSplit.Length - 1] != null && pathSplit[pathSplit.Length - 1] != "")
             {
                 streamPlayer.StartPlayback(path);
-            }
-            else
+            }else
             { 
                 ControlKeyEnable(true, true, false);
             }
 
         }
-        /// <summary>
-        /// Control the button enable
-        /// </summary>
-        /// <param name="rec"></param>
-        /// <param name="play"></param>
-        /// <param name="stop"></param>
+
         private void ControlKeyEnable(bool rec, bool play, bool stop)
         {
             btnRecord.IsEnabled = rec;
             btnPlayback.IsEnabled = play;
             btnStop.IsEnabled = stop;
         }
-        /// <summary>
-        /// When close the window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void Window_Closed(object sender, EventArgs e)
         {
-            Dispose();
+            if (colorStream != null)
+            {
+                colorStream.Dispose();
+                colorStream = null;
+            }
+            if (skeletonStream != null)
+            {
+                skeletonStream.Dispose();
+                skeletonStream = null;
+            }
+            if (sensor != null)
+            {
+                sensor.Close();
+                sensor = null;
+            }
         }
+
         public void Dispose()
         {
             if (colorStream != null)
@@ -234,10 +206,7 @@ namespace ReferenceDataCollection
                 sensor = null;
             }
         }
-        /// <summary>
-        /// Show the frame in the UI
-        /// </summary>
-        /// <param name="image"></param>
+
         public void ShowFrameEvent(Mat image)
         {
             if (image != null)
@@ -261,6 +230,40 @@ namespace ReferenceDataCollection
                     streamPlayer.NewFrame -= ShowFrameEvent;
                 }
             }
+        }
+
+        public void Skeleton3D()
+        {
+            //Glut.glutInit();
+            //Glut.glutInitDisplayMode(Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
+            //Glut.glutInitWindowSize(512, 424);
+            //Glut.glutCreateWindow("3D Skeleton");
+
+            //Glut.glutIdleFunc(OnReaderFrame);
+            //Glut.glutDisplayFunc(OnDisplay);
+
+            //Glut.glutMainLoop();
+      
+            //Glut.glutKeyboardFunc(keyboard);                   
+            //Glut.glutReshapeFunc(reshape);            
+            //Glut.glutMouseFunc(mouse);            
+            //Glut.glutMainLoop();
+
+            //Glut.glutInitWindowPosition(100, 100);
+
+
+        }
+        private void OnDisplay()
+        {
+  
+        }
+
+        private void OnReaderFrame()
+        {
+            //Gl.Viewport(0,0,512,424);
+            //Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            //Glut.glutSwapBuffers();
         }
     }
 }

@@ -11,49 +11,28 @@ using System.Windows;
 
 namespace ExerciseAssistantApplication.ViewModell
 {
-    /// <summary>
-    /// ViewModel for log in screen
-    /// </summary>
     public class LogInViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Edit box foe email
-        /// </summary>
         private string email_box;
-        /// <summary>
-        /// Edit box for password
-        /// </summary>
         public string upassword;
-        /// <summary>
-        /// Command for OK button
-        /// </summary>
         public RelayCommand OkCommand { get; set; }
-        /// <summary>
-        /// Command for Back button
-        /// </summary>
         public RelayCommand BackCommand { get; set; }
-        /// <summary>
-        /// The constructor
-        /// </summary>
+
         public LogInViewModel()
         {
             this.OkCommand = new RelayCommand(Ok, Cancel);
             this.BackCommand = new RelayCommand(Back, Cancel);
         }
-        /// <summary>
-        /// Event for OK button
-        /// </summary>
+
         public void Ok()
         {
             try
             {
-                //check the user, and if is an admin, show the admin's menu
                 int isAdmin = AuthenticateEmail(Email_box, uPassword);
-                string[] emailSplit = Email_box.Split('@');
                 if (isAdmin == 1)// if login with success and is Admin
                 {
                     ViewService.CloseDialog(this);
-                    MenuViewModel mvm = new MenuViewModel(true, emailSplit[0]);
+                    MenuViewModel mvm = new MenuViewModel(true);
                     ViewService.ShowDialog(mvm);
                 }
                 else
@@ -61,7 +40,7 @@ namespace ExerciseAssistantApplication.ViewModell
                     if (isAdmin == 2)// if login with success and is User
                     { 
                         ViewService.CloseDialog(this);
-                        MenuViewModel mvm = new MenuViewModel(false, emailSplit[0]);
+                        MenuViewModel mvm = new MenuViewModel(false);
                         ViewService.ShowDialog(mvm);
                     }
                 }
@@ -70,6 +49,8 @@ namespace ExerciseAssistantApplication.ViewModell
             {
 
                 MessageBox.Show("ERROR: Invalid email or invalid password!" );
+                //ez nem kell csak amig nem megy addig itt marad:
+                ViewService.CloseDialog(this);
             }
             catch (Exception ex)
             {
@@ -77,20 +58,12 @@ namespace ExerciseAssistantApplication.ViewModell
 
             }
         }
-        /// <summary>
-        /// Variable for user
-        /// </summary>
         public User cUser { get; set; }
-
-        /// <summary>
-        /// Autentification with email and password
-        /// Using the local database
-        /// </summary>
-        /// <param name="email">The user's email</param>
-        /// <param name="password">The user's password</param>
-        /// <returns> 0 - invalid user, 1 - admin, 2 - user </returns>
+        
+        //return: 0 - invalid user, 1 - admin, 2 - user
         public int AuthenticateEmail(string email, string password)
         {
+
             using (MyDbContext db = new MyDbContext())
             {
                 //string hashPwd = CalculateHash(password, email);
@@ -112,17 +85,20 @@ namespace ExerciseAssistantApplication.ViewModell
             }
         }
 
-        /// <summary>
-        /// Event for Back button
-        /// </summary>
+
+        //public string CalculateHash(string clearTextPassword, string salt)
+        //{
+        //    byte[] saltedHashBytes = Encoding.UTF8.GetBytes(clearTextPassword + salt);
+        //    HashAlgorithm algorithm = new SHA256Managed();
+        //    byte[] hash = algorithm.ComputeHash(saltedHashBytes);
+        //    return Convert.ToBase64String(hash);
+        //}
+
+
         public void Back()
         {
             ViewService.CloseDialog(this);
         }
-        /// <summary>
-        /// Event for cancel 
-        /// </summary>
-        /// <returns></returns>
         private bool Cancel()
         {
             //if (string.IsNullOrWhiteSpace(this.Email) || string.IsNullOrWhiteSpace(this.uPassword))
@@ -131,9 +107,7 @@ namespace ExerciseAssistantApplication.ViewModell
                 return true;
         }
 
-        /// <summary>
-        /// Getter and setter for password
-        /// </summary>
+        
         public string uPassword
         {
             get { return upassword; }
@@ -143,9 +117,6 @@ namespace ExerciseAssistantApplication.ViewModell
                 this.OnPropertyChanged("uPassword");
             }
         }
-        /// <summary>
-        /// Getter and setter for email
-        /// </summary>
         public string Email_box
         {
             get { return this.email_box; }

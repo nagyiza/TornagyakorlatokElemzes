@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
-/// <summary>
-/// I used the example of Kinect SDK 2.0
-/// </summary>
+// In this class I used the example code of Kinect SDK 2.0
+
 namespace Stream
 {
     public class SkeletonStream : IDataCollection<BodyFrameArrivedEventArgs>

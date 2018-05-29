@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="CalculateScatter.cs" />
     <Compile Include="Compare.cs" />
-    <Compile Include="CompareMain.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Skeleton.cs" />
