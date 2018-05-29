@@ -140,7 +140,7 @@ public class BodySourceView : MonoBehaviour
         StartButton.enabled = false;
         exerciseName = path;
 
-        this.path = @"..\..\..\ReferenceData\" + path + "Average.txt";
+        this.path = @"..\..\..\ReferenceData\" + path + ".txt";
 
         Debug.Log("The path is BodySourceView " + this.path);
 
@@ -162,7 +162,7 @@ public class BodySourceView : MonoBehaviour
         StartButton.enabled = false;
         // StopButton.enabled = false;
         if (path == "" || path == null) {
-            path = @"..\..\..\ReferenceData\" + path + "Average.txt";
+            path = @"..\..\..\ReferenceData\" + path + ".txt";
 
             Debug.Log("The path is BodySourceView " + path);
 
@@ -400,7 +400,7 @@ public class BodySourceView : MonoBehaviour
                 result.color = Color.red;
             }
 
-            //if (cmp.dtwResult[1] == 0) // dtwResult[0] - result with scatter
+            //if (cmp.dtwResult[1] == 0) // dtwResult[1] - result with scatter
             //{
             //    result2.text = "Good";
             //    result2.color = Color.green;
@@ -458,7 +458,7 @@ public class BodySourceView : MonoBehaviour
     private void ReferenceSkeleton()
     {
         Debug.Log("Path: " + this.path);
-        File.WriteAllText(writePath + "Reference\\" + exerciseName + "AverageRef.txt", "   X       Y         Z      JointType" + Environment.NewLine);
+        File.WriteAllText(writePath + "Reference\\" + exerciseName + "Ref.txt", "   X       Y         Z      JointType" + Environment.NewLine);
         string[] lines = System.IO.File.ReadAllLines(path);//reference     
         
         int type = 0;
@@ -469,24 +469,16 @@ public class BodySourceView : MonoBehaviour
                 string[] words = line.Split(' ');
                 if (line != lines[0])
                 {
-                    //skeleton display Width
-                    double skeletonWidth = Convert.ToDouble(words[10]);
-
                     Vector4 position = new Vector4();
                     position.w = int.Parse(words[5]);
-                    position.z = float.Parse(words[2]);
-                    position.x = float.Parse(words[0]);
-                    position.y = float.Parse(words[1]);
-
-                    position.x = (float)(position.x * skeletonWidth / 1920); // (512 / 1920)
-                    position.y = (float)(position.y * skeletonWidth / 1920);
-                    position.x = (float)(position.x * 0.2 + 5);
-                    position.y = (float)(position.y * 0.2 - 10) * (-1);
-
+                    position.z = float.Parse(words[0]);
+                    position.x = float.Parse(words[1]);
+                    position.y = float.Parse(words[2]);
+                    
                     reference.Add(position);
 
                     //write reference coordinates in a file
-                    File.AppendAllText(writePath + "Reference\\" + exerciseName + "AverageRef.txt", position.x + " " + position.y + " " + position.z + " " + position.w + Environment.NewLine);
+                    File.AppendAllText(writePath + "Reference\\" + exerciseName + "Ref.txt", position.x + " " + position.y + " " + position.z + " " + position.w + Environment.NewLine);
                     if (int.Parse(words[5]) <= type)
                     {
                         skeletonRefCount++;

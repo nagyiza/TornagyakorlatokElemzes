@@ -201,7 +201,7 @@ namespace Assets.KinectView.Scripts
 
             c.x = c.x - b.x;
             c.y = c.y - b.y;
-            c.z = c.z - c.z;
+            c.z = c.z - b.z;
 
             double dotProduct;
             a.Normalize();
